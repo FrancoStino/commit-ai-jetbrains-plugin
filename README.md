@@ -1,6 +1,6 @@
 <div align="center">
     <a href="https://plugins.jetbrains.com/plugin/">
-        <img src="./src/main/resources/META-INF/commitAi.svg" alt="logo"/>
+        <img src="./src/main/resources/META-INF/commitAi.svg" alt="logo" width="300"/>
     </a>
 
 <h1 align="center">AI Commits</h1>
