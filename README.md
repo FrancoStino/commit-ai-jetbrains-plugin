@@ -9,7 +9,6 @@
 [version-badge]: https://img.shields.io/jetbrains/plugin/v/?style=for-the-badge
 [installs-badge]: https://img.shields.io/jetbrains/plugin/d/?style=for-the-badge&color=red
 [rating-badge]: https://img.shields.io/jetbrains/plugin/r/stars/?style=for-the-badge
-[license-badge]: https://img.shields.io/github/license/FrancoStino/commit-ai-jetbrains-plugin?style=for-the-badge
 [marketplace-url]: https://plugins.jetbrains.com/plugin/
 
 
@@ -17,7 +16,6 @@
 [![Version][version-badge]][marketplace-url]
 [![Installs][installs-badge]][marketplace-url]
 [![Rating][rating-badge]][marketplace-url]
-[![License][license-badge]][license-url]
 </div>
 <br>
 
