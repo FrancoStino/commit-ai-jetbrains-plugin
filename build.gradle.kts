@@ -5,8 +5,11 @@ plugins {
     id("org.jetbrains.changelog") version "2.4.0"
 }
 
-group = "com.davideladisa.commit-ai"
-version = "1.0-SNAPSHOT"
+val pluginGroup: String by project
+val pluginVersion: String by project
+
+group = pluginGroup
+version = pluginVersion
 
 repositories {
     mavenCentral()
