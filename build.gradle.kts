@@ -43,6 +43,11 @@ intellijPlatform {
     }
 }
 
+changelog {
+    version.set(project.version.toString())
+    path.set(file("CHANGELOG.md").absolutePath)
+}
+
 tasks {
     // Set the JVM compatibility versions
     withType<JavaCompile> {
