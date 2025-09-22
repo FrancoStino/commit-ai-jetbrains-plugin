@@ -7,6 +7,7 @@ plugins {
 
 val pluginGroup: String by project
 val pluginVersion: String by project
+val platformVersion: String by project
 
 group = pluginGroup
 version = pluginVersion
@@ -22,7 +23,7 @@ repositories {
 // Read more: https://plugins.jetbrains.com/docs/intellij/tools-intellij-platform-gradle-plugin.html
 dependencies {
     intellijPlatform {
-        create("IC", "2025.1.4.1")
+        create("IC", platformVersion)
         testFramework(org.jetbrains.intellij.platform.gradle.TestFrameworkType.Platform)
 
         // Add necessary plugin dependencies for compilation here, example:
