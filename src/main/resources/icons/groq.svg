@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   version="1.1"
+   id="Layer_1"
+   x="0px"
+   y="0px"
+   width="16"
+   height="16"
+   viewBox="0 32.25 16 16"
+   enable-background="new 0 32.25 152 55.5"
+   xml:space="preserve"
+   sodipodi:docname="groq-icon.svg"
+   inkscape:version="1.4 (e7c3feb100, 2024-10-09)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/"><defs
+   id="defs5" /><sodipodi:namedview
+   id="namedview5"
+   pagecolor="#ffffff"
+   bordercolor="#000000"
+   borderopacity="0.25"
+   inkscape:showpageshadow="2"
+   inkscape:pageopacity="0.0"
+   inkscape:pagecheckerboard="0"
+   inkscape:deskcolor="#d1d1d1"
+   inkscape:zoom="45.254834"
+   inkscape:cx="4.3862717"
+   inkscape:cy="6.7064659"
+   inkscape:window-width="3440"
+   inkscape:window-height="1412"
+   inkscape:window-x="0"
+   inkscape:window-y="0"
+   inkscape:window-maximized="1"
+   inkscape:current-layer="Layer_1-2" />
+ <title
+   id="title1">
+  groq_logo
+ </title>
+ <g
+   id="Layer_2">
+  <g
+   id="Layer_1-2">
+   
+   
+   
+   
+   
+   
+  <path
+   d="m 8.0008319,32.75 c -2.8319173,0 -5.1355414,2.303624 -5.1355414,5.135251 0,2.831629 2.3036241,5.135544 5.1355414,5.135544 H 9.6897513 V 41.094893 H 8.0008319 c -1.7698402,0 -3.2096409,-1.439801 -3.2096409,-3.209642 0,-1.76984 1.4398007,-3.20964 3.2096409,-3.20964 1.7698398,0 3.2171561,1.4398 3.2171561,3.20964 v 0 4.729497 0 c 0,1.75828 -1.4317103,3.190277 -3.185655,3.208775 -0.839258,-0.0069 -1.6418121,-0.3442 -2.2336864,-0.939252 l -1.3617711,1.36177 c 0.9438765,0.948789 2.222704,1.488641 3.5607781,1.503093 V 47.75 c 0.011588,0 0.02312,0 0.034398,0 h 0.036123 v -8.66e-4 c 2.7914564,-0.03785 5.0517294,-2.313451 5.0647354,-5.111267 l 0.0018,-4.878619 C 13.06763,34.985997 10.790307,32.75 8.0008732,32.75 Z"
+   id="path3"
+   style="fill:#f55036;fill-opacity:1;stroke-width:0.289001">
+   </path></g>
+ </g>
+<metadata
+   id="metadata5"><rdf:RDF><cc:Work
+       rdf:about=""><dc:title>
+  groq_logo
+ </dc:title></cc:Work></rdf:RDF></metadata></svg>
