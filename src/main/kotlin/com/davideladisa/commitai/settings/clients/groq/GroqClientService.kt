@@ -69,4 +69,17 @@ class GroqClientService(private val cs: CoroutineScope) : LLMClientService<GroqC
         }
     }
 
+    fun clearToken(client: GroqClientConfiguration) {
+        cs.launch(Dispatchers.Default) {
+            try {
+                PasswordSafe.instance.setPassword(getCredentialAttributes(client.id), null)
+                client.tokenIsStored = false
+                client.token = null
+                sendNotification(Notification(title = "Token cleared", message = "Groq token has been cleared."))
+            } catch (e: Exception) {
+                sendNotification(Notification.unableToSaveToken(e.message))
+            }
+        }
+    }
+
 }

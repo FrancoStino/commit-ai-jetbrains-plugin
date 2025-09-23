@@ -46,6 +46,10 @@ class GroqClientPanel(private val clientConfiguration: GroqClientConfiguration) 
                 .resizableColumn()
                 .align(Align.FILL)
                 .comment("You can get your token at https://console.groq.com/keys", 50)
+            button("Reset Token") {
+                GroqClientService.getInstance().clearToken(clientConfiguration)
+            }
+                .align(AlignX.RIGHT)
         }
     }
 }

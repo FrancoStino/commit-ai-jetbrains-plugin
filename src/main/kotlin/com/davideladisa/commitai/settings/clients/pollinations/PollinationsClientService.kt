@@ -4,6 +4,8 @@ import com.davideladisa.commitai.AICommitsUtils.getCredentialAttributes
 import com.davideladisa.commitai.AICommitsUtils.retrieveToken
 import com.davideladisa.commitai.notifications.Notification
 import com.davideladisa.commitai.notifications.sendNotification
+import com.davideladisa.commitai.settings.AppSettings2
+import com.davideladisa.commitai.settings.clients.LLMClientConfiguration
 import com.davideladisa.commitai.settings.clients.LLMClientService
 import com.intellij.ide.passwordSafe.PasswordSafe
 import com.intellij.openapi.components.Service
@@ -65,6 +67,19 @@ class PollinationsClientService(private val cs: CoroutineScope) : LLMClientServi
             try {
                 PasswordSafe.instance.setPassword(getCredentialAttributes(client.id), token)
                 client.tokenIsStored = true
+            } catch (e: Exception) {
+                sendNotification(Notification.unableToSaveToken(e.message))
+            }
+        }
+    }
+
+    fun clearToken(client: PollinationsClientConfiguration) {
+        cs.launch(Dispatchers.Default) {
+            try {
+                PasswordSafe.instance.setPassword(getCredentialAttributes(client.id), null)
+                client.tokenIsStored = false
+                client.token = null
+                sendNotification(Notification(title = "Token cleared", message = "Pollinations token has been cleared."))
             } catch (e: Exception) {
                 sendNotification(Notification.unableToSaveToken(e.message))
             }
