@@ -34,11 +34,11 @@
         Settings > Commit AI</p>
         <h3>Troubleshooting</h3>
         <p>We'd love to hear from you if you have any issues or feature requests. Please report them
-        <a href="https://github.com/FrancoStino/commit-ai-jetbrains-plugin/28558-commit-ai--free/28558-commit-ai--free/issues">here</a>.</p>
+        <a href="https://github.com/FrancoStino/commit-ai-jetbrains-plugin/28558-commit-ai/28558-commit-ai/issues">here</a>.</p>
         <h3>Demo</h3>
         <p>
             <img
-            src="https://raw.githubusercontent.com/FrancoStino/commit-ai-jetbrains-plugin/28558-commit-ai--free/dc45b4533e432ddde531c1a13bc9397c17d240ad/screenshots/plugin.gif"
+            src="https://raw.githubusercontent.com/FrancoStino/commit-ai-jetbrains-plugin/28558-commit-ai/dc45b4533e432ddde531c1a13bc9397c17d240ad/screenshots/plugin.gif"
             border="0"
             width="600"
             alt="Demo.gif"/>
@@ -47,8 +47,8 @@
         <ul>
             <li><a href="https://github.com/FrancoStino/commit-ai-jetbrains-plugin">Star the repository</a></li>
             <li><a href="https://ko-fi.com/davideladisa">Buy me a coffee</a></li>
-            <li><a href="https://plugins.jetbrains.com/plugin/28558-commit-ai--free/">Rate the plugin</a></li>
-            <li><a href="https://plugins.jetbrains.com/plugin/28558-commit-ai--free/">Share the plugin</a></li>
+            <li><a href="https://plugins.jetbrains.com/plugin/28558-commit-ai/">Rate the plugin</a></li>
+            <li><a href="https://plugins.jetbrains.com/plugin/28558-commit-ai/">Share the plugin</a></li>
             <li><a href="https://github.com/sponsors/FrancoStino">Sponsor me</a></li>
         </ul>
     ]]></description>

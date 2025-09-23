@@ -34,7 +34,7 @@ enum class DefaultPrompts(val prompt: Prompt) {
     ),
 
     // author: ljgonzalez1
-    // source: https://github.com/FrancoStino/commit-ai-jetbrains-plugin/28558-commit-ai--free/discussions/18#discussioncomment-10718381
+    // source: https://github.com/FrancoStino/commit-ai-jetbrains-plugin/28558-commit-ai/discussions/18#discussioncomment-10718381
     // ✨ feat(conditions): add HpComparisonType enum and ICondition interface for unit comparison logic
     EMOJI(
         Prompt(
