@@ -38,12 +38,17 @@ dependencies {
 intellijPlatform {
     pluginConfiguration {
         ideaVersion {
-            sinceBuild = "251"
+            sinceBuild = "241.18034"
         }
 
         changeNotes = """
             Initial version
         """.trimIndent()
+    }
+    pluginVerification {
+        ides {
+            recommended()
+        }
     }
 }
 
