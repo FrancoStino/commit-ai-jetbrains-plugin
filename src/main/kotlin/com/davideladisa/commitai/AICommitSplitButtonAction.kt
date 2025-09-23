@@ -21,11 +21,6 @@ class AICommitSplitButtonAction : SplitButtonAction(object : ActionGroup() {
         val actions = mutableListOf<AnAction>()
         if (configurations.isNotEmpty()) {
             actions.add(configurations.first())
-
-            if (configurations.size > 1) {
-                actions.add(Separator.getInstance())
-            }
-
             actions.addAll(configurations.drop(1))
         }
 

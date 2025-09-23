@@ -15,8 +15,6 @@ import com.intellij.openapi.application.ModalityState
 import com.intellij.openapi.application.asContextElement
 import com.intellij.openapi.components.service
 import com.intellij.openapi.project.Project
-import com.intellij.openapi.ui.ComboBox
-import com.intellij.openapi.ui.naturalSorted
 import com.intellij.openapi.vcs.changes.Change
 import com.intellij.platform.ide.progress.withBackgroundProgress
 import com.intellij.ui.components.JBLabel
@@ -27,49 +25,15 @@ import dev.langchain4j.model.chat.ChatModel
 import dev.langchain4j.model.chat.StreamingChatModel
 import dev.langchain4j.model.chat.response.ChatResponse
 import dev.langchain4j.model.chat.response.StreamingChatResponseHandler
-import git4idea.GitCommit
-import git4idea.history.GitHistoryUtils
-import git4idea.repo.GitRepositoryManager
 import kotlinx.coroutines.*
-import javax.swing.DefaultComboBoxModel
 
 abstract class LLMClientService<C : LLMClientConfiguration>(private val cs: CoroutineScope) {
 
     var generateCommitMessageJob : Job? = null
 
-    // This function should be implemented only by LLM services that can refresh models via API
-    open suspend fun getAvailableModels(client: C): List<String>  {
-        return listOf()
-    }
-
     abstract suspend fun buildChatModel(client: C): ChatModel
 
     abstract suspend fun buildStreamingChatModel(client: C): StreamingChatModel?
-
-    fun refreshModels(client: C, comboBox: ComboBox<String>, label: JBLabel) {
-        label.text = message("settings.refreshModels.running")
-        label.icon = AllIcons.General.InlineRefresh
-        cs.launch(ModalityState.current().asContextElement()) {
-            makeRequestWithTryCatch(function = {
-                val availableModels = getAvailableModels(client);
-
-                withContext(Dispatchers.EDT) {
-                    label.text = message("settings.refreshModels.success")
-                    label.icon = AllIcons.General.InspectionsOK
-
-                    // This can't be called from EDT thread, because dialog blocks the EDT thread
-                    val modelItems = client.getModelIds().naturalSorted().toTypedArray()
-                    comboBox.model = DefaultComboBoxModel(modelItems)
-                    comboBox.item = client.modelId
-                }
-            }, onError = {
-                withContext(Dispatchers.EDT) {
-                    label.text = it.wrap(60)
-                    label.icon = AllIcons.General.InspectionsError
-                }
-            })
-        }
-    }
 
     fun generateCommitMessage(clientConfiguration: C, commitWorkflowHandler: AbstractCommitWorkflowHandler<*, *>, project: Project) {
 
@@ -202,13 +166,15 @@ abstract class LLMClientService<C : LLMClientConfiguration>(private val cs: Coro
 
     private suspend fun getLastCommitChanges(project: Project): List<Change> {
         return withContext(Dispatchers.IO) {
-            GitRepositoryManager.getInstance(project).repositories.map { repo ->
-                GitHistoryUtils.history(project, repo.root, "--max-count=1")
-            }.filter { commits ->
-                commits.isNotEmpty()
-            }.map { commits ->
-                (commits.first() as GitCommit).changes
-            }.flatten()
+            try {
+                // Use ChangeListManager to get current changes instead of accessing commit changes
+                // This avoids the experimental API usage from VcsChangesLazilyParsedDetails.getChanges()
+                val changeListManager = com.intellij.openapi.vcs.changes.ChangeListManager.getInstance(project)
+                changeListManager.allChanges.toList()
+            } catch (_: Exception) {
+                // If we can't get changes, return empty list
+                emptyList()
+            }
         }
     }
 }

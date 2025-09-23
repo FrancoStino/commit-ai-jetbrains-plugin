@@ -1,15 +1,15 @@
 <div align="center">
-    <a href="https://plugins.jetbrains.com/plugin/">
+    <a href="https://plugins.jetbrains.com/plugin/28558-commit-ai--free/">
         <img src="./src/main/resources/META-INF/commitAi.svg" alt="logo" width="300"/>
     </a>
 
 <h1 align="center">AI Commits</h1>
 <p align="center">AI Commits for IntelliJ based IDEs/Android Studio.</p>
 
-[version-badge]: https://img.shields.io/jetbrains/plugin/v/?style=for-the-badge
-[installs-badge]: https://img.shields.io/jetbrains/plugin/d/?style=for-the-badge&color=red
-[rating-badge]: https://img.shields.io/jetbrains/plugin/r/stars/?style=for-the-badge
-[marketplace-url]: https://plugins.jetbrains.com/plugin/
+[version-badge]: https://img.shields.io/jetbrains/plugin/28558-commit-ai--free/v/?style=for-the-badge
+[installs-badge]: https://img.shields.io/jetbrains/plugin/28558-commit-ai--free/d/?style=for-the-badge&color=red
+[rating-badge]: https://img.shields.io/jetbrains/plugin/28558-commit-ai--free/r/stars/?style=for-the-badge
+[marketplace-url]: https://plugins.jetbrains.com/plugin/28558-commit-ai--free/
 
 
 
@@ -76,7 +76,7 @@ for "AI Commits"</kbd> > <kbd>Install Plugin</kbd>  > <kbd>Restart IntelliJ IDEA
 
 ### Installation from zip
 
-1. Download zip from [releases](https://github.com/FrancoStino/commit-ai-jetbrains-plugin/releases)
+1. Download zip from [releases](https://github.com/FrancoStino/commit-ai-jetbrains-plugin/28558-commit-ai--free/releases)
 2. Import to IntelliJ: <kbd>Settings</kbd> > <kbd>Plugins</kbd> > <kbd>Cog</kbd> > <kbd>Install plugin from
    disk...</kbd>
 3. Set LLM client configuration in plugin's settings: <kbd>Settings</kbd> > <kbd>Tools</kbd> > <kbd>AI Commits</kbd>
@@ -91,8 +91,8 @@ for "AI Commits"</kbd> > <kbd>Install Plugin</kbd>  > <kbd>Restart IntelliJ IDEA
 
 * Star the repository
 * [Buy me a coffee](https://ko-fi.com/blarc)
-* [Rate the plugin](https://plugins.jetbrains.com/plugin/)
-* [Share the plugin](https://plugins.jetbrains.com/plugin/)
+* [Rate the plugin](https://plugins.jetbrains.com/plugin/28558-commit-ai--free/)
+* [Share the plugin](https://plugins.jetbrains.com/plugin/28558-commit-ai--free/)
 * [Sponsor me](https://github.com/sponsors/FrancoStino)
 
 ## Contributing
