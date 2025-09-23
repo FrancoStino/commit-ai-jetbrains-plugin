@@ -48,7 +48,7 @@ intellijPlatform {
 
     pluginVerification {
         ides {
-            intellijIdeaCommunity("2025.1.4")
+            recommended()
         }
     }
 }

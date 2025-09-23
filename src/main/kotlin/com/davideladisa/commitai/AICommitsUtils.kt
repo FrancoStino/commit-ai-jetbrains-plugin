@@ -195,11 +195,7 @@ object AICommitsUtils {
     }
 //
     fun getCredentialAttributes(title: String): CredentialAttributes {
-        return CredentialAttributes(
-            title,
-            null,
-            false
-        )
+        return CredentialAttributes(title)
     }
 
     fun getIDELocale(): Locale {
@@ -210,7 +206,7 @@ object AICommitsUtils {
         return try {
             Class.forName(className)
             true
-        } catch (e: ClassNotFoundException) {
+        } catch (_: ClassNotFoundException) {
             false
         }
     }
