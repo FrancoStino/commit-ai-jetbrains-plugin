@@ -39,6 +39,7 @@ intellijPlatform {
     pluginConfiguration {
         ideaVersion {
             sinceBuild = "251"
+            untilBuild = "251.*"  // Limit to 2025.1.x versions
         }
 
         changeNotes = """
