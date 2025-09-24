@@ -36,16 +36,6 @@ class AICommitSplitButtonAction : SplitButtonAction(object : ActionGroup() {
 
         return actions.toTypedArray()
     }
-}), DumbAware {
-
-    override fun actionPerformed(e: AnActionEvent) {
-        val project = e.project ?: return
-        val projectSettings = project.service<ProjectSettings>()
-        val selectedId = projectSettings.splitButtonActionSelectedLLMClientId ?: AppSettings2.instance.activeLlmClientId
-        val selectedConfig = AppSettings2.instance.llmClientConfigurations
-            .find { it?.id == selectedId }
-        selectedConfig?.actionPerformed(e)
-    }
 
     override fun update(e: AnActionEvent) {
         val project = e.project ?: return
@@ -60,8 +50,16 @@ class AICommitSplitButtonAction : SplitButtonAction(object : ActionGroup() {
             e.presentation.isEnabled = false
         }
     }
+}), DumbAware {
 
-    override fun getActionUpdateThread(): ActionUpdateThread {
-        return ActionUpdateThread.EDT
+    override fun actionPerformed(e: AnActionEvent) {
+        val project = e.project ?: return
+        val projectSettings = project.service<ProjectSettings>()
+        val selectedId = projectSettings.splitButtonActionSelectedLLMClientId ?: AppSettings2.instance.activeLlmClientId
+        val selectedConfig = AppSettings2.instance.llmClientConfigurations
+            .find { it?.id == selectedId }
+        selectedConfig?.execute(e)
     }
+
+
 }

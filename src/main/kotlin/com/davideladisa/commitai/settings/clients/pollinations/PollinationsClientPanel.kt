@@ -8,23 +8,10 @@ import com.intellij.ui.components.JBPasswordField
 import com.intellij.ui.components.JBTextField
 import com.intellij.ui.dsl.builder.*
 import com.intellij.ui.layout.ValidationInfoBuilder
-import com.davideladisa.commitai.settings.AppSettings
-import com.davideladisa.commitai.AICommitsUtils.getCredentialAttributes
-import com.davideladisa.commitai.notifications.Notification
-import com.davideladisa.commitai.notifications.sendNotification
-import com.intellij.notification.NotificationType
-import java.awt.Color
-import javax.swing.DefaultComboBoxModel
-import javax.swing.DefaultListCellRenderer
-import javax.swing.JLabel
-import javax.swing.JList
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.Dispatchers
 
 class PollinationsClientPanel(private val clientConfiguration: PollinationsClientConfiguration) : LLMClientPanel(clientConfiguration) {
     private val tokenPasswordField = JBPasswordField()
     private val topPTextField = JBTextField()
-    private val seedModels = setOf("gemini", "gemini-search", "openai-large", "openai-reasoning", "evil", "unity")
 
     override fun create() = panel {
         hostRow(clientConfiguration::host.toNullableProperty())
@@ -34,43 +21,6 @@ class PollinationsClientPanel(private val clientConfiguration: PollinationsClien
         temperatureRow(ValidationInfoBuilder::temperatureValidNullable)
         topPDoubleRow(topPTextField, clientConfiguration::topP.toNullableProperty())
         verifyRow()
-    }.also {
-        modelComboBox.renderer = object : DefaultListCellRenderer() {
-            override fun getListCellRendererComponent(
-                list: JList<*>?,
-                value: Any?,
-                index: Int,
-                isSelected: Boolean,
-                cellHasFocus: Boolean
-            ): java.awt.Component {
-                val component = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus) as JLabel
-                if (value is String && seedModels.contains(value) && !clientConfiguration.tokenIsStored && clientConfiguration.token.isNullOrEmpty()) {
-                    component.foreground = Color.GRAY
-                }
-                return component
-            }
-        }
-
-        val originalModel = modelComboBox.model
-        modelComboBox.model = object : DefaultComboBoxModel<String>() {
-            init {
-                for (i in 0 until originalModel.size) {
-                    addElement(originalModel.getElementAt(i))
-                }
-            }
-
-            override fun setSelectedItem(anItem: Any?) {
-                if (anItem is String && seedModels.contains(anItem) && !clientConfiguration.tokenIsStored && clientConfiguration.token.isNullOrEmpty()) {
-                    // Select the first available model instead
-                    val firstAvailable = (0 until size).map { getElementAt(it) }.firstOrNull { item ->
-                        item !is String || !seedModels.contains(item) || clientConfiguration.tokenIsStored || !clientConfiguration.token.isNullOrEmpty()
-                    }
-                    super.setSelectedItem(firstAvailable)
-                    return
-                }
-                super.setSelectedItem(anItem)
-            }
-        }
     }
 
     override fun verifyConfiguration() {
