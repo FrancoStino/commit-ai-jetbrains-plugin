@@ -1,21 +1,15 @@
-<div style="text-align: center;">
+<div align="center">
     <a href="https://plugins.jetbrains.com/plugin/28558-commit-ai/">
-        <img src="./src/main/resources/META-INF/commitAi.svg" alt="logo" width="300"/>
+        <img src="./src/main/resources/META-INF/pluginIcon.svg" alt="logo" width="300"/>
     </a>
 
-<h1 style="text-align: center;">Commit AI</h1>
-<p style="text-align: center;">Commit AI for IntelliJ based IDEs/Android Studio.</p>
+<h1 align="center">Commit AI</h1>
+<p align="center">Commit AI for IntelliJ based IDEs/Android Studio.</p>
 
-[version-badge]: https://img.shields.io/jetbrains/plugin/28558-commit-ai/v/?style=for-the-badge
-[installs-badge]: https://img.shields.io/jetbrains/plugin/28558-commit-ai/d/?style=for-the-badge&color=red
-[rating-badge]: https://img.shields.io/jetbrains/plugin/28558-commit-ai/r/stars/?style=for-the-badge
-[marketplace-url]: https://plugins.jetbrains.com/plugin/28558-commit-ai/
+[![Version](https://img.shields.io/jetbrains/plugin/v/28558-commit-ai?style=for-the-badge&label=Version)](https://plugins.jetbrains.com/plugin/28558-commit-ai/)
+[![Installs](https://img.shields.io/jetbrains/plugin/d/28558-commit-ai?style=for-the-badge)](https://plugins.jetbrains.com/plugin/28558-commit-ai/)
+[![Rating](https://img.shields.io/jetbrains/plugin/r/stars/28558-commit-ai?style=for-the-badge)](https://plugins.jetbrains.com/plugin/28558-commit-ai/)
 
-
-
-[![Version][version-badge]][marketplace-url]
-[![Installs][installs-badge]][marketplace-url]
-[![Rating][rating-badge]][marketplace-url]
 </div>
 <br>
 

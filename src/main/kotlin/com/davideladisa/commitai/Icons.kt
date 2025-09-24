@@ -17,7 +17,7 @@ object Icons {
         }
     }
 
-    val AI_COMMITS = AICommitsIcon("/META-INF/commitAi.svg", null)
+    val AI_COMMITS = AICommitsIcon("/META-INF/pluginIcon.svg", null)
     val POLLINATIONS = AICommitsIcon("/icons/pollinations.svg", null)
     val GROQ = AICommitsIcon("/icons/groq.svg", null)
 
