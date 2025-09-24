@@ -6,6 +6,31 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+#  (2025-09-24)
+
+
+### Bug Fixes
+
+* update CHANGELOG to reflect latest release details (issue [#1](https://github.com/FrancoStino/commit-ai-jetbrains-plugin/issues/1)) ([4dab5f4](https://github.com/FrancoStino/commit-ai-jetbrains-plugin/commit/4dab5f4fa50388d947f0c4675076996ddfc43c20))
+
+
+### Features
+
+* Add prereleased release type (master) ([ea533a9](https://github.com/FrancoStino/commit-ai-jetbrains-plugin/commit/ea533a9a35004db32718f8a34a6b35cd8665de58))
+* **ci:** add changelog auto-update workflow and conditional build logic ([488422e](https://github.com/FrancoStino/commit-ai-jetbrains-plugin/commit/488422e5d6f4a43a711b4a673d5b7a29ebc06c41))
+* **commit:** enhance commit flow with detailed validation and improved change retrieval ([5f36b05](https://github.com/FrancoStino/commit-ai-jetbrains-plugin/commit/5f36b05854df6f999bf2ae0d08f525b4b8c419a7))
+* Enhance LLM config selection in split button (develop) ([adf3a70](https://github.com/FrancoStino/commit-ai-jetbrains-plugin/commit/adf3a705cdea7749048ec2486772df1de8d5ddd0))
+* Remove release-please workflow (main) ([1e3f277](https://github.com/FrancoStino/commit-ai-jetbrains-plugin/commit/1e3f2777f9cfe723c7854bca0a79182a92044bff))
+* Update plugin and dependencies (develop) ([7fd3f94](https://github.com/FrancoStino/commit-ai-jetbrains-plugin/commit/7fd3f94bd0dde3779c10a812de439ee5a6e9e91a))
+* Update plugin icon and README (develop) ([6041b55](https://github.com/FrancoStino/commit-ai-jetbrains-plugin/commit/6041b55ab10676e72bd2c2702855898e78f44b1e))
+
+
+### Reverts
+
+* Revert "Update GitHub workflow to rename Plugin Verification task to `verifyPlugin`" ([23f5a79](https://github.com/FrancoStino/commit-ai-jetbrains-plugin/commit/23f5a795ebe545fde9d78b29e21786abe44cfb85))
+
+
+
 
 ## [1.1.0] - 2025-09-24
 
