@@ -79,10 +79,11 @@ for "Commit AI"</kbd> > <kbd>Install Plugin</kbd>  > <kbd>Restart IntelliJ IDEA<
 ## Support
 
 * Star the repository
-* [Buy me a coffee](https://ko-fi.com/blarc)
 * [Rate the plugin](https://plugins.jetbrains.com/plugin/28558-commit-ai/)
 * [Share the plugin](https://plugins.jetbrains.com/plugin/28558-commit-ai/)
 * [Sponsor me](https://github.com/sponsors/FrancoStino)
+
+<a href='https://ko-fi.com/R6R81LO506' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://storage.ko-fi.com/cdn/kofi6.png?v=6' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
 
 ## Contributing
 
