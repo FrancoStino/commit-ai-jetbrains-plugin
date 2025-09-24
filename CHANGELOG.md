@@ -11,6 +11,39 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Bug Fixes
 
+* Restore commit icon in split button ([483a0b5](https://github.com/FrancoStino/commit-ai-jetbrains-plugin/commit/483a0b5f3e324e0f937a91dd3821f9bcbbc4ae7a))
+* update pluginVersion to 1.2.0 in gradle.properties (develop) ([3d0f34b](https://github.com/FrancoStino/commit-ai-jetbrains-plugin/commit/3d0f34bff696d58e3de547c292f195f4d1b51f7d))
+* Use execute method to avoid OverrideOnly API usage violation ([bfce48b](https://github.com/FrancoStino/commit-ai-jetbrains-plugin/commit/bfce48b47b00f8fd4a293406e57cc484daf41471))
+
+
+### Features
+
+* add seed model validation to pollinations client (issue #XYZ) ([2de62b4](https://github.com/FrancoStino/commit-ai-jetbrains-plugin/commit/2de62b4904c2091d4859194055a73f4cb4ee1795))
+* bump plugin version to 1.2.0 (develop) ([21b90d0](https://github.com/FrancoStino/commit-ai-jetbrains-plugin/commit/21b90d021e97349e6c54465d7c83fe5bfedc6118))
+
+
+
+## [1.1.1](https://github.com/FrancoStino/commit-ai-jetbrains-plugin/compare/1.1.0...1.1.1) (2025-09-24)
+
+
+### Bug Fixes
+
+* update CHANGELOG to reflect latest release details (issue [#1](https://github.com/FrancoStino/commit-ai-jetbrains-plugin/issues/1)) ([4dab5f4](https://github.com/FrancoStino/commit-ai-jetbrains-plugin/commit/4dab5f4fa50388d947f0c4675076996ddfc43c20))
+
+
+### Features
+
+* **ci:** add changelog auto-update workflow and conditional build logic ([488422e](https://github.com/FrancoStino/commit-ai-jetbrains-plugin/commit/488422e5d6f4a43a711b4a673d5b7a29ebc06c41))
+* Enhance LLM config selection in split button (develop) ([adf3a70](https://github.com/FrancoStino/commit-ai-jetbrains-plugin/commit/adf3a705cdea7749048ec2486772df1de8d5ddd0))
+* Update plugin icon and README (develop) ([6041b55](https://github.com/FrancoStino/commit-ai-jetbrains-plugin/commit/6041b55ab10676e72bd2c2702855898e78f44b1e))
+
+
+
+#  (2025-09-24)
+
+
+### Bug Fixes
+
 * update CHANGELOG to reflect latest release details (issue [#1](https://github.com/FrancoStino/commit-ai-jetbrains-plugin/issues/1)) ([4dab5f4](https://github.com/FrancoStino/commit-ai-jetbrains-plugin/commit/4dab5f4fa50388d947f0c4675076996ddfc43c20))
 
 
