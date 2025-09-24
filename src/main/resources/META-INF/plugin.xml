@@ -118,7 +118,7 @@
         <!-- Button action with split dropdown -->
         <action
                 id="AICommitSplitButton"
-                icon="/META-INF/commitAi.svg"
+                icon="/META-INF/pluginIcon.svg"
                 class="com.davideladisa.commitai.AICommitSplitButtonAction">
 
             <add-to-group group-id="Vcs.MessageActionGroup" anchor="last"/>
