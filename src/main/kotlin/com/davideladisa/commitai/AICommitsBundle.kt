@@ -36,7 +36,7 @@ object AICommitsBundle : DynamicBundle(BUNDLE) {
     }
 
     fun openRepository() {
-        BrowserLauncher.instance.open("https://github.com/FrancoStino/commit-ai-jetbrains-plugin");
+        BrowserLauncher.instance.open("https://github.com/FrancoStino/commit-ai-jetbrains-plugin")
     }
 
     fun plugin() = PluginManagerCore.getPlugin(PluginId.getId("com.davideladisa.commit-ai"))

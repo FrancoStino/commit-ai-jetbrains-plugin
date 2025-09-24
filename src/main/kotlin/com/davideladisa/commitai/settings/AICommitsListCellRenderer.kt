@@ -30,7 +30,7 @@ class AICommitsListCellRenderer : DefaultListCellRenderer() {
 
             // This is used for combo box in settings dialog
             is LLMClientConfiguration -> {
-                text = value.name
+                text = "${value.getClientName()}: ${value.modelId}"
                 icon = value.getClientIcon()
             }
         }
