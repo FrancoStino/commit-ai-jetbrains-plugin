@@ -58,11 +58,11 @@ class LLMClientTable {
     )
 
     private fun fetchSortedLlmClients() = AppSettings2.instance.llmClientConfigurations.filterNotNull().sortedWith(
-        compareBy({ it.getClientName() }, { it.name })
+        compareBy({ if (it.getClientName() == "Pollinations") 0 else 1 }, { it.name })
     )
 
     private fun updateLlmClients(newClients: List<LLMClientConfiguration>) {
-        llmClients = newClients.filterNotNull().sortedWith(compareBy({ it.getClientName() }, { it.name }))
+        llmClients = newClients.filterNotNull().sortedWith(compareBy({ if (it.getClientName() == "Pollinations") 0 else 1 }, { it.name }))
         refreshTableModel()
     }
 
@@ -143,7 +143,7 @@ class LLMClientTable {
                 listOf(
                     PollinationsClientConfiguration(),
                     GroqClientConfiguration()
-                ).sortedBy { it.getClientName() }
+                ).sortedBy { if (it.getClientName() == "Pollinations") 0 else 1 }
             } else {
                 listOf(newLLMClientConfiguration)
             }
