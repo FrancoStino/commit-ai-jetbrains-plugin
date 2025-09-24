@@ -63,7 +63,7 @@ abstract class LLMClientConfiguration(
         return name.compareTo(other.name)
     }
 
-    override fun actionPerformed(e: AnActionEvent) {
+    fun execute(e: AnActionEvent) {
         val project = e.project ?: return
 
         val generateCommitMessageJob = getGenerateCommitMessageJob()
@@ -83,6 +83,10 @@ abstract class LLMClientConfiguration(
         projectSettings.splitButtonActionSelectedLLMClientId = this.id
 
         generateCommitMessage(commitWorkflowHandler, project)
+    }
+
+    override fun actionPerformed(e: AnActionEvent) {
+        execute(e)
     }
 
     override fun update(e: AnActionEvent) {

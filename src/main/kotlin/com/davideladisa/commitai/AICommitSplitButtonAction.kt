@@ -44,7 +44,7 @@ class AICommitSplitButtonAction : SplitButtonAction(object : ActionGroup() {
         val selectedId = projectSettings.splitButtonActionSelectedLLMClientId ?: AppSettings2.instance.activeLlmClientId
         val selectedConfig = AppSettings2.instance.llmClientConfigurations
             .find { it?.id == selectedId }
-        selectedConfig?.actionPerformed(e)
+        selectedConfig?.execute(e)
     }
 
     override fun update(e: AnActionEvent) {
