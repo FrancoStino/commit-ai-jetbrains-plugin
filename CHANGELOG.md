@@ -6,6 +6,27 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+#  (2025-09-25)
+
+
+
+# [1.2.0](https://github.com/FrancoStino/commit-ai-jetbrains-plugin/compare/1.1.1...1.2.0) (2025-09-24)
+
+
+### Bug Fixes
+
+* Restore commit icon in split button ([483a0b5](https://github.com/FrancoStino/commit-ai-jetbrains-plugin/commit/483a0b5f3e324e0f937a91dd3821f9bcbbc4ae7a))
+* update pluginVersion to 1.2.0 in gradle.properties (develop) ([3d0f34b](https://github.com/FrancoStino/commit-ai-jetbrains-plugin/commit/3d0f34bff696d58e3de547c292f195f4d1b51f7d))
+* Use execute method to avoid OverrideOnly API usage violation ([bfce48b](https://github.com/FrancoStino/commit-ai-jetbrains-plugin/commit/bfce48b47b00f8fd4a293406e57cc484daf41471))
+
+
+### Features
+
+* add seed model validation to pollinations client (issue #XYZ) ([2de62b4](https://github.com/FrancoStino/commit-ai-jetbrains-plugin/commit/2de62b4904c2091d4859194055a73f4cb4ee1795))
+* bump plugin version to 1.2.0 (develop) ([21b90d0](https://github.com/FrancoStino/commit-ai-jetbrains-plugin/commit/21b90d021e97349e6c54465d7c83fe5bfedc6118))
+
+
+
 #  (2025-09-24)
 
 
