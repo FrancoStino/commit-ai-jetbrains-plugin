@@ -1,5 +1,6 @@
 package com.davideladisa.commitai.settings.clients.groq
 
+import com.davideladisa.commitai.AICommitsBundle
 import com.davideladisa.commitai.AICommitsBundle.message
 import com.davideladisa.commitai.emptyText
 import com.davideladisa.commitai.settings.clients.LLMClientPanel
@@ -45,10 +46,13 @@ class GroqClientPanel(private val clientConfiguration: GroqClientConfiguration) 
                 .emptyText(if (clientConfiguration.tokenIsStored) message("settings.llmClient.token.stored") else "gsk_...")
                 .resizableColumn()
                 .align(Align.FILL)
-                .comment("You can get your token at https://console.groq.com/keys", 50)
             button("Reset Token") {
                 GroqClientService.getInstance().clearToken(clientConfiguration)
             }
+                .align(AlignX.RIGHT)
+        }
+        row {
+            browserLink("Get your token", AICommitsBundle.URL_GROQ_KEYS.toString())
                 .align(AlignX.RIGHT)
         }
     }
