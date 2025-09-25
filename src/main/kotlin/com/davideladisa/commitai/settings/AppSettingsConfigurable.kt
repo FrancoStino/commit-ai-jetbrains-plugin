@@ -77,6 +77,11 @@ class AppSettingsConfigurable(val project: Project, cs: CoroutineScope) : BoundC
             cell(llmClientToolbarDecorator.createPanel())
                 .align(Align.FILL)
         }.resizableRow()
+        
+        row {
+            browserLink(message("settings.more-llm-clients"), AICommitsBundle.URL_LLM_CLIENTS_DISCUSSION.toString())
+                .align(AlignX.RIGHT)
+        }
 
         row {
             label(message("settings.locale")).widthGroup("labelPrompt")

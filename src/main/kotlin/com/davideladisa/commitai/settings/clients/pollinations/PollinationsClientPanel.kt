@@ -1,5 +1,6 @@
 package com.davideladisa.commitai.settings.clients.pollinations
 
+import com.davideladisa.commitai.AICommitsBundle
 import com.davideladisa.commitai.AICommitsBundle.message
 import com.davideladisa.commitai.emptyText
 import com.davideladisa.commitai.settings.clients.LLMClientPanel
@@ -49,6 +50,10 @@ class PollinationsClientPanel(private val clientConfiguration: PollinationsClien
             button("Reset Token") {
                 PollinationsClientService.getInstance().clearToken(clientConfiguration)
             }
+                .align(AlignX.RIGHT)
+        }
+        row {
+            browserLink("Get your token", AICommitsBundle.URL_POLLINATIONS_AUTH.toString())
                 .align(AlignX.RIGHT)
         }
     }
