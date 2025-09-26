@@ -6,6 +6,21 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+#  (2025-09-26)
+
+
+### Features
+
+* Add free/freemium labels to LLM client list items (develop) ([93141af](https://github.com/FrancoStino/commit-ai-jetbrains-plugin/commit/93141afd1a3900ec0b85b8e7f1a3a54dc069529d))
+* **build:** add IntelliJ tasks plugin to bundled dependencies ([f4f8b2d](https://github.com/FrancoStino/commit-ai-jetbrains-plugin/commit/f4f8b2d33d25bdd821730f2206bc9900a61c9ebc))
+* **settings/prompts:** enhance prompt configuration and editing ([926b65e](https://github.com/FrancoStino/commit-ai-jetbrains-plugin/commit/926b65e0e18365cd70a82d03f8a20d929d8b375b))
+
+
+
+## [1.2.1](https://github.com/FrancoStino/commit-ai-jetbrains-plugin/compare/1.2.0...1.2.1) (2025-09-25)
+
+
+
 #  (2025-09-25)
 
 
