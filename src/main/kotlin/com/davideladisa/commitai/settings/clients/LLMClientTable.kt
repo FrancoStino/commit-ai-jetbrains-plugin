@@ -17,6 +17,8 @@ import com.intellij.ui.table.TableView
 import com.intellij.util.containers.ContainerUtil
 import com.intellij.util.ui.JBUI
 import com.intellij.util.ui.ListTableModel
+import com.intellij.util.ui.UIUtil
+import java.awt.Color
 import java.awt.Component
 import java.awt.Dimension
 import java.awt.event.MouseAdapter
@@ -135,9 +137,10 @@ class LLMClientTable {
         } else {
             llmClient.panel().create()
         }.apply {
-            isResizable = false
-            // Add 200 so there is space for verification message.
-            minimumSize = Dimension(max(size.width, 500), max(size.height, 300) + 200)
+            isResizable = true
+            // Increased size for better usability and space for verification messages
+            preferredSize = Dimension(800, 600)
+            minimumSize = Dimension(700, 500)
         }
 
         private fun getLlmClients(newLLMClientConfiguration: LLMClientConfiguration?): List<LLMClientConfiguration> {
@@ -162,6 +165,8 @@ class LLMClientTable {
                 }
 
                 val cardsList = JBList(llmClientConfigurations).apply {
+                    // Set darker background for better separation
+                    background = UIUtil.getPanelBackground().darker()
                     val descriptor = object : ListItemDescriptorAdapter<LLMClientConfiguration>() {
                         override fun getTextFor(value: LLMClientConfiguration) = when {
                             value.getClientName() == "Pollinations" && newLlmClientConfiguration == null -> "${value.getClientName()} (Free)"
