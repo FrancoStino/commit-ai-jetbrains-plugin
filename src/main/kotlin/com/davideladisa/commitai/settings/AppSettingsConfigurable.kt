@@ -35,19 +35,28 @@ class AppSettingsConfigurable(val project: Project, cs: CoroutineScope) : BoundC
     override fun createPanel() = panel {
 
         row {
-            label(message("settings.llmClient")).widthGroup("labelPrompt")
-            llmClientConfigurationComboBox = comboBox(AppSettings2.instance.llmClientConfigurations.filterNotNull().sortedBy { it.name }, CommitAIListCellRenderer())
-                .bindItem(getter = { projectSettings.getActiveLLMClientConfiguration() }, setter = { setActiveLLMClientConfiguration(it) })
-                .widthGroup("input")
-                .component
+            label(message("settings.llmClient"))
+                .widthGroup("labelPrompt")
+            llmClientConfigurationComboBox =
+                comboBox(
+                    AppSettings2.instance.llmClientConfigurations.filterNotNull().sortedBy { it.name },
+                    CommitAIListCellRenderer()
+                )
+                    .bindItem(
+                        getter = { projectSettings.getActiveLLMClientConfiguration() },
+                        setter = { setActiveLLMClientConfiguration(it) })
+                    .widthGroup("input")
+                    .component
             cell(isProjectSpecificLLMClientCheckBox)
                 .bindSelected(project.service<ProjectSettings>()::isProjectSpecificLLMClient)
+                .comment(message("settings.llmClient.projectSpecific.comment"))
             contextHelp(message("settings.llmClient.projectSpecific.contextHelp"))
-                .align(AlignX.LEFT)
+        }
+
+        row {
             checkBox(message("settings.llmClient.streamingResponse"))
                 .bindSelected(AppSettings2.instance::useStreamingResponse)
             contextHelp(message("settings.llmClient.streamingResponse.contextHelp"))
-                .align(AlignX.LEFT)
         }
         row {
             llmClientToolbarDecorator = ToolbarDecorator.createDecorator(llmClientTable.table)
@@ -107,24 +116,26 @@ class AppSettingsConfigurable(val project: Project, cs: CoroutineScope) : BoundC
                 .widthGroup("input")
                 .bindItem(
                     getter = { locales.find { it.language == projectSettings.locale.language } ?: Locale.ENGLISH },
-                    setter = { setActiveLocale(it)}
+                    setter = { setActiveLocale(it) }
                 )
 
             contextHelp(message("settings.locale.contextHelp"))
-
+        }
+        row {
             browserLink(message("settings.more-prompts"), CommitAIBundle.URL_PROMPTS_DISCUSSION.toString())
                 .align(AlignX.RIGHT)
         }
         row {
-            label(message("settings.prompt")).widthGroup("labelPrompt")
+            label(message("settings.prompt"))
+                .widthGroup("labelPrompt")
             promptComboBox = comboBox(AppSettings2.instance.prompts.values, CommitAIListCellRenderer())
                 .bindItem(getter = { projectSettings.activePrompt }, { setActivePrompt(it) })
                 .widthGroup("input")
                 .component
             cell(isProjectSpecificPromptCheckBox)
                 .bindSelected(project.service<ProjectSettings>()::isProjectSpecificPrompt)
+                .comment(message("settings.prompt.projectSpecific.comment"))
             contextHelp(message("settings.prompt.projectSpecific.contextHelp"))
-                .align(AlignX.LEFT)
         }
         row {
             toolbarDecorator = ToolbarDecorator.createDecorator(promptTable.table)
