@@ -160,7 +160,11 @@ class LLMClientTable {
 
                 val cardsList = JBList(llmClientConfigurations).apply {
                     val descriptor = object : ListItemDescriptorAdapter<LLMClientConfiguration>() {
-                        override fun getTextFor(value: LLMClientConfiguration) = value.getClientName()
+                        override fun getTextFor(value: LLMClientConfiguration) = when {
+                            value.getClientName() == "Pollinations" && newLlmClientConfiguration == null -> "${value.getClientName()} (Free)"
+                            value.getClientName() == "Groq" && newLlmClientConfiguration == null -> "${value.getClientName()} (Freemium)"
+                            else -> value.getClientName()
+                        }
                         override fun getIconFor(value: LLMClientConfiguration) = value.getClientIcon()
                     }
                     cellRenderer = object : GroupedItemsListRenderer<LLMClientConfiguration>(descriptor) {
