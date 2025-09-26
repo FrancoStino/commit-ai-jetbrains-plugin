@@ -12,6 +12,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Features
 
 * Add free/freemium labels to LLM client list items (develop) ([93141af](https://github.com/FrancoStino/commit-ai-jetbrains-plugin/commit/93141afd1a3900ec0b85b8e7f1a3a54dc069529d))
+* Add free/freemium labels to LLM client list items (develop) ([36399f3](https://github.com/FrancoStino/commit-ai-jetbrains-plugin/commit/36399f311863e329efee4c5c7987c51bc7cbc9ff))
+* **build:** add IntelliJ tasks plugin to bundled dependencies ([f4f8b2d](https://github.com/FrancoStino/commit-ai-jetbrains-plugin/commit/f4f8b2d33d25bdd821730f2206bc9900a61c9ebc))
+* **build:** add IntelliJ tasks plugin to bundled dependencies ([4c1b9b6](https://github.com/FrancoStino/commit-ai-jetbrains-plugin/commit/4c1b9b6b84fb89b1953048664d78b78b772cc423))
+* **settings/prompts:** enhance prompt configuration and editing ([926b65e](https://github.com/FrancoStino/commit-ai-jetbrains-plugin/commit/926b65e0e18365cd70a82d03f8a20d929d8b375b))
+* **settings/prompts:** enhance prompt configuration and editing ([ad6bb18](https://github.com/FrancoStino/commit-ai-jetbrains-plugin/commit/ad6bb18ebb816a7facba469d5483e1cf39aad095))
+
+
+
+## [1.2.1](https://github.com/FrancoStino/commit-ai-jetbrains-plugin/compare/1.2.0...1.2.1) (2025-09-25)
+
+
+
+#  (2025-09-26)
+
+
+### Features
+
+* Add free/freemium labels to LLM client list items (develop) ([93141af](https://github.com/FrancoStino/commit-ai-jetbrains-plugin/commit/93141afd1a3900ec0b85b8e7f1a3a54dc069529d))
 * **build:** add IntelliJ tasks plugin to bundled dependencies ([f4f8b2d](https://github.com/FrancoStino/commit-ai-jetbrains-plugin/commit/f4f8b2d33d25bdd821730f2206bc9900a61c9ebc))
 * **settings/prompts:** enhance prompt configuration and editing ([926b65e](https://github.com/FrancoStino/commit-ai-jetbrains-plugin/commit/926b65e0e18365cd70a82d03f8a20d929d8b375b))
 
