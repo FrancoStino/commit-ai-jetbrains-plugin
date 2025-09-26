@@ -29,10 +29,13 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.awt.event.ActionEvent
 import java.awt.event.ComponentAdapter
 import java.awt.event.ComponentEvent
 import java.awt.event.MouseAdapter
 import java.awt.event.MouseEvent
+import javax.swing.AbstractAction
+import javax.swing.Action
 import javax.swing.ListSelectionModel.SINGLE_SELECTION
 import kotlin.math.max
 
@@ -84,7 +87,7 @@ class PromptTable(private val cs: CoroutineScope) {
 
     fun editPrompt(): Pair<Prompt, Prompt>? {
         val selectedPrompt = table.selectedObject ?: return null
-        val dialog = PromptDialog(prompts.keys.toSet(), cs, selectedPrompt.copy())
+        val dialog = PromptDialog(prompts.keys.toSet(), cs, selectedPrompt.deepCopy())
 
         if (dialog.showAndGet()) {
             prompts = prompts.minus(selectedPrompt.name.lowercase()).toMutableMap()
@@ -132,12 +135,7 @@ class PromptTable(private val cs: CoroutineScope) {
             promptContentTextArea.rows = 5
             promptContentTextArea.autoscrolls = false
 
-            if (!prompt.canBeChanged) {
-                isOKActionEnabled = false
-                promptNameTextField.isEditable = false
-                promptDescriptionTextField.isEditable = false
-                promptContentTextArea.isEditable = false
-            }
+            // Enable editing for all prompts now, reset button will appear for default prompts
 
             promptPreviewTextArea.wrapStyleWord = true
             promptPreviewTextArea.lineWrap = true
@@ -159,9 +157,15 @@ class PromptTable(private val cs: CoroutineScope) {
                 cell(promptNameTextField)
                     .align(Align.FILL)
                     .bindText(prompt::name)
-                    .applyIf(prompt.canBeChanged) { focused() }
+                    .applyIf(prompt.canBeChanged && !prompt.isDefault) { focused() }
                     .validationOnApply { notBlank(it.text) }
                     .applyIf(newPrompt == null) { validationOnApply { unique(it.text.lowercase(), prompts) } }
+                    .apply {
+                        // Disable name editing for default prompts
+                        if (prompt.isDefault) {
+                            component.isEditable = false
+                        }
+                    }
             }
             row(message("settings.prompt.description")) {
                 cell(promptDescriptionTextField)
@@ -220,6 +224,24 @@ class PromptTable(private val cs: CoroutineScope) {
             val constructPrompt = CommitAIUtils.constructPrompt(promptContent, diff, branch, hint, project)
             promptPreviewTextArea.text = constructPrompt.substring(0, constructPrompt.length.coerceAtMost(10000))
             promptPreviewTextArea.caretPosition = max(0, promptPreviewTextArea.caretPosition - 10)
+        }
+
+        override fun createLeftSideActions(): Array<Action> {
+            return if (prompt.isDefault) {
+                arrayOf(object : AbstractAction(message("actions.reset")) {
+                    override fun actionPerformed(e: ActionEvent?) {
+                        resetToDefault()
+                    }
+                })
+            } else {
+                emptyArray()
+            }
+        }
+
+        private fun resetToDefault() {
+            prompt.content = prompt.originalContent
+            promptContentTextArea.text = prompt.originalContent
+            setPreview(prompt.originalContent, promptHintTextField.text)
         }
 
     }

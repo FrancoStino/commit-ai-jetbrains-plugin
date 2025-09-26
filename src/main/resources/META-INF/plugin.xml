@@ -10,49 +10,6 @@
     <!-- A displayed Vendor name or Organization ID displayed on the Plugins Page. -->
     <vendor url="https://www.davideladisa.it">Davide Ladisa</vendor>
 
-    <!-- Description of the plugin displayed on the Plugin Page and IDE Plugin Manager.
-         Guidelines: https://plugins.jetbrains.com/docs/marketplace/best-practices-for-listing.html#plugin-description -->
-    <description><![CDATA[
-        <p>Commit AI is a plugin that generates your commit messages by using git diff and LLMs.</p>
-        <h3>Features</h3>
-        <ul>
-            <li>Generate commit message from git diff using LLM</li>
-            <li>Compute diff only from the selected files and lines in the commit dialog</li>
-            <li>Create your own prompt for commit message generation</li>
-            <li>Use predefined variables and hint to customize your prompt</li>
-            <li>Supports Git and Subversion as version control systems.</li>
-        </ul>
-        <h3>Supported models</h3>
-        <ul>
-            <li>Groq</li>
-            <li>Pollinations</li>
-        </ul>
-        <p>The plugin uses <a href="https://github.com/langchain4j/langchain4j">langchain4j</a> for creating LLM API clients with OpenAI-compatible APIs. Currently supports Groq and Pollinations. If you would like support for additional LLM providers, please make a feature request in GitHub issues.</p>
-        <h3>Usage</h3>
-        <p>To get started, install the plugin and set LLM client configuration in plugin's settings::
-        <br/>
-        Settings > Commit AI</p>
-        <h3>Troubleshooting</h3>
-        <p>We'd love to hear from you if you have any issues or feature requests. Please report them
-        <a href="https://github.com/FrancoStino/commit-ai-jetbrains-plugin/28558-commit-ai/28558-commit-ai/issues">here</a>.</p>
-        <h3>Demo</h3>
-        <p>
-            <img
-            src="https://raw.githubusercontent.com/FrancoStino/commit-ai-jetbrains-plugin/28558-commit-ai/dc45b4533e432ddde531c1a13bc9397c17d240ad/screenshots/plugin.gif"
-            border="0"
-            width="600"
-            alt="Demo.gif"/>
-        </p>
-        <h3>Support</h3>
-        <ul>
-            <li><a href="https://github.com/FrancoStino/commit-ai-jetbrains-plugin">Star the repository</a></li>
-            <li><a href="https://ko-fi.com/davideladisa">Buy me a coffee</a></li>
-            <li><a href="https://plugins.jetbrains.com/plugin/28558-commit-ai/">Rate the plugin</a></li>
-            <li><a href="https://plugins.jetbrains.com/plugin/28558-commit-ai/">Share the plugin</a></li>
-            <li><a href="https://github.com/sponsors/FrancoStino">Sponsor me</a></li>
-        </ul>
-    ]]></description>
-
     <!-- Product and plugin compatibility requirements.
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
     <depends>com.intellij.modules.platform</depends>
@@ -73,6 +30,7 @@
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
     <extensions defaultExtensionNs="com.intellij">
         <projectConfigurable
+                parentId="tools"
                 instance="com.davideladisa.commitai.settings.AppSettingsConfigurable"
                 id="com.davideladisa.commitai.settings.AppSettingsConfigurable"
                 key="name"
