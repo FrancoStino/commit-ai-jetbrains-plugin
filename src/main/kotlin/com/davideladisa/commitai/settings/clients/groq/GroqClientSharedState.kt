@@ -26,27 +26,21 @@ class GroqClientSharedState : PersistentStateComponent<GroqClientSharedState>, L
     )
 
     override var modelIds: MutableSet<String> = mutableSetOf(
-        "meta-llama/llama-prompt-guard-2-86m",
-        "openai/gpt-oss-20b",
-        "playai-tts",
-        "meta-llama/llama-4-maverick-17b-128e-instruct",
-        "qwen/qwen3-32b",
-        "llama-3.1-8b-instant",
-        "moonshotai/kimi-k2-instruct",
-        "meta-llama/llama-prompt-guard-2-22m",
-        "gemma2-9b-it",
-        "whisper-large-v3-turbo",
-        "openai/gpt-oss-120b",
-        "playai-tts-arabic",
-        "meta-llama/llama-guard-4-12b",
-        "moonshotai/kimi-k2-instruct-0905",
-        "allam-2-7b",
-        "deepseek-r1-distill-llama-70b",
-        "whisper-large-v3",
-        "groq/compound",
+        // Recommended models for text generation (ordered by performance)
         "llama-3.3-70b-versatile",
+        "deepseek-r1-distill-llama-70b",
+        "llama-3.1-8b-instant",
+        "groq/compound",
         "groq/compound-mini",
-        "meta-llama/llama-4-scout-17b-16e-instruct"
+        "moonshotai/kimi-k2-instruct",
+        "moonshotai/kimi-k2-instruct-0905",
+        "qwen/qwen3-32b",
+        "openai/gpt-oss-120b",
+        "openai/gpt-oss-20b",
+        "meta-llama/llama-4-scout-17b-16e-instruct",
+        "meta-llama/llama-4-maverick-17b-128e-instruct",
+        "gemma2-9b-it",
+        "allam-2-7b"
     )
 
     override fun getState(): GroqClientSharedState = this
