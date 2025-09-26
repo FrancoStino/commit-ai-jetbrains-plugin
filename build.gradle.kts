@@ -37,6 +37,7 @@ dependencies {
 
         // Add necessary plugin dependencies for compilation here
         bundledPlugin("com.intellij.java")
+        bundledPlugin("com.intellij.tasks")
         platformPlugins.split(",").map { it.trim() }.forEach { bundledPlugin(it) }
     }
     implementation(libs.langchain4j.openai)
