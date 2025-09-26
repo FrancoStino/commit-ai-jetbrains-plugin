@@ -57,9 +57,12 @@ class LLMClientTable {
         llmClients.toList()
     )
 
-    private fun fetchSortedLlmClients() = AppSettings2.instance.llmClientConfigurations.filterNotNull().sortedWith(
-        compareBy({ if (it.getClientName() == "Pollinations") 0 else 1 }, { it.name })
-    )
+    private fun fetchSortedLlmClients(): List<LLMClientConfiguration> {
+        val sortedWith = AppSettings2.instance.llmClientConfigurations.filterNotNull().sortedWith(
+            compareBy({ if (it.getClientName() == "Pollinations") 0 else 1 }, { it.name })
+        )
+        return sortedWith
+    }
 
     private fun updateLlmClients(newClients: List<LLMClientConfiguration>) {
         llmClients = newClients.filterNotNull().sortedWith(compareBy({ if (it.getClientName() == "Pollinations") 0 else 1 }, { it.name }))
