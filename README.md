@@ -22,8 +22,18 @@
 <!-- Plugin description -->
 ## Description
 
-Commit AI is a plugin that generates your commit messages by using git diff and LLMs. To get started, install the
-plugin and configure a LLM API client in plugin's settings: <kbd>Settings</kbd> > <kbd>Tools</kbd> > <kbd>Commit AI</kbd>
+Commit AI is a plugin that generates your commit messages by using git diff and LLMs.
+
+### ✨ Key Features
+- **AI-powered commit messages**: Generate meaningful commit messages from your code changes
+- **Multiple LLM providers**: Support for Groq and Pollinations with top models like Llama 3.3 70B
+- **Smart diff analysis**: Analyzes only selected files and lines in the commit dialog
+- **Custom prompts**: Create and customize your own prompt templates with variables
+- **Universal IDE support**: Works across all JetBrains IDEs (IntelliJ, PhpStorm, PyCharm, WebStorm, etc.)
+- **Git & SVN support**: Compatible with both Git and Subversion version control systems
+
+### 🚀 Getting Started
+Install the plugin and configure your LLM client in <kbd>Settings</kbd> > <kbd>Tools</kbd> > <kbd>Commit AI</kbd>
 <!-- Plugin description end -->
 
 ## Features
