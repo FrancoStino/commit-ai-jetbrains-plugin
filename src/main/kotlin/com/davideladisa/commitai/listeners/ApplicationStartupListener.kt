@@ -1,6 +1,6 @@
 package com.davideladisa.commitai.listeners
 
-import com.davideladisa.commitai.AICommitsBundle
+import com.davideladisa.commitai.CommitAIBundle
 import com.davideladisa.commitai.notifications.Notification
 import com.davideladisa.commitai.notifications.sendNotification
 import com.davideladisa.commitai.settings.AppSettings2
@@ -15,7 +15,7 @@ class ApplicationStartupListener : ProjectActivity {
     }
     private fun showVersionNotification(project: Project) {
         val settings = AppSettings2.instance
-        val version = AICommitsBundle.plugin()?.version
+        val version = CommitAIBundle.plugin()?.version
 
         if (version == settings.lastVersion) {
             return

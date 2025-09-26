@@ -11,7 +11,7 @@ import com.intellij.openapi.project.DumbAware
 import com.intellij.openapi.vcs.VcsDataKeys
 import com.intellij.vcs.commit.AbstractCommitWorkflowHandler
 
-class AICommitAction : AnAction(), DumbAware {
+class CommitAIAction : AnAction(), DumbAware {
 
     override fun getActionUpdateThread(): ActionUpdateThread {
         return ActionUpdateThread.EDT

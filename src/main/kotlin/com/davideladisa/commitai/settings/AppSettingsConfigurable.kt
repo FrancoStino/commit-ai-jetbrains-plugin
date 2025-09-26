@@ -1,8 +1,8 @@
 package com.davideladisa.commitai.settings
 
-import com.davideladisa.commitai.AICommitsBundle
-import com.davideladisa.commitai.AICommitsBundle.message
-import com.davideladisa.commitai.AICommitsUtils
+import com.davideladisa.commitai.CommitAIBundle
+import com.davideladisa.commitai.CommitAIBundle.message
+import com.davideladisa.commitai.CommitAIUtils
 import com.davideladisa.commitai.settings.clients.LLMClientConfiguration
 import com.davideladisa.commitai.settings.clients.LLMClientTable
 import com.davideladisa.commitai.settings.prompts.Prompt
@@ -36,7 +36,7 @@ class AppSettingsConfigurable(val project: Project, cs: CoroutineScope) : BoundC
 
         row {
             label(message("settings.llmClient")).widthGroup("labelPrompt")
-            llmClientConfigurationComboBox = comboBox(AppSettings2.instance.llmClientConfigurations.filterNotNull().sortedBy { it.name }, AICommitsListCellRenderer())
+            llmClientConfigurationComboBox = comboBox(AppSettings2.instance.llmClientConfigurations.filterNotNull().sortedBy { it.name }, CommitAIListCellRenderer())
                 .bindItem(getter = { projectSettings.getActiveLLMClientConfiguration() }, setter = { setActiveLLMClientConfiguration(it) })
                 .widthGroup("input")
                 .component
@@ -79,13 +79,13 @@ class AppSettingsConfigurable(val project: Project, cs: CoroutineScope) : BoundC
         }.resizableRow()
         
         row {
-            browserLink(message("settings.more-llm-clients"), AICommitsBundle.URL_LLM_CLIENTS_DISCUSSION.toString())
+            browserLink(message("settings.more-llm-clients"), CommitAIBundle.URL_LLM_CLIENTS_DISCUSSION.toString())
                 .align(AlignX.RIGHT)
         }
 
         row {
             label(message("settings.locale")).widthGroup("labelPrompt")
-            val ideLocale = AICommitsUtils.getIDELocale()
+            val ideLocale = CommitAIUtils.getIDELocale()
 
             // Configures locale-aware text comparator for proper language name sorting
             // Without a Collator, we would get incorrect sorting based on raw Unicode values
@@ -103,7 +103,7 @@ class AppSettingsConfigurable(val project: Project, cs: CoroutineScope) : BoundC
                 })
                 .toList()
 
-            comboBox(locales, AICommitsListCellRenderer())
+            comboBox(locales, CommitAIListCellRenderer())
                 .widthGroup("input")
                 .bindItem(
                     getter = { locales.find { it.language == projectSettings.locale.language } ?: Locale.ENGLISH },
@@ -112,12 +112,12 @@ class AppSettingsConfigurable(val project: Project, cs: CoroutineScope) : BoundC
 
             contextHelp(message("settings.locale.contextHelp"))
 
-            browserLink(message("settings.more-prompts"), AICommitsBundle.URL_PROMPTS_DISCUSSION.toString())
+            browserLink(message("settings.more-prompts"), CommitAIBundle.URL_PROMPTS_DISCUSSION.toString())
                 .align(AlignX.RIGHT)
         }
         row {
             label(message("settings.prompt")).widthGroup("labelPrompt")
-            promptComboBox = comboBox(AppSettings2.instance.prompts.values, AICommitsListCellRenderer())
+            promptComboBox = comboBox(AppSettings2.instance.prompts.values, CommitAIListCellRenderer())
                 .bindItem(getter = { projectSettings.activePrompt }, { setActivePrompt(it) })
                 .widthGroup("input")
                 .component
@@ -164,10 +164,10 @@ class AppSettingsConfigurable(val project: Project, cs: CoroutineScope) : BoundC
         }.resizableRow()
 
         row {
-            browserLink(message("settings.report-bug"), AICommitsBundle.URL_BUG_REPORT.toString())
-            browserLink(message("settings.github-star"), AICommitsBundle.URL_GITHUB.toString())
-            browserLink(message("settings.kofi"), AICommitsBundle.URL_KOFI.toString())
-            browserLink(message("settings.github-sponsors"), AICommitsBundle.URL_GITHUB_SPONSORS.toString())
+            browserLink(message("settings.report-bug"), CommitAIBundle.URL_BUG_REPORT.toString())
+            browserLink(message("settings.github-star"), CommitAIBundle.URL_GITHUB.toString())
+            browserLink(message("settings.kofi"), CommitAIBundle.URL_KOFI.toString())
+            browserLink(message("settings.github-sponsors"), CommitAIBundle.URL_GITHUB_SPONSORS.toString())
         }
     }
 

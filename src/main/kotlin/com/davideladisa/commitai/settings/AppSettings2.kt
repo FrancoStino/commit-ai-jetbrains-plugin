@@ -1,7 +1,7 @@
 package com.davideladisa.commitai.settings
 
-import com.davideladisa.commitai.AICommitsUtils
-import com.davideladisa.commitai.AICommitsUtils.getCredentialAttributes
+import com.davideladisa.commitai.CommitAIUtils
+import com.davideladisa.commitai.CommitAIUtils.getCredentialAttributes
 import com.davideladisa.commitai.notifications.Notification
 import com.davideladisa.commitai.notifications.sendNotification
 import com.davideladisa.commitai.settings.clients.LLMClientConfiguration
@@ -27,7 +27,7 @@ import java.util.*
 @State(
     name = AppSettings2.SERVICE_NAME,
     storages = [
-        Storage("AICommits2.xml")
+        Storage("CommitAI2.xml")
     ]
 )
 @Service(Service.Level.APP)
@@ -104,7 +104,7 @@ class AppSettings2 : PersistentStateComponent<AppSettings2> {
     }
 
     fun isPathExcluded(path: String): Boolean {
-        return AICommitsUtils.matchesGlobs(path, appExclusions)
+        return CommitAIUtils.matchesGlobs(path, appExclusions)
     }
 
     fun getActiveLLMClientConfiguration(): LLMClientConfiguration? {

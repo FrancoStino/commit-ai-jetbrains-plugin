@@ -1,6 +1,6 @@
 package com.davideladisa.commitai.settings
 
-import com.davideladisa.commitai.AICommitsBundle.message
+import com.davideladisa.commitai.CommitAIBundle.message
 import com.davideladisa.commitai.createColumn
 import com.intellij.openapi.components.service
 import com.intellij.openapi.options.BoundConfigurable

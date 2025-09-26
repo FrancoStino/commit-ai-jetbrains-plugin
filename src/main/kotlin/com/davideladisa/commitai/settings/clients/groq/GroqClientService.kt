@@ -1,7 +1,7 @@
 package com.davideladisa.commitai.settings.clients.groq
 
-import com.davideladisa.commitai.AICommitsUtils.getCredentialAttributes
-import com.davideladisa.commitai.AICommitsUtils.retrieveToken
+import com.davideladisa.commitai.CommitAIUtils.getCredentialAttributes
+import com.davideladisa.commitai.CommitAIUtils.retrieveToken
 import com.davideladisa.commitai.notifications.Notification
 import com.davideladisa.commitai.notifications.sendNotification
 import com.davideladisa.commitai.settings.clients.LLMClientService

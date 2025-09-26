@@ -13,7 +13,7 @@ import java.net.URI
 @NonNls
 private const val BUNDLE = "messages.AiCommitsBundle"
 
-object AICommitsBundle : DynamicBundle(BUNDLE) {
+object CommitAIBundle : DynamicBundle(BUNDLE) {
 
     val URL_BUG_REPORT = URI("https://github.com/FrancoStino/commit-ai-jetbrains-plugin/28558-commit-ai/issues")
     val URL_PROMPTS_DISCUSSION = URI("https://github.com/FrancoStino/commit-ai-jetbrains-plugin/28558-commit-ai/discussions/2")

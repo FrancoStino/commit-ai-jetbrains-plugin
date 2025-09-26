@@ -1,6 +1,6 @@
 package com.davideladisa.commitai.settings.clients
 
-import com.davideladisa.commitai.AICommitsBundle.message
+import com.davideladisa.commitai.CommitAIBundle.message
 import com.davideladisa.commitai.createColumn
 import com.davideladisa.commitai.settings.AppSettings2
 import com.davideladisa.commitai.settings.clients.pollinations.PollinationsClientConfiguration
