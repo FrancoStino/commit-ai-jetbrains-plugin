@@ -1,8 +1,8 @@
 package com.davideladisa.commitai.notifications
 
-import com.davideladisa.commitai.AICommitsBundle
-import com.davideladisa.commitai.AICommitsBundle.message
-import com.davideladisa.commitai.AICommitsBundle.openPluginSettings
+import com.davideladisa.commitai.CommitAIBundle
+import com.davideladisa.commitai.CommitAIBundle.message
+import com.davideladisa.commitai.CommitAIBundle.openPluginSettings
 import com.davideladisa.commitai.settings.AppSettings2
 import com.intellij.ide.browsers.BrowserLauncher
 import com.intellij.openapi.components.service
@@ -58,7 +58,7 @@ data class NotificationAction(val title: String, val run: (dismiss: () -> Unit) 
         }
 
         fun openRepository(onComplete: () -> Unit) = NotificationAction(message("actions.sure-take-me-there")) { dismiss ->
-            AICommitsBundle.openRepository()
+            CommitAIBundle.openRepository()
             dismiss()
             onComplete()
         }

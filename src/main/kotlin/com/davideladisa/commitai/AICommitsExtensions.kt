@@ -1,6 +1,6 @@
 package com.davideladisa.commitai
 
-import com.davideladisa.commitai.AICommitsBundle.message
+import com.davideladisa.commitai.CommitAIBundle.message
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.ValidationInfo
 import com.intellij.openapi.vcs.FilePath

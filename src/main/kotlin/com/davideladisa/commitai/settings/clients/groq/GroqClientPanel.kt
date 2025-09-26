@@ -1,7 +1,7 @@
 package com.davideladisa.commitai.settings.clients.groq
 
-import com.davideladisa.commitai.AICommitsBundle
-import com.davideladisa.commitai.AICommitsBundle.message
+import com.davideladisa.commitai.CommitAIBundle
+import com.davideladisa.commitai.CommitAIBundle.message
 import com.davideladisa.commitai.emptyText
 import com.davideladisa.commitai.settings.clients.LLMClientPanel
 import com.davideladisa.commitai.temperatureValidNullable
@@ -52,7 +52,7 @@ class GroqClientPanel(private val clientConfiguration: GroqClientConfiguration) 
                 .align(AlignX.RIGHT)
         }
         row {
-            browserLink("Get your token", AICommitsBundle.URL_GROQ_KEYS.toString())
+            browserLink("Get your token", CommitAIBundle.URL_GROQ_KEYS.toString())
                 .align(AlignX.RIGHT)
         }
     }

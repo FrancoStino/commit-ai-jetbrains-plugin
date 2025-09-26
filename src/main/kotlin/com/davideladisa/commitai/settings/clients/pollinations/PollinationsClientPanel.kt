@@ -1,7 +1,7 @@
 package com.davideladisa.commitai.settings.clients.pollinations
 
-import com.davideladisa.commitai.AICommitsBundle
-import com.davideladisa.commitai.AICommitsBundle.message
+import com.davideladisa.commitai.CommitAIBundle
+import com.davideladisa.commitai.CommitAIBundle.message
 import com.davideladisa.commitai.emptyText
 import com.davideladisa.commitai.settings.clients.LLMClientPanel
 import com.davideladisa.commitai.temperatureValidNullable
@@ -53,7 +53,7 @@ class PollinationsClientPanel(private val clientConfiguration: PollinationsClien
                 .align(AlignX.RIGHT)
         }
         row {
-            browserLink("Get your token", AICommitsBundle.URL_POLLINATIONS_AUTH.toString())
+            browserLink("Get your token", CommitAIBundle.URL_POLLINATIONS_AUTH.toString())
                 .align(AlignX.RIGHT)
         }
     }

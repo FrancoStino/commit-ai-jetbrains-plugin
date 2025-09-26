@@ -6,7 +6,7 @@ import javax.swing.Icon
 
 object Icons {
 
-    data class AICommitsIcon(val bright: String, val dark: String?) {
+    data class CommitAIIcon(val bright: String, val dark: String?) {
 
         fun getThemeBasedIcon(): Icon {
             return if (JBColor.isBright() || dark == null) {
@@ -17,11 +17,11 @@ object Icons {
         }
     }
 
-    val AI_COMMITS = AICommitsIcon("/META-INF/pluginIcon.svg", null)
-    val POLLINATIONS = AICommitsIcon("/icons/pollinations.svg", null)
-    val GROQ = AICommitsIcon("/icons/groq.svg", null)
+    val AI_COMMITS = CommitAIIcon("/META-INF/pluginIcon.svg", null)
+    val POLLINATIONS = CommitAIIcon("/icons/pollinations.svg", null)
+    val GROQ = CommitAIIcon("/icons/groq.svg", null)
 
     object Process {
-        val STOP = AICommitsIcon("/icons/stop.svg", "/icons/stop_dark.svg")
+        val STOP = CommitAIIcon("/icons/stop.svg", "/icons/stop_dark.svg")
     }
 }

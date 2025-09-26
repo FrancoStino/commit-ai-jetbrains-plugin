@@ -1,10 +1,10 @@
 package com.davideladisa.commitai.settings.prompts
 
 import ai.grazie.utils.applyIf
-import com.davideladisa.commitai.AICommitsBundle.message
-import com.davideladisa.commitai.AICommitsUtils
-import com.davideladisa.commitai.AICommitsUtils.computeDiff
-import com.davideladisa.commitai.AICommitsUtils.getCommonBranch
+import com.davideladisa.commitai.CommitAIBundle.message
+import com.davideladisa.commitai.CommitAIUtils
+import com.davideladisa.commitai.CommitAIUtils.computeDiff
+import com.davideladisa.commitai.CommitAIUtils.getCommonBranch
 import com.davideladisa.commitai.createColumn
 import com.davideladisa.commitai.notBlank
 import com.davideladisa.commitai.settings.AppSettings2
@@ -217,7 +217,7 @@ class PromptTable(private val cs: CoroutineScope) {
         }
 
         private fun setPreview(promptContent: String, hint: String) {
-            val constructPrompt = AICommitsUtils.constructPrompt(promptContent, diff, branch, hint, project)
+            val constructPrompt = CommitAIUtils.constructPrompt(promptContent, diff, branch, hint, project)
             promptPreviewTextArea.text = constructPrompt.substring(0, constructPrompt.length.coerceAtMost(10000))
             promptPreviewTextArea.caretPosition = max(0, promptPreviewTextArea.caretPosition - 10)
         }

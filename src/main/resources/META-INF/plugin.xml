@@ -99,15 +99,15 @@
                 implementation="com.davideladisa.commitai.listeners.ApplicationStartupListener"
         />
 
-        <checkinHandlerFactory implementation="com.davideladisa.commitai.AICommitsCheckingHandlerFactory"/>
+        <checkinHandlerFactory implementation="com.davideladisa.commitai.CommitAICheckingHandlerFactory"/>
 
     </extensions>
 
     <actions>
         <!-- Keyboard shortcut action that directly executes -->
         <action
-                id="AICommit"
-                class="com.davideladisa.commitai.AICommitAction">
+                id="CommitAI"
+                class="com.davideladisa.commitai.CommitAIAction">
 
             <keyboard-shortcut
                     keymap="$default"
@@ -117,9 +117,9 @@
 
         <!-- Button action with split dropdown -->
         <action
-                id="AICommitSplitButton"
+                id="CommitAISplitButton"
                 icon="/META-INF/pluginIcon.svg"
-                class="com.davideladisa.commitai.AICommitSplitButtonAction">
+                class="com.davideladisa.commitai.CommitAISplitButtonAction">
 
             <add-to-group group-id="Vcs.MessageActionGroup" anchor="last"/>
         </action>

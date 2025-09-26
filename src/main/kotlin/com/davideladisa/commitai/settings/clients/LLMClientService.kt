@@ -1,9 +1,9 @@
 package com.davideladisa.commitai.settings.clients
 
-import com.davideladisa.commitai.AICommitsBundle.message
-import com.davideladisa.commitai.AICommitsUtils.computeDiff
-import com.davideladisa.commitai.AICommitsUtils.constructPrompt
-import com.davideladisa.commitai.AICommitsUtils.getCommonBranch
+import com.davideladisa.commitai.CommitAIBundle.message
+import com.davideladisa.commitai.CommitAIUtils.computeDiff
+import com.davideladisa.commitai.CommitAIUtils.constructPrompt
+import com.davideladisa.commitai.CommitAIUtils.getCommonBranch
 import com.davideladisa.commitai.notifications.Notification
 import com.davideladisa.commitai.notifications.sendNotification
 import com.davideladisa.commitai.settings.AppSettings2

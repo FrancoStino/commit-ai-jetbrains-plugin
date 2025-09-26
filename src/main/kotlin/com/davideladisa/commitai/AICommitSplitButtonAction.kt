@@ -8,7 +8,7 @@ import com.intellij.openapi.components.service
 import com.intellij.openapi.project.DumbAware
 import com.intellij.openapi.actionSystem.DefaultActionGroup
 
-class AICommitSplitButtonAction : SplitButtonAction(object : ActionGroup() {
+class CommitAISplitButtonAction : SplitButtonAction(object : ActionGroup() {
 
     override fun getChildren(e: AnActionEvent?): Array<AnAction> {
         val configurations = AppSettings2.instance.llmClientConfigurations.sortedWith(

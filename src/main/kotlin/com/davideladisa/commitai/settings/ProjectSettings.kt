@@ -1,6 +1,6 @@
 package com.davideladisa.commitai.settings
 
-import com.davideladisa.commitai.AICommitsUtils
+import com.davideladisa.commitai.CommitAIUtils
 import com.davideladisa.commitai.settings.AppSettings2.LocaleConverter
 import com.davideladisa.commitai.settings.clients.LLMClientConfiguration
 import com.davideladisa.commitai.settings.prompts.DefaultPrompts
@@ -17,7 +17,7 @@ import java.util.*
 
 @State(
         name = ProjectSettings.SERVICE_NAME,
-        storages = [Storage("AICommit.xml")]
+        storages = [Storage("CommitAI.xml")]
 )
 @Service(Service.Level.PROJECT)
 class ProjectSettings : PersistentStateComponent<ProjectSettings?> {
@@ -53,7 +53,7 @@ class ProjectSettings : PersistentStateComponent<ProjectSettings?> {
     }
 
     fun isPathExcluded(path: String): Boolean {
-        return AICommitsUtils.matchesGlobs(path, projectExclusions)
+        return CommitAIUtils.matchesGlobs(path, projectExclusions)
     }
 
     fun getActiveLLMClientConfiguration(): LLMClientConfiguration? {

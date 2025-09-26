@@ -14,7 +14,7 @@ import java.util.*
 
 @State(
     name = AppSettings.SERVICE_NAME,
-    storages = [Storage("AICommit.xml")]
+    storages = [Storage("CommitAI.xml")]
 )
 @Service(Service.Level.APP)
 //@Deprecated("No longer used. Need for migration.")

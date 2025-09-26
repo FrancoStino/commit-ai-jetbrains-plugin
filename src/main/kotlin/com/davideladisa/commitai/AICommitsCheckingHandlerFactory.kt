@@ -7,7 +7,7 @@ import com.intellij.openapi.vcs.changes.CommitContext
 import com.intellij.openapi.vcs.checkin.CheckinHandler
 import com.intellij.openapi.vcs.checkin.CheckinHandlerFactory
 
-class AICommitsCheckingHandlerFactory : CheckinHandlerFactory() {
+class CommitAICheckingHandlerFactory : CheckinHandlerFactory() {
     override fun createHandler(panel: CheckinProjectPanel, commitContext: CommitContext): CheckinHandler {
         return object : CheckinHandler() {
             override fun beforeCheckin(): ReturnResult {

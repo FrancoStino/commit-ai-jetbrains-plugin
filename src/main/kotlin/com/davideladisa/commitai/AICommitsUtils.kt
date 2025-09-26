@@ -27,7 +27,7 @@ import java.io.StringWriter
 import java.nio.file.FileSystems
 import java.util.*
 
-object AICommitsUtils {
+object CommitAIUtils {
 
     fun isPathExcluded(path: String, project: Project): Boolean {
         return AppSettings2.instance.isPathExcluded(path) || project.service<ProjectSettings>().isPathExcluded(path)

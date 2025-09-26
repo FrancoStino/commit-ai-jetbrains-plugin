@@ -1,7 +1,7 @@
 package com.davideladisa.commitai.settings.clients
 
 import com.davideladisa.commitai.*
-import com.davideladisa.commitai.AICommitsBundle.message
+import com.davideladisa.commitai.CommitAIBundle.message
 import com.intellij.openapi.ui.ComboBox
 import com.intellij.openapi.ui.ValidationInfo
 import com.intellij.ui.components.JBLabel
