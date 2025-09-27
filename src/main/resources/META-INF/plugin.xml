@@ -74,13 +74,12 @@
         </action>
 
         <!-- Button action with split dropdown -->
-        <action
+        <group
                 id="CommitAISplitButton"
-                icon="/META-INF/pluginIcon.svg"
                 class="com.davideladisa.commitai.CommitAISplitButtonAction">
 
             <add-to-group group-id="Vcs.MessageActionGroup" anchor="last"/>
-        </action>
+        </group>
     </actions>
 
 </idea-plugin>

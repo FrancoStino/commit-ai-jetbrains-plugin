@@ -88,9 +88,18 @@ class LLMClientTable {
 
     fun editLlmClient(): Pair<LLMClientConfiguration, LLMClientConfiguration>? {
         val selectedLlmClient = table.selectedObject ?: return null
-        val dialog = LLMClientDialog(selectedLlmClient.clone())
+        val clonedClient = selectedLlmClient.clone()
+        val dialog = LLMClientDialog(clonedClient)
         if (dialog.showAndGet()) {
+            // Keep the same ID to maintain active client reference
+            dialog.llmClient.id = selectedLlmClient.id
             updateLlmClients(llmClients - selectedLlmClient + dialog.llmClient)
+
+            // Update active client ID if this was the active client
+            if (AppSettings2.instance.activeLlmClientId == selectedLlmClient.id) {
+                AppSettings2.instance.activeLlmClientId = dialog.llmClient.id
+            }
+
             return selectedLlmClient to dialog.llmClient
         }
         return null

@@ -33,9 +33,6 @@ class ProjectSettings : PersistentStateComponent<ProjectSettings?> {
     @Attribute
     var isProjectSpecificLLMClient: Boolean = false
 
-    @Transient
-    var splitButtonActionSelectedLLMClientId: String? = null
-
     @Property
     var activePrompt = DefaultPrompts.BASIC.prompt
         get() = getActivePrompt(field)
@@ -65,10 +62,8 @@ class ProjectSettings : PersistentStateComponent<ProjectSettings?> {
     }
 
     fun getSplitButtonActionSelectedOrActiveLLMClient(): LLMClientConfiguration? {
-        // First try to get the session client, then fall back to the active client
-        return splitButtonActionSelectedLLMClientId?.let {
-            AppSettings2.instance.getActiveLLMClientConfiguration(it)
-        } ?: getActiveLLMClientConfiguration()
+        // Always return the current active configuration - no more temporary selections
+        return getActiveLLMClientConfiguration()
     }
 
     private fun getActivePrompt(activePrompt: Prompt): Prompt {

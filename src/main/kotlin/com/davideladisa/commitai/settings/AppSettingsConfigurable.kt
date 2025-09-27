@@ -19,14 +19,10 @@ import kotlinx.coroutines.CoroutineScope
 import java.text.Collator
 import java.util.*
 
-// Most of the settings are global, but we use project configurable to set isProjectSpecificLLMClient property
+// Settings for prompts, locale, and general configuration
 class AppSettingsConfigurable(val project: Project, cs: CoroutineScope) : BoundConfigurable(message("settings.general.group.title")) {
 
     private val projectSettings = project.service<ProjectSettings>()
-    private val llmClientTable = LLMClientTable()
-    private lateinit var llmClientConfigurationComboBox: ComboBox<LLMClientConfiguration>
-    private var isProjectSpecificLLMClientCheckBox = JBCheckBox(message("settings.llmClient.projectSpecific"))
-    private lateinit var llmClientToolbarDecorator: ToolbarDecorator
     private val promptTable = PromptTable(cs)
     private val isProjectSpecificPromptCheckBox = JBCheckBox(message("settings.prompt.projectSpecific"))
     private lateinit var toolbarDecorator: ToolbarDecorator
@@ -35,61 +31,9 @@ class AppSettingsConfigurable(val project: Project, cs: CoroutineScope) : BoundC
     override fun createPanel() = panel {
 
         row {
-            label(message("settings.llmClient"))
-                .widthGroup("labelPrompt")
-            llmClientConfigurationComboBox =
-                comboBox(
-                    AppSettings2.instance.llmClientConfigurations.filterNotNull().sortedBy { it.name },
-                    CommitAIListCellRenderer()
-                )
-                    .bindItem(
-                        getter = { projectSettings.getActiveLLMClientConfiguration() },
-                        setter = { setActiveLLMClientConfiguration(it) })
-                    .widthGroup("input")
-                    .component
-            cell(isProjectSpecificLLMClientCheckBox)
-                .bindSelected(project.service<ProjectSettings>()::isProjectSpecificLLMClient)
-                .comment(message("settings.llmClient.projectSpecific.comment"))
-            contextHelp(message("settings.llmClient.projectSpecific.contextHelp"))
-        }
-
-        row {
             checkBox(message("settings.llmClient.streamingResponse"))
                 .bindSelected(AppSettings2.instance::useStreamingResponse)
             contextHelp(message("settings.llmClient.streamingResponse.contextHelp"))
-        }
-        row {
-            llmClientToolbarDecorator = ToolbarDecorator.createDecorator(llmClientTable.table)
-                .setAddAction {
-                    llmClientTable.addLlmClient().let {
-                        llmClientConfigurationComboBox.addItem(it)
-                    }
-                }
-                .setEditAction {
-                    llmClientTable.editLlmClient()?.let {
-                        val editingActive = llmClientConfigurationComboBox.selectedItem == it.first
-                        llmClientConfigurationComboBox.removeItem(it.first)
-                        llmClientConfigurationComboBox.addItem(it.second)
-
-                        if (editingActive) {
-                            llmClientConfigurationComboBox.selectedItem = it.second
-                        }
-                    }
-                }
-                .setRemoveAction {
-                    llmClientTable.removeLlmClient()?.let {
-                        llmClientConfigurationComboBox.removeItem(it)
-                    }
-                }
-                .disableUpDownActions()
-
-            cell(llmClientToolbarDecorator.createPanel())
-                .align(Align.FILL)
-        }.resizableRow()
-        
-        row {
-            browserLink(message("settings.more-llm-clients"), CommitAIBundle.URL_LLM_CLIENTS_DISCUSSION.toString())
-                .align(AlignX.RIGHT)
         }
 
         row {
@@ -182,16 +126,6 @@ class AppSettingsConfigurable(val project: Project, cs: CoroutineScope) : BoundC
         }
     }
 
-    private fun setActiveLLMClientConfiguration(llmClientConfiguration: LLMClientConfiguration?) {
-        llmClientConfiguration?.let {
-            if (isProjectSpecificLLMClientCheckBox.isSelected) {
-                project.service<ProjectSettings>().activeLlmClientId = it.id
-            } else {
-                AppSettings2.instance.activeLlmClientId = it.id
-            }
-        }
-    }
-
     private fun setActivePrompt(prompt: Prompt?) {
         prompt?.let {
             if (isProjectSpecificPromptCheckBox.isSelected) {
@@ -219,18 +153,16 @@ class AppSettingsConfigurable(val project: Project, cs: CoroutineScope) : BoundC
     }
 
     override fun isModified(): Boolean {
-        return super.isModified() || promptTable.isModified() || llmClientTable.isModified()
+        return super.isModified() || promptTable.isModified()
     }
 
     override fun apply() {
         promptTable.apply()
-        llmClientTable.apply()
         super.apply()
     }
 
     override fun reset() {
         promptTable.reset()
-        llmClientTable.reset()
         super.reset()
     }
 

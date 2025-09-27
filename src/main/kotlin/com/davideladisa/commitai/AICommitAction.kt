@@ -55,9 +55,6 @@ class CommitAIAction : AnAction(), DumbAware {
             return
         }
 
-        // Remember which LLM client was used for the shortcut action
-        projectSettings.splitButtonActionSelectedLLMClientId = llmClient.id
-
         llmClient.generateCommitMessage(commitWorkflowHandler, project)
     }
 
