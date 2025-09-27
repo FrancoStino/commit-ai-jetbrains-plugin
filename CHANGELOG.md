@@ -16,6 +16,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Resolve threading issues that caused IllegalStateException during diff checking
 - Fix icon display to show selected LLM client instead of generic round icon
+- Remove hardcoded "openai" model forcing in Pollinations client configuration
+- Fix UnsupportedOperationException when clicking main split button action
 
 
 # [1.3.0](https://github.com/FrancoStino/commit-ai-jetbrains-plugin/compare/1.2.1...1.3.0) (2025-09-27)
