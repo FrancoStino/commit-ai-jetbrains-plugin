@@ -1,4 +1,4 @@
-name: Auto-Update Changelog
+name: Changelog
 
 on:
   workflow_run:
