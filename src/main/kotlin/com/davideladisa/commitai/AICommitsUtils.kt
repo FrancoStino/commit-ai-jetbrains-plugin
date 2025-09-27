@@ -29,6 +29,30 @@ import java.util.*
 
 object CommitAIUtils {
 
+    fun isCommitDiffEmpty(project: Project, commitWorkflowHandler: com.intellij.vcs.commit.AbstractCommitWorkflowHandler<*, *>?): Boolean {
+        if (commitWorkflowHandler == null) return true
+        
+        try {
+            val includedChanges = commitWorkflowHandler.ui.getIncludedChanges()
+            
+            // Quick check: if no changes are included, diff is empty
+            if (includedChanges.isEmpty()) return true
+            
+            // Check if all changes are excluded by our filters
+            val hasValidChanges = includedChanges.any { change ->
+                change.filePath()?.path?.let { path ->
+                    !isPathExcluded(path, project)
+                } ?: false
+            }
+            
+            return !hasValidChanges
+            
+        } catch (e: Exception) {
+            // If we can't determine, assume there might be changes to be safe
+            return false
+        }
+    }
+
     fun isPathExcluded(path: String, project: Project): Boolean {
         return AppSettings2.instance.isPathExcluded(path) || project.service<ProjectSettings>().isPathExcluded(path)
     }

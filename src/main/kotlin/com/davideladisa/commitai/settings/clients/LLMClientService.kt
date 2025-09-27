@@ -4,8 +4,6 @@ import com.davideladisa.commitai.CommitAIBundle.message
 import com.davideladisa.commitai.CommitAIUtils.computeDiff
 import com.davideladisa.commitai.CommitAIUtils.constructPrompt
 import com.davideladisa.commitai.CommitAIUtils.getCommonBranch
-import com.davideladisa.commitai.notifications.Notification
-import com.davideladisa.commitai.notifications.sendNotification
 import com.davideladisa.commitai.settings.AppSettings2
 import com.davideladisa.commitai.settings.ProjectSettings
 import com.davideladisa.commitai.wrap
@@ -49,9 +47,7 @@ abstract class LLMClientService<C : LLMClientConfiguration>(private val cs: Coro
 
                 val diff = computeDiff(includedChanges, false, project)
                 if (diff.isBlank()) {
-                    withContext(Dispatchers.EDT) {
-                        sendNotification(Notification.emptyDiff())
-                    }
+                    // Diff is empty - this should be handled by UI state, not notification
                     return@withBackgroundProgress
                 }
 

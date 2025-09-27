@@ -21,8 +21,13 @@ class CommitAIAction : AnAction(), DumbAware {
         // Only enable this action when the commit dialog is open (COMMIT_WORKFLOW_HANDLER is available)
         val commitWorkflowHandler = e.getData(VcsDataKeys.COMMIT_WORKFLOW_HANDLER)
         val hasActiveLlmClient = e.project?.service<ProjectSettings>()?.getSplitButtonActionSelectedOrActiveLLMClient() != null
-
-        e.presentation.isEnabledAndVisible = commitWorkflowHandler != null && hasActiveLlmClient
+        val project = e.project
+        
+        // Check if diff is empty
+        val isDiffEmpty = project != null && CommitAIUtils.isCommitDiffEmpty(project, commitWorkflowHandler as? AbstractCommitWorkflowHandler<*, *>)
+        
+        e.presentation.isVisible = commitWorkflowHandler != null && hasActiveLlmClient
+        e.presentation.isEnabled = !isDiffEmpty
     }
 
     override fun actionPerformed(e: AnActionEvent) {

@@ -4,6 +4,7 @@ import com.davideladisa.commitai.Icons
 import com.davideladisa.commitai.notifications.Notification
 import com.davideladisa.commitai.notifications.sendNotification
 import com.davideladisa.commitai.settings.ProjectSettings
+import com.davideladisa.commitai.CommitAIUtils
 import com.intellij.openapi.actionSystem.ActionUpdateThread
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
@@ -90,6 +91,10 @@ abstract class LLMClientConfiguration(
     }
 
     override fun update(e: AnActionEvent) {
+        // Check if diff is empty
+        val commitWorkflowHandler = e.getData(VcsDataKeys.COMMIT_WORKFLOW_HANDLER)
+        val project = e.project
+        val isDiffEmpty = project != null && CommitAIUtils.isCommitDiffEmpty(project, commitWorkflowHandler as? AbstractCommitWorkflowHandler<*, *>)
 
         if (getGenerateCommitMessageJob()?.isActive == true) {
             e.presentation.icon = Icons.Process.STOP.getThemeBasedIcon()
@@ -98,6 +103,9 @@ abstract class LLMClientConfiguration(
             // Show provider name with model in Git area dropdown
             e.presentation.text = "${getClientName()}: ${modelId}"
         }
+        
+        // Disable if diff is empty
+        e.presentation.isEnabled = !isDiffEmpty
     }
 
     override fun getActionUpdateThread(): ActionUpdateThread {
