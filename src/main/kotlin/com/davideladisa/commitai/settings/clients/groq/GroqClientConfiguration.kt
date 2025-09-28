@@ -15,6 +15,10 @@ class GroqClientConfiguration : LLMClientConfiguration(
     "0.7"
 ) {
 
+    init {
+        templatePresentation.text = "${getClientName()}: $modelId"
+    }
+
     @Attribute
     var host: String = "https://api.groq.com/openai/v1"
     @Attribute

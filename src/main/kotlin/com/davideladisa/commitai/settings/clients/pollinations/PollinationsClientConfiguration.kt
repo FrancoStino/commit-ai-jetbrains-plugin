@@ -15,6 +15,10 @@ class PollinationsClientConfiguration : LLMClientConfiguration(
     "0.7"
 ) {
 
+    init {
+        templatePresentation.text = "${getClientName()}: $modelId"
+    }
+
     @Attribute
     var host: String = "https://text.pollinations.ai/openai"
     @Attribute
