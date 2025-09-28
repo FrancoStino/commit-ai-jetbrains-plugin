@@ -10,8 +10,8 @@ import kotlinx.coroutines.Job
 import javax.swing.Icon
 
 class PollinationsClientConfiguration : LLMClientConfiguration(
-    "openai",
-    "openai",
+    "openai-large",
+    "openai-large",
     "0.7"
 ) {
 

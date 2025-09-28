@@ -46,7 +46,7 @@ class PollinationsClientPanel(private val clientConfiguration: PollinationsClien
                 .emptyText(if (clientConfiguration.tokenIsStored) message("settings.llmClient.token.stored") else "Optional for Pollinations")
                 .resizableColumn()
                 .align(Align.FILL)
-                .comment("API token is optional for Pollinations", 50)
+                .comment("API token is optional for some Pollinations models.", 50)
             button("Reset Token") {
                 PollinationsClientService.getInstance().clearToken(clientConfiguration)
             }
