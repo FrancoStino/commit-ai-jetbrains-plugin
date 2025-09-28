@@ -38,8 +38,6 @@ data class Notification(
                 }
             )
         )
-
-        fun emptyDiff() = Notification(DEFAULT_TITLE, message = message("notifications.empty-diff"), type = Type.TRANSIENT)
         fun promptTooLarge() = Notification(DEFAULT_TITLE, message = message("notifications.prompt-too-large"))
         fun unsuccessfulRequest(message: String) = Notification(message = message("notifications.unsuccessful-request", message))
         fun noCommitMessage() = Notification(message = message("notifications.no-commit-message"))

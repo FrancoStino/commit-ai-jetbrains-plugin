@@ -24,7 +24,7 @@
 
     </projectListeners>
 
-    <resource-bundle>messages.AiCommitsBundle</resource-bundle>
+    <resource-bundle>messages.CommitAIBundle</resource-bundle>
 
     <!-- Extension points defined by the plugin.
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->

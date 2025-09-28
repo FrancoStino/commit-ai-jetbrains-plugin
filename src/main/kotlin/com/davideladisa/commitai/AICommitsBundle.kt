@@ -11,7 +11,7 @@ import org.jetbrains.annotations.PropertyKey
 import java.net.URI
 
 @NonNls
-private const val BUNDLE = "messages.AiCommitsBundle"
+private const val BUNDLE = "messages.CommitAIBundle"
 
 object CommitAIBundle : DynamicBundle(BUNDLE) {
 

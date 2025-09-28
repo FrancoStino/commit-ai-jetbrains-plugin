@@ -18,11 +18,15 @@ class CommitAIAction : AnAction(), DumbAware {
     }
 
     override fun update(e: AnActionEvent) {
-        // Only enable this action when the commit dialog is open (COMMIT_WORKFLOW_HANDLER is available)
-        val commitWorkflowHandler = e.getData(VcsDataKeys.COMMIT_WORKFLOW_HANDLER)
+        // Show the action when commit dialog is open, but enable only when there are files in staging
+        val commitWorkflowHandler = e.getData(VcsDataKeys.COMMIT_WORKFLOW_HANDLER) as? AbstractCommitWorkflowHandler<*, *>
         val hasActiveLlmClient = e.project?.service<ProjectSettings>()?.getSplitButtonActionSelectedOrActiveLLMClient() != null
+        val hasStagedFiles = commitWorkflowHandler?.ui?.getIncludedChanges()?.isNotEmpty() == true
 
-        e.presentation.isEnabledAndVisible = commitWorkflowHandler != null && hasActiveLlmClient
+        // Always visible when commit dialog is open and has LLM client
+        e.presentation.isVisible = commitWorkflowHandler != null && hasActiveLlmClient
+        // Enabled only when there are also staged files
+        e.presentation.isEnabled = e.presentation.isVisible && hasStagedFiles
     }
 
     override fun actionPerformed(e: AnActionEvent) {

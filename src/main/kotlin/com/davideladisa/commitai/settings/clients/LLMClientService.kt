@@ -48,12 +48,6 @@ abstract class LLMClientService<C : LLMClientConfiguration>(private val cs: Coro
                 }
 
                 val diff = computeDiff(includedChanges, false, project)
-                if (diff.isBlank()) {
-                    withContext(Dispatchers.EDT) {
-                        sendNotification(Notification.emptyDiff())
-                    }
-                    return@withBackgroundProgress
-                }
 
                 val branch = getCommonBranch(includedChanges, project)
                 val prompt = constructPrompt(project.service<ProjectSettings>().activePrompt.content, diff, branch, commitWorkflowHandler.getCommitMessage(), project)

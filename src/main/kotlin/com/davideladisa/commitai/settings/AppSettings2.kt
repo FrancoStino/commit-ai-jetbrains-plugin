@@ -98,7 +98,8 @@ class AppSettings2 : PersistentStateComponent<AppSettings2> {
 
     fun recordHit() {
         hits++
-        if (requestSupport && (hits == 50 || hits % 100 == 0)) {
+        // Show support notification less frequently: at 50 uses, then every 250 uses
+        if (requestSupport && (hits == 50 || (hits > 50 && hits % 250 == 0))) {
             sendNotification(Notification.star())
         }
     }
