@@ -31,6 +31,7 @@ enum class DefaultPrompts(val prompt: Prompt) {
             description = "Prompt for commit message in the conventional commit convention.",
             content = "Write a commit message in the conventional commit convention. I'll send you an output " +
                     "of 'git diff --staged' command, and you convert it into a commit message. " +
+                    "The subject should not contain the type and scope. " +
                     "Lines must not be longer than 74 characters. Use {locale} language to answer. " +
                     "End commit title with issue number if you can get it from the branch name: " +
                     "{branch} in parenthesis.\n" +
@@ -40,6 +41,7 @@ enum class DefaultPrompts(val prompt: Prompt) {
             isDefault = true,
             originalContent = "Write a commit message in the conventional commit convention. I'll send you an output " +
                     "of 'git diff --staged' command, and you convert it into a commit message. " +
+                    "The subject should not contain the type and scope. " +
                     "Lines must not be longer than 74 characters. Use {locale} language to answer. " +
                     "End commit title with issue number if you can get it from the branch name: " +
                     "{branch} in parenthesis.\n" +

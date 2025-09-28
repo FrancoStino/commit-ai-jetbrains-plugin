@@ -26,6 +26,7 @@ import dev.langchain4j.model.chat.StreamingChatModel
 import dev.langchain4j.model.chat.response.ChatResponse
 import dev.langchain4j.model.chat.response.StreamingChatResponseHandler
 import kotlinx.coroutines.*
+import kotlin.text.RegexOption
 
 abstract class LLMClientService<C : LLMClientConfiguration>(private val cs: CoroutineScope) {
 
@@ -54,7 +55,7 @@ abstract class LLMClientService<C : LLMClientConfiguration>(private val cs: Coro
 
                 makeRequest(clientConfiguration, prompt, onSuccess = {
                     withContext(Dispatchers.EDT) {
-                        clientConfiguration.setCommitMessage(commitWorkflowHandler, prompt, it)
+                        clientConfiguration.setCommitMessage(commitWorkflowHandler, prompt, cleanCommitMessage(it))
                     }
                     AppSettings2.instance.recordHit()
                 }, onError = {
@@ -170,5 +171,12 @@ abstract class LLMClientService<C : LLMClientConfiguration>(private val cs: Coro
                 emptyList()
             }
         }
+    }
+
+    private fun cleanCommitMessage(message: String): String {
+        return message
+            .replace("```", "")
+            .replace(Regex("<think>.*?</think>", RegexOption.DOT_MATCHES_ALL), "")
+            .trim()
     }
 }
