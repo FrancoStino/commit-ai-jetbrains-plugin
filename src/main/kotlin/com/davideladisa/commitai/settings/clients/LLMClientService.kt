@@ -173,8 +173,8 @@ abstract class LLMClientService<C : LLMClientConfiguration>(private val cs: Coro
 
     private fun cleanCommitMessage(message: String): String {
         return message
-            .replace("*", "")
-            .replace("`", "")
+            .replace("**", "")
+            .replace("```", "")
             .replace(Regex("<think>.*?</think>", RegexOption.DOT_MATCHES_ALL), "")
             .trim()
     }
