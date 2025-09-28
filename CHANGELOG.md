@@ -6,6 +6,27 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+#  (2025-09-28)
+
+
+
+# [1.4.0](https://github.com/FrancoStino/commit-ai-jetbrains-plugin/compare/1.3.0...1.4.0) (2025-09-28)
+
+
+### Bug Fixes
+
+* **ci:** replace main to master ([96ab97d](https://github.com/FrancoStino/commit-ai-jetbrains-plugin/commit/96ab97d4aa36e59a21a55f689b36ea1bec0e9d03))
+* clean commit messages ([eed2818](https://github.com/FrancoStino/commit-ai-jetbrains-plugin/commit/eed281830b82e08093256414d6e6f2f57ef2c22b))
+* enable action only ([8718283](https://github.com/FrancoStino/commit-ai-jetbrains-plugin/commit/8718283f8d6f6a82d94cb6355fc01250a4615f11))
+* update CHANGELOG.md for released version (master) ([cb8980a](https://github.com/FrancoStino/commit-ai-jetbrains-plugin/commit/cb8980a98cdaf575071cf573b5e55e90890d65fc))
+
+
+### Features
+
+* **settings:** remove ([851ca59](https://github.com/FrancoStino/commit-ai-jetbrains-plugin/commit/851ca59bb3c5a358f5c227f7b0b7eccbdb7dae87))
+
+
+
 
 ### Changed
 - Replace "Git diff is empty" alert notifications with UI state management
