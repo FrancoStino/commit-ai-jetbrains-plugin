@@ -1,16 +1,12 @@
 package com.davideladisa.commitai.settings
 
 import com.davideladisa.commitai.CommitAIUtils
-import com.davideladisa.commitai.CommitAIUtils.getCredentialAttributes
 import com.davideladisa.commitai.notifications.Notification
 import com.davideladisa.commitai.notifications.sendNotification
 import com.davideladisa.commitai.settings.clients.LLMClientConfiguration
 import com.davideladisa.commitai.settings.clients.pollinations.PollinationsClientConfiguration
 import com.davideladisa.commitai.settings.clients.groq.GroqClientConfiguration
 import com.davideladisa.commitai.settings.prompts.DefaultPrompts
-import com.intellij.credentialStore.CredentialAttributes
-import com.intellij.credentialStore.Credentials
-import com.intellij.ide.passwordSafe.PasswordSafe
 import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.components.PersistentStateComponent
 import com.intellij.openapi.components.Service

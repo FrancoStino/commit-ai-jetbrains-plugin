@@ -4,8 +4,6 @@ import com.davideladisa.commitai.CommitAIBundle.message
 import com.davideladisa.commitai.CommitAIUtils.computeDiff
 import com.davideladisa.commitai.CommitAIUtils.constructPrompt
 import com.davideladisa.commitai.CommitAIUtils.getCommonBranch
-import com.davideladisa.commitai.notifications.Notification
-import com.davideladisa.commitai.notifications.sendNotification
 import com.davideladisa.commitai.settings.AppSettings2
 import com.davideladisa.commitai.settings.ProjectSettings
 import com.davideladisa.commitai.wrap
@@ -175,7 +173,8 @@ abstract class LLMClientService<C : LLMClientConfiguration>(private val cs: Coro
 
     private fun cleanCommitMessage(message: String): String {
         return message
-            .replace("```", "")
+            .replace("*", "")
+            .replace("`", "")
             .replace(Regex("<think>.*?</think>", RegexOption.DOT_MATCHES_ALL), "")
             .trim()
     }
