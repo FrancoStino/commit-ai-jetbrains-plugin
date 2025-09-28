@@ -49,7 +49,6 @@ class AppSettingsConfigurable(val project: Project, cs: CoroutineScope) : BoundC
                     .component
             cell(isProjectSpecificLLMClientCheckBox)
                 .bindSelected(project.service<ProjectSettings>()::isProjectSpecificLLMClient)
-                .comment(message("settings.llmClient.projectSpecific.comment"))
             contextHelp(message("settings.llmClient.projectSpecific.contextHelp"))
         }
 
@@ -134,7 +133,6 @@ class AppSettingsConfigurable(val project: Project, cs: CoroutineScope) : BoundC
                 .component
             cell(isProjectSpecificPromptCheckBox)
                 .bindSelected(project.service<ProjectSettings>()::isProjectSpecificPrompt)
-                .comment(message("settings.prompt.projectSpecific.comment"))
             contextHelp(message("settings.prompt.projectSpecific.contextHelp"))
         }
         row {
