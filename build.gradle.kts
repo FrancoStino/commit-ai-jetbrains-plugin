@@ -76,7 +76,7 @@ intellijPlatform {
         }
         ideaVersion {
             sinceBuild = properties("pluginSinceBuild")
-            untilBuild = properties("pluginUntilBuild")
+            // untilBuild removed to support EAP versions
         }
     }
 
@@ -96,7 +96,8 @@ intellijPlatform {
 
     pluginVerification {
         ides {
-            recommended()
+            // Use specific IDE versions instead of recommended() to avoid missing versions
+            ide(providers.gradleProperty("platformType"), providers.gradleProperty("platformVersion"))
         }
     }
 }
