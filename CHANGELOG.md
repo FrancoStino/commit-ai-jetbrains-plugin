@@ -6,6 +6,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+#  (2025-09-30)
+
+
+### Features
+
+* **settings:** display client name and model ID in UI presentation ([99a359b](https://github.com/FrancoStino/commit-ai-jetbrains-plugin/commit/99a359b16da67919e39e97a679b837b62f313fd4))
+* update for eap ([5485aac](https://github.com/FrancoStino/commit-ai-jetbrains-plugin/commit/5485aac1fe6b47d1da7b677b936a9aed04264849))
+
+
+
 #  (2025-09-28)
 
 
