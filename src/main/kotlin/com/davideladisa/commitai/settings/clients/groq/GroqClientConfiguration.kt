@@ -68,4 +68,23 @@ class GroqClientConfiguration : LLMClientConfiguration(
     }
 
     override fun panel() = GroqClientPanel(this)
+
+    override fun equals(other: Any?): Boolean {
+        if (!super.equals(other)) return false
+        if (other !is GroqClientConfiguration) return false
+
+        return host == other.host &&
+                timeout == other.timeout &&
+                tokenIsStored == other.tokenIsStored &&
+                topP == other.topP
+    }
+
+    override fun hashCode(): Int {
+        var result = super.hashCode()
+        result = 31 * result + host.hashCode()
+        result = 31 * result + timeout
+        result = 31 * result + tokenIsStored.hashCode()
+        result = 31 * result + (topP?.hashCode() ?: 0)
+        return result
+    }
 }

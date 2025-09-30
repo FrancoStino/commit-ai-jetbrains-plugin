@@ -88,8 +88,11 @@ class LLMClientTable {
 
     fun editLlmClient(): Pair<LLMClientConfiguration, LLMClientConfiguration>? {
         val selectedLlmClient = table.selectedObject ?: return null
-        val dialog = LLMClientDialog(selectedLlmClient.clone())
+        val clonedClient = selectedLlmClient.clone()
+        val dialog = LLMClientDialog(clonedClient)
         if (dialog.showAndGet()) {
+            // The cloned client preserves the original ID, which is correct
+            // We need to ensure all references are updated in AppSettingsConfigurable
             updateLlmClients(llmClients - selectedLlmClient + dialog.llmClient)
             return selectedLlmClient to dialog.llmClient
         }
@@ -117,6 +120,7 @@ class LLMClientTable {
         var llmClient = newLlmClientConfiguration ?: llmClientConfigurations[0]
 
         private val cardLayout = JBCardLayout()
+        private var editPanel: DialogPanel? = null
 
         init {
             title = newLlmClientConfiguration?.let { "Edit LLM Client" } ?: "Add LLM Client"
@@ -125,17 +129,21 @@ class LLMClientTable {
         }
 
         override fun doOKAction() {
-            if (newLlmClientConfiguration == null) {
-                (cardLayout.findComponentById(llmClient.getClientName()) as DialogPanel).apply()
+            // Always apply changes from the panel before closing
+            val activePanel = if (newLlmClientConfiguration == null) {
+                cardLayout.findComponentById(llmClient.getClientName()) as DialogPanel
+            } else {
+                // In edit mode, use the stored panel reference
+                editPanel
             }
-            // TODO: Figure out how to call apply of the currently active panel
+            activePanel?.apply()
             super.doOKAction()
         }
 
         override fun createCenterPanel() = if (newLlmClientConfiguration == null) {
             createCardSplitter()
         } else {
-            llmClient.panel().create()
+            llmClient.panel().create().also { editPanel = it }
         }.apply {
             isResizable = true
             // Increased size for better usability and space for verification messages

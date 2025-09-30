@@ -30,56 +30,57 @@
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
     <extensions defaultExtensionNs="com.intellij">
         <projectConfigurable
-                parentId="tools"
-                instance="com.davideladisa.commitai.settings.AppSettingsConfigurable"
-                id="com.davideladisa.commitai.settings.AppSettingsConfigurable"
-                key="name"
+            parentId="tools"
+            instance="com.davideladisa.commitai.settings.AppSettingsConfigurable"
+            id="com.davideladisa.commitai.settings.AppSettingsConfigurable"
+            key="name"
         />
 
         <projectConfigurable
-                parentId="com.davideladisa.commitai.settings.AppSettingsConfigurable"
-                instance="com.davideladisa.commitai.settings.ExclusionsConfigurable"
-                id="com.davideladisa.commitai.settings.ExclusionsConfigurable"
-                key="settings.exclusions.group.title"
+            parentId="com.davideladisa.commitai.settings.AppSettingsConfigurable"
+            instance="com.davideladisa.commitai.settings.ExclusionsConfigurable"
+            id="com.davideladisa.commitai.settings.ExclusionsConfigurable"
+            key="settings.exclusions.group.title"
         />
 
         <notificationGroup
-                id="ai.commits.notification.general"
-                displayType="BALLOON"
-                key="notification.group.general.name"
+            id="ai.commits.notification.general"
+            displayType="BALLOON"
+            key="notification.group.general.name"
         />
         <notificationGroup
-                id="ai.commits.notification.important"
-                displayType="STICKY_BALLOON"
-                key="notification.group.important.name"
+            id="ai.commits.notification.important"
+            displayType="STICKY_BALLOON"
+            key="notification.group.important.name"
         />
         <postStartupActivity
-                implementation="com.davideladisa.commitai.listeners.ApplicationStartupListener"
+            implementation="com.davideladisa.commitai.listeners.ApplicationStartupListener"
         />
 
-        <checkinHandlerFactory implementation="com.davideladisa.commitai.CommitAICheckingHandlerFactory"/>
+        <checkinHandlerFactory
+            implementation="com.davideladisa.commitai.CommitAICheckingHandlerFactory"
+        />
 
     </extensions>
 
     <actions>
         <!-- Keyboard shortcut action that directly executes -->
-        <action
-                id="CommitAI"
-                class="com.davideladisa.commitai.CommitAIAction">
+        <action id="CommitAI" class="com.davideladisa.commitai.CommitAIAction">
 
             <keyboard-shortcut
-                    keymap="$default"
-                    first-keystroke="control alt C"
+                keymap="$default"
+                first-keystroke="control alt C"
             />
         </action>
 
         <!-- Button action with split dropdown -->
         <action
-                id="CommitAISplitButton"
-                icon="/META-INF/pluginIcon.svg"
-                class="com.davideladisa.commitai.CommitAISplitButtonAction">
+            id="CommitAISplitButton"
+            icon="/META-INF/pluginIcon.svg"
+            class="com.davideladisa.commitai.CommitAISplitButtonAction"
+        >
 
-            <add-to-group group-id="Vcs.MessageActionGroup" anchor="last"/>
+            <add-to-group group-id="Vcs.MessageActionGroup" anchor="last" />
         </action>
     </actions>
 

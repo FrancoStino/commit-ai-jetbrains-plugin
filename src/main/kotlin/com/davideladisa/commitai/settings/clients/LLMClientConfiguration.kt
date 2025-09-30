@@ -108,11 +108,22 @@ abstract class LLMClientConfiguration(
         // Allow overriding
     }
 
-//    override fun equals(other: Any?): Boolean {
-//        return other is LLMClientConfiguration && other.id == id
-//    }
-//
-//    override fun hashCode(): Int {
-//        return id.hashCode()
-//    }
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is LLMClientConfiguration) return false
+        if (other::class != this::class) return false
+
+        return id == other.id &&
+                name == other.name &&
+                modelId == other.modelId &&
+                temperature == other.temperature
+    }
+
+    override fun hashCode(): Int {
+        var result = id.hashCode()
+        result = 31 * result + name.hashCode()
+        result = 31 * result + modelId.hashCode()
+        result = 31 * result + temperature.hashCode()
+        return result
+    }
 }
