@@ -12,6 +12,7 @@ import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.components.service
 import com.intellij.openapi.project.DumbAware
+import com.intellij.openapi.project.Project
 import com.intellij.openapi.util.Disposer
 import com.intellij.openapi.vcs.VcsDataKeys
 import com.intellij.vcs.commit.AbstractCommitWorkflowHandler
@@ -46,8 +47,7 @@ class CommitAIAction : AnAction(), DumbAware, Disposable {
     override fun update(e: AnActionEvent) {
         // Show the action when commit dialog is open, but enable only when there are files in staging
         val commitWorkflowHandler = e.getData(VcsDataKeys.COMMIT_WORKFLOW_HANDLER) as? AbstractCommitWorkflowHandler<*, *>
-        val projectSettings = e.project?.service<ProjectSettings>()
-        val activeLlmClient = projectSettings?.getSplitButtonActionSelectedOrActiveLLMClient()
+        val activeLlmClient = getActiveLlmClient(e.project)
         val hasActiveLlmClient = activeLlmClient != null
         val hasStagedFiles = commitWorkflowHandler?.ui?.getIncludedChanges()?.isNotEmpty() == true
 
@@ -59,8 +59,7 @@ class CommitAIAction : AnAction(), DumbAware, Disposable {
         // Update icon to match the selected LLM client
         activeLlmClient?.let {
             // Get fresh configuration to ensure we have the latest data
-            val freshClient = AppSettings2.instance.llmClientConfigurations
-                .filterNotNull()
+            val freshClient = AppSettings2.instance.llmClientConfigurations.toList()
                 .find { config -> config.id == it.id } ?: it
 
             e.presentation.icon = freshClient.getClientIcon()
@@ -71,8 +70,7 @@ class CommitAIAction : AnAction(), DumbAware, Disposable {
     override fun actionPerformed(e: AnActionEvent) {
         val project = e.project ?: return
 
-        val projectSettings = project.service<ProjectSettings>()
-        val llmClient = projectSettings.getSplitButtonActionSelectedOrActiveLLMClient()
+        val llmClient = getActiveLlmClient(project)
 
         if (llmClient == null) {
             Notification.clientNotSet()
@@ -94,9 +92,13 @@ class CommitAIAction : AnAction(), DumbAware, Disposable {
         }
 
         // Remember which LLM client was used for the shortcut action
+        val projectSettings = project.service<ProjectSettings>()
         projectSettings.splitButtonActionSelectedLLMClientId = llmClient.id
 
         llmClient.generateCommitMessage(commitWorkflowHandler, project)
     }
+
+    private fun getActiveLlmClient(project: Project?) =
+        project?.service<ProjectSettings>()?.getSplitButtonActionSelectedOrActiveLLMClient()
 
 }

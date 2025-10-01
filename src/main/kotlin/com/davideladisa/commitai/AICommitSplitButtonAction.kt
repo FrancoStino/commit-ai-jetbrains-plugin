@@ -18,8 +18,7 @@ class CommitAISplitButtonAction : SplitButtonAction(object : ActionGroup() {
 
     override fun getChildren(e: AnActionEvent?): Array<AnAction> {
         // Always get fresh configurations from AppSettings2
-        val configurations = AppSettings2.instance.llmClientConfigurations
-            .filterNotNull()
+        val configurations = AppSettings2.instance.llmClientConfigurations.toList()
             .sortedWith(
                 compareBy<LLMClientConfiguration> {
                     it.id != AppSettings2.instance.activeLlmClientId
@@ -116,16 +115,31 @@ class CommitAISplitButtonAction : SplitButtonAction(object : ActionGroup() {
         e.presentation.isEnabled = e.presentation.isVisible && hasStagedFiles
 
         // Update icon and text to match the selected LLM client
-        activeLlmClient?.let {
-            // Get fresh configuration to ensure we have the latest data
-            val freshClient = AppSettings2.instance.llmClientConfigurations
-                .filterNotNull()
-                .find { config -> config.id == it.id } ?: it
-
-            e.presentation.icon = freshClient.getClientIcon()
-            e.presentation.text = "Generate Commit Message (${freshClient.getClientName()}: ${freshClient.modelId})"
+        activeLlmClient?.let { client ->
+            updatePresentationWithFreshClient(e.presentation, client.id)
         }
     }
+
+    /**
+     * Updates presentation with fresh LLM client configuration data.
+     * Extracted to avoid code duplication.
+     */
+    private fun updatePresentationWithFreshClient(presentation: Presentation, clientId: String) {
+        val freshClient = getFreshLLMClient(clientId)
+        freshClient?.let {
+            presentation.icon = it.getClientIcon()
+            presentation.text = "Generate Commit Message (${it.getClientName()}: ${it.modelId})"
+        }
+    }
+}
+
+/**
+ * Retrieves fresh LLM client configuration by ID.
+ * Extracted helper function to eliminate code duplication.
+ */
+private fun getFreshLLMClient(clientId: String): LLMClientConfiguration? {
+    return AppSettings2.instance.llmClientConfigurations.toList()
+        .find { it.id == clientId }
 }
 
 /**
@@ -138,9 +152,7 @@ private class LLMClientWrapperAction(private val clientId: String) : AnAction(),
         val project = e.project ?: return
 
         // Get fresh configuration
-        val freshClient = AppSettings2.instance.llmClientConfigurations
-            .filterNotNull()
-            .find { it.id == clientId }
+        val freshClient = getFreshLLMClient(clientId)
 
         if (freshClient != null) {
             // Store this selection for the session
@@ -154,9 +166,7 @@ private class LLMClientWrapperAction(private val clientId: String) : AnAction(),
 
     override fun update(e: AnActionEvent) {
         // Always get fresh client configuration
-        val freshClient = AppSettings2.instance.llmClientConfigurations
-            .filterNotNull()
-            .find { it.id == clientId }
+        val freshClient = getFreshLLMClient(clientId)
 
         if (freshClient != null) {
             // Update presentation with fresh data
