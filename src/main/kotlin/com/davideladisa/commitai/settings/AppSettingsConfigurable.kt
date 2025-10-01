@@ -65,14 +65,30 @@ class AppSettingsConfigurable(val project: Project, cs: CoroutineScope) : BoundC
                     }
                 }
                 .setEditAction {
-                    llmClientTable.editLlmClient()?.let {
-                        val editingActive = llmClientConfigurationComboBox.selectedItem == it.first
-                        llmClientConfigurationComboBox.removeItem(it.first)
-                        llmClientConfigurationComboBox.addItem(it.second)
-
-                        if (editingActive) {
-                            llmClientConfigurationComboBox.selectedItem = it.second
+                    llmClientTable.editLlmClient()?.let { (oldClient, newClient) ->
+                        // Check if we're editing the active client
+                        val wasActive = llmClientConfigurationComboBox.selectedItem == oldClient
+                        val wasActiveById = if (projectSettings.isProjectSpecificLLMClient) {
+                            projectSettings.activeLlmClientId == oldClient.id
+                        } else {
+                            AppSettings2.instance.activeLlmClientId == oldClient.id
                         }
+
+                        // Update combo box
+                        llmClientConfigurationComboBox.removeItem(oldClient)
+                        llmClientConfigurationComboBox.addItem(newClient)
+
+                        // Restore selection if it was active
+                        if (wasActive || wasActiveById) {
+                            llmClientConfigurationComboBox.selectedItem = newClient
+                            // Update the stored ID reference
+                            if (projectSettings.isProjectSpecificLLMClient) {
+                                projectSettings.activeLlmClientId = newClient.id
+                            } else {
+                                AppSettings2.instance.activeLlmClientId = newClient.id
+                            }
+                        }
+
                     }
                 }
                 .setRemoveAction {
@@ -85,7 +101,7 @@ class AppSettingsConfigurable(val project: Project, cs: CoroutineScope) : BoundC
             cell(llmClientToolbarDecorator.createPanel())
                 .align(Align.FILL)
         }.resizableRow()
-        
+
         row {
             browserLink(message("settings.more-llm-clients"), CommitAIBundle.URL_LLM_CLIENTS_DISCUSSION.toString())
                 .align(AlignX.RIGHT)
@@ -224,12 +240,47 @@ class AppSettingsConfigurable(val project: Project, cs: CoroutineScope) : BoundC
         promptTable.apply()
         llmClientTable.apply()
         super.apply()
+
+        // Refresh the combo box to reflect any changes made to LLM clients
+        refreshLLMClientComboBox()
     }
 
     override fun reset() {
         promptTable.reset()
         llmClientTable.reset()
         super.reset()
+
+        // Refresh the combo box to reflect reset state
+        refreshLLMClientComboBox()
+    }
+
+    private fun refreshLLMClientComboBox() {
+        // Clear and repopulate the combo box with current configurations
+        llmClientConfigurationComboBox.removeAllItems()
+
+        val sortedClients = AppSettings2.instance.llmClientConfigurations
+            .filterNotNull()
+            .sortedBy { it.name }
+
+        sortedClients.forEach { llmClientConfigurationComboBox.addItem(it) }
+
+        // Restore the selected item based on current active ID
+        val activeClient = if (projectSettings.isProjectSpecificLLMClient) {
+            AppSettings2.instance.getActiveLLMClientConfiguration(projectSettings.activeLlmClientId)
+        } else {
+            AppSettings2.instance.getActiveLLMClientConfiguration()
+        }
+
+        activeClient?.let { active ->
+            // Find the matching client in the combo box by ID
+            for (i in 0 until llmClientConfigurationComboBox.itemCount) {
+                val item = llmClientConfigurationComboBox.getItemAt(i)
+                if (item?.id == active.id) {
+                    llmClientConfigurationComboBox.selectedIndex = i
+                    break
+                }
+            }
+        }
     }
 
 }
