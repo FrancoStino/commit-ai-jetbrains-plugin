@@ -49,25 +49,19 @@ class CommitAISplitButtonAction : SplitButtonAction(object : ActionGroup() {
     }
 }), DumbAware, Disposable {
 
+    // Cache the main action and invalidate when settings change
+    private var cachedMainAction: AnAction? = null
+    private var cachedActiveClientId: String? = null
+
     init {
         // Listen for LLM client settings changes to force update
         val connection = ApplicationManager.getApplication().messageBus.connect(this)
         connection.subscribe(LLMClientSettingsChangeNotifier.TOPIC, object : LLMClientSettingsChangeNotifier {
             override fun settingsChanged() {
-                // Force complete recreation of the split button
+                // Invalidate cached main action when settings change
                 ApplicationManager.getApplication().invokeLater {
-                    // Clear template presentation to force refresh
-                    templatePresentation.text = null
-                    templatePresentation.icon = null
-                    templatePresentation.description = null
-
-                    // Force the action manager to update this action
-                    ActionManager.getInstance().getAction("CommitAISplitButton")?.let { action ->
-                        if (action is CommitAISplitButtonAction) {
-                            // Clear any cached state to force refresh on next update
-                            action.templatePresentation.isEnabledAndVisible = true
-                        }
-                    }
+                    cachedMainAction = null
+                    cachedActiveClientId = null
                 }
             }
         })
@@ -92,11 +86,20 @@ class CommitAISplitButtonAction : SplitButtonAction(object : ActionGroup() {
     override fun getMainAction(e: AnActionEvent): AnAction? {
         // Get the active client and return a wrapper action with its ID
         val projectSettings = e.project?.service<ProjectSettings>()
-        val activeClient = projectSettings?.getSplitButtonActionSelectedOrActiveLLMClient()
+        
+        // Force using only the active client from settings, ignore session selection
+        val activeClient = projectSettings?.getActiveLLMClientConfiguration()
             ?: AppSettings2.instance.getActiveLLMClientConfiguration()
 
-        // Return a fresh wrapper action for the active client
-        return activeClient?.let { LLMClientWrapperAction(it.id) }
+        // Check if we need to create a new action
+        val currentActiveClientId = activeClient?.id
+        if (cachedMainAction == null || cachedActiveClientId != currentActiveClientId) {
+            // Create new action and cache it
+            cachedMainAction = activeClient?.let { LLMClientWrapperAction(it.id) }
+            cachedActiveClientId = currentActiveClientId
+        }
+
+        return cachedMainAction
     }
 
     override fun update(e: AnActionEvent) {
@@ -105,7 +108,10 @@ class CommitAISplitButtonAction : SplitButtonAction(object : ActionGroup() {
         // Show the action when commit dialog is open, but enable only when there are files in staging
         val commitWorkflowHandler = e.getData(VcsDataKeys.COMMIT_WORKFLOW_HANDLER) as? AbstractCommitWorkflowHandler<*, *>
         val projectSettings = e.project?.service<ProjectSettings>()
-        val activeLlmClient = projectSettings?.getSplitButtonActionSelectedOrActiveLLMClient()
+        
+        // Use only the active client from settings, ignore session selection
+        val activeLlmClient = projectSettings?.getActiveLLMClientConfiguration()
+            ?: AppSettings2.instance.getActiveLLMClientConfiguration()
         val hasActiveLlmClient = activeLlmClient != null
         val hasStagedFiles = commitWorkflowHandler?.ui?.getIncludedChanges()?.isNotEmpty() == true
 
@@ -151,16 +157,14 @@ private class LLMClientWrapperAction(private val clientId: String) : AnAction(),
     override fun actionPerformed(e: AnActionEvent) {
         val project = e.project ?: return
 
-        // Get fresh configuration
-        val freshClient = getFreshLLMClient(clientId)
+        // Instead of using the cached clientId, get the currently active client from settings
+        val projectSettings = project.service<ProjectSettings>()
+        val currentActiveClient = projectSettings.getActiveLLMClientConfiguration()
+            ?: AppSettings2.instance.getActiveLLMClientConfiguration()
 
-        if (freshClient != null) {
-            // Store this selection for the session
-            val projectSettings = project.service<ProjectSettings>()
-            projectSettings.splitButtonActionSelectedLLMClientId = clientId
-
-            // Execute with fresh client
-            freshClient.execute(e)
+        if (currentActiveClient != null) {
+            // Always use the current active client, not the cached ID
+            currentActiveClient.execute(e)
         }
     }
 

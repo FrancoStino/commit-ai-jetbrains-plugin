@@ -78,10 +78,6 @@ abstract class LLMClientConfiguration(
             return
         }
 
-        // Remember which LLM client was used for the shortcut action
-        val projectSettings = project.service<ProjectSettings>()
-        projectSettings.splitButtonActionSelectedLLMClientId = this.id
-
         generateCommitMessage(commitWorkflowHandler, project)
     }
 
