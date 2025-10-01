@@ -7,7 +7,6 @@ import com.davideladisa.commitai.settings.clients.LLMClientConfiguration
 import com.davideladisa.commitai.settings.clients.LLMClientTable
 import com.davideladisa.commitai.settings.prompts.Prompt
 import com.davideladisa.commitai.settings.prompts.PromptTable
-import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.components.service
 import com.intellij.openapi.options.BoundConfigurable
 import com.intellij.openapi.project.Project
@@ -90,10 +89,6 @@ class AppSettingsConfigurable(val project: Project, cs: CoroutineScope) : BoundC
                             }
                         }
 
-                        // Update split button selected ID if it was pointing to the old client
-                        if (projectSettings.splitButtonActionSelectedLLMClientId == oldClient.id) {
-                            projectSettings.splitButtonActionSelectedLLMClientId = newClient.id
-                        }
                     }
                 }
                 .setRemoveAction {
@@ -208,14 +203,6 @@ class AppSettingsConfigurable(val project: Project, cs: CoroutineScope) : BoundC
             } else {
                 AppSettings2.instance.activeLlmClientId = it.id
             }
-
-            // Clear the session-specific selection so it falls back to the new active client
-            project.service<ProjectSettings>().splitButtonActionSelectedLLMClientId = null
-
-            // Notify immediately when LLM client selection changes
-            ApplicationManager.getApplication().messageBus
-                .syncPublisher(LLMClientSettingsChangeNotifier.TOPIC)
-                .settingsChanged()
         }
     }
 
@@ -254,22 +241,8 @@ class AppSettingsConfigurable(val project: Project, cs: CoroutineScope) : BoundC
         llmClientTable.apply()
         super.apply()
 
-        // Clear the session-specific selection when settings are applied
-        project.service<ProjectSettings>().splitButtonActionSelectedLLMClientId = null
-
         // Refresh the combo box to reflect any changes made to LLM clients
         refreshLLMClientComboBox()
-
-        // Notify all listeners that settings have changed
-        ApplicationManager.getApplication().messageBus
-            .syncPublisher(LLMClientSettingsChangeNotifier.TOPIC)
-            .settingsChanged()
-
-        // Force update of all actions to reflect changes immediately
-        ApplicationManager.getApplication().invokeLater {
-            // Actions will be refreshed automatically when the UI is updated
-            // The notification system will handle the refresh
-        }
     }
 
     override fun reset() {

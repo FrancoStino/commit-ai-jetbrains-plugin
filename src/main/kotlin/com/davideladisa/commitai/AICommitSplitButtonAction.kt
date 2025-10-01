@@ -1,7 +1,6 @@
 package com.davideladisa.commitai
 
 import com.davideladisa.commitai.settings.AppSettings2
-import com.davideladisa.commitai.settings.LLMClientSettingsChangeNotifier
 import com.davideladisa.commitai.settings.ProjectSettings
 import com.davideladisa.commitai.settings.clients.LLMClientConfiguration
 import com.intellij.icons.AllIcons
@@ -49,23 +48,7 @@ class CommitAISplitButtonAction : SplitButtonAction(object : ActionGroup() {
     }
 }), DumbAware, Disposable {
 
-    // Cache the main action and invalidate when settings change
-    private var cachedMainAction: AnAction? = null
-    private var cachedActiveClientId: String? = null
-
     init {
-        // Listen for LLM client settings changes to force update
-        val connection = ApplicationManager.getApplication().messageBus.connect(this)
-        connection.subscribe(LLMClientSettingsChangeNotifier.TOPIC, object : LLMClientSettingsChangeNotifier {
-            override fun settingsChanged() {
-                // Invalidate cached main action when settings change
-                ApplicationManager.getApplication().invokeLater {
-                    cachedMainAction = null
-                    cachedActiveClientId = null
-                }
-            }
-        })
-
         // Register for disposal when the action is no longer needed
         Disposer.register(ApplicationManager.getApplication(), this)
     }
@@ -87,19 +70,12 @@ class CommitAISplitButtonAction : SplitButtonAction(object : ActionGroup() {
         // Get the active client and return a wrapper action with its ID
         val projectSettings = e.project?.service<ProjectSettings>()
         
-        // Force using only the active client from settings, ignore session selection
+        // Always create fresh action from current settings
         val activeClient = projectSettings?.getActiveLLMClientConfiguration()
             ?: AppSettings2.instance.getActiveLLMClientConfiguration()
 
-        // Check if we need to create a new action
-        val currentActiveClientId = activeClient?.id
-        if (cachedMainAction == null || cachedActiveClientId != currentActiveClientId) {
-            // Create new action and cache it
-            cachedMainAction = activeClient?.let { LLMClientWrapperAction(it.id) }
-            cachedActiveClientId = currentActiveClientId
-        }
-
-        return cachedMainAction
+        // Return a fresh wrapper action for the active client
+        return activeClient?.let { LLMClientWrapperAction(it.id) }
     }
 
     override fun update(e: AnActionEvent) {
