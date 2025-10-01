@@ -6,6 +6,27 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+#  (2025-10-01)
+
+
+
+# [1.5.0](https://github.com/FrancoStino/commit-ai-jetbrains-plugin/compare/1.4.1...1.5.0) (2025-10-01)
+
+
+### Bug Fixes
+
+* Adjust logo size in README (develop) ([fb28622](https://github.com/FrancoStino/commit-ai-jetbrains-plugin/commit/fb28622e327bb7d91275446f7d15743423b95273))
+* Update dependabot target branch to master (develop) ([963f7ab](https://github.com/FrancoStino/commit-ai-jetbrains-plugin/commit/963f7ab93ce292f01273d3e90362a53553f659b3))
+
+
+### Features
+
+* Improve LLM client settings synchronization and UI updates (develop) ([2bb011d](https://github.com/FrancoStino/commit-ai-jetbrains-plugin/commit/2bb011dc11b9b348e00922b25495eaee91aca244))
+* Increment plugin version to 1.5.0 (develop) ([37a1c72](https://github.com/FrancoStino/commit-ai-jetbrains-plugin/commit/37a1c729e45bd54e27f9fb88fbde0a825587c14d))
+* Refactor LLM client selection and caching (develop) ([97dd548](https://github.com/FrancoStino/commit-ai-jetbrains-plugin/commit/97dd548fd85f443bef61b4479cc42a4accef2ee1))
+
+
+
 #  (2025-09-30)
 
 
