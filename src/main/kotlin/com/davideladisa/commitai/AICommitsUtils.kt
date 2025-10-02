@@ -86,11 +86,11 @@ object CommitAIUtils {
     }
 
     fun replaceHint(promptContent: String, hint: String?): String {
-        val hintRegex = Regex("\\{[^{}]*(\\\$hint)[^{}]*}")
+        val hintRegex = Regex("\\{[^{}]*(\\$hint)[^{}]*}")
 
         hintRegex.find(promptContent, 0)?.let {
             if (!hint.isNullOrBlank()) {
-                var hintValue = it.value.replace("\$hint", hint)
+                var hintValue = it.value.replace($$"$hint", hint)
                 hintValue = hintValue.replace("{", "")
                 hintValue = hintValue.replace("}", "")
                 return promptContent.replace(it.value, hintValue)
@@ -126,7 +126,7 @@ object CommitAIUtils {
                     branches.add(branch)
                 }
             }
-            branches.groupingBy<String, String> { it }.eachCount().maxByOrNull { it.value }?.key
+            branches.groupingBy { it }.eachCount().maxByOrNull { it.value }?.key
         }
     }
 
@@ -178,13 +178,13 @@ object CommitAIUtils {
             normalizedUrl.contains("/branches/") -> {
                 val branchPart = url.substringAfter("/branches/")
                 val endIndex = branchPart.indexOf('/')
-                if (endIndex > 0) branchPart.substring(0, endIndex) else branchPart
+                if (endIndex > 0) branchPart.take(endIndex) else branchPart
             }
 
             normalizedUrl.contains("/tags/") -> {
                 val tagPart = url.substringAfter("/tags/")
                 val endIndex = tagPart.indexOf('/')
-                if (endIndex > 0) "tag: ${tagPart.substring(0, endIndex)}" else "tag: $tagPart"
+                if (endIndex > 0) "tag: ${tagPart.take(endIndex)}" else "tag: $tagPart"
             }
 
             normalizedUrl.contains("/trunk") -> "trunk"
