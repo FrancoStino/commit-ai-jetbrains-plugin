@@ -3,8 +3,7 @@ package com.davideladisa.commitai.settings.clients
 import com.davideladisa.commitai.CommitAIBundle.message
 import com.davideladisa.commitai.createColumn
 import com.davideladisa.commitai.settings.AppSettings2
-import com.davideladisa.commitai.settings.clients.groq.GroqClientConfiguration
-import com.davideladisa.commitai.settings.clients.pollinations.PollinationsClientConfiguration
+import com.intellij.openapi.extensions.ExtensionPointName
 import com.intellij.openapi.ui.DialogPanel
 import com.intellij.openapi.ui.DialogWrapper
 import com.intellij.openapi.ui.Splitter
@@ -152,11 +151,9 @@ class LLMClientTable {
 
         private fun getLlmClients(newLLMClientConfiguration: LLMClientConfiguration?): List<LLMClientConfiguration> {
             return if (newLLMClientConfiguration == null) {
-                // TODO(@FrancoStino): Is there a better way to create the list of all possible LLM Clients that implement LLMClient abstract class
-                listOf(
-                    PollinationsClientConfiguration(),
-                    GroqClientConfiguration()
-                ).sortedBy { if (it.getClientName() == "Pollinations") 0 else 1 }
+                val epName =
+                    ExtensionPointName.create<LLMClientConfiguration>("com.davideladisa.commit-ai.llmClientConfiguration")
+                epName.extensionList
             } else {
                 listOf(newLLMClientConfiguration)
             }
