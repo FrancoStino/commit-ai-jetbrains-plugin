@@ -86,18 +86,7 @@ object CommitAIUtils {
     }
 
     fun replaceHint(promptContent: String, hint: String?): String {
-        val hintRegex = Regex("\\{[^{}]*(\\$hint)[^{}]*}")
-
-        hintRegex.find(promptContent, 0)?.let {
-            if (!hint.isNullOrBlank()) {
-                var hintValue = it.value.replace($$"$hint", hint)
-                hintValue = hintValue.replace("{", "")
-                hintValue = hintValue.replace("}", "")
-                return promptContent.replace(it.value, hintValue)
-            } else {
-                return promptContent.replace(it.value, "")
-            }
-        }
+        // For now, only support the simple {hint} placeholder to avoid regex issues.
         return promptContent.replace("{hint}", hint.orEmpty())
     }
 
