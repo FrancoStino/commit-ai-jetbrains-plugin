@@ -75,7 +75,7 @@ class CommitAISplitButtonAction : SplitButtonAction(object : ActionGroup() {
             ?: AppSettings2.instance.getActiveLLMClientConfiguration()
 
         // Return a fresh wrapper action for the active client
-        return activeClient?.let { LLMClientWrapperAction(it.id) }
+        return activeClient?.let { LLMClientWrapperAction(it.id, isMainAction = true) }
     }
 
     override fun update(e: AnActionEvent) {
@@ -128,20 +128,25 @@ private fun getFreshLLMClient(clientId: String): LLMClientConfiguration? {
  * Wrapper action that always fetches fresh LLM client configuration.
  * This ensures the action always uses the latest configuration data.
  */
-private class LLMClientWrapperAction(private val clientId: String) : AnAction(), DumbAware {
+private class LLMClientWrapperAction(
+    private val clientId: String,
+    private val isMainAction: Boolean = false
+) : AnAction(), DumbAware {
 
     override fun actionPerformed(e: AnActionEvent) {
         val project = e.project ?: return
 
-        // Instead of using the cached clientId, get the currently active client from settings
-        val projectSettings = project.service<ProjectSettings>()
-        val currentActiveClient = projectSettings.getActiveLLMClientConfiguration()
-            ?: AppSettings2.instance.getActiveLLMClientConfiguration()
-
-        if (currentActiveClient != null) {
-            // Always use the current active client, not the cached ID
-            currentActiveClient.execute(e)
+        val clientToExecute = if (isMainAction) {
+            // For main action, always get the currently active client
+            val projectSettings = project.service<ProjectSettings>()
+            projectSettings.getActiveLLMClientConfiguration()
+                ?: AppSettings2.instance.getActiveLLMClientConfiguration()
+        } else {
+            // For child actions, use the client specified by clientId
+            getFreshLLMClient(clientId)
         }
+
+        clientToExecute?.execute(e)
     }
 
     override fun update(e: AnActionEvent) {
@@ -164,11 +169,12 @@ private class LLMClientWrapperAction(private val clientId: String) : AnAction(),
     }
 
     override fun equals(other: Any?): Boolean {
-        return other is LLMClientWrapperAction && other.clientId == clientId
+        if (other !is LLMClientWrapperAction) return false
+        return other.clientId == clientId && other.isMainAction == isMainAction
     }
 
     override fun hashCode(): Int {
-        return clientId.hashCode()
+        return clientId.hashCode() * 31 + isMainAction.hashCode()
     }
 }
 

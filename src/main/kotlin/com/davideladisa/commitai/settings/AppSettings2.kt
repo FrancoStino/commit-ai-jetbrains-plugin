@@ -4,8 +4,8 @@ import com.davideladisa.commitai.CommitAIUtils
 import com.davideladisa.commitai.notifications.Notification
 import com.davideladisa.commitai.notifications.sendNotification
 import com.davideladisa.commitai.settings.clients.LLMClientConfiguration
-import com.davideladisa.commitai.settings.clients.pollinations.PollinationsClientConfiguration
 import com.davideladisa.commitai.settings.clients.groq.GroqClientConfiguration
+import com.davideladisa.commitai.settings.clients.pollinations.PollinationsClientConfiguration
 import com.davideladisa.commitai.settings.prompts.DefaultPrompts
 import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.components.PersistentStateComponent
@@ -114,12 +114,12 @@ class AppSettings2 : PersistentStateComponent<AppSettings2> {
             ?: validConfigurations.firstOrNull()
     }
 
-    fun setActiveLlmClient(newId: String) {
-        // TODO @FrancoStino: Throw exception if llm client id is not valid
-        llmClientConfigurations.filterNotNull().find { it.id == newId }?.let {
-            activeLlmClientId = newId
-        }
-    }
+//    fun setActiveLlmClient(newId: String) {
+//        // TODO @FrancoStino: Throw exception if llm client id is not valid
+//        llmClientConfigurations.filterNotNull().find { it.id == newId }?.let {
+//            activeLlmClientId = newId
+//        }
+//    }
 
     class LocaleConverter : Converter<Locale>() {
         override fun toString(value: Locale): String? {
