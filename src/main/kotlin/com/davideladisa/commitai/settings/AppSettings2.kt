@@ -72,7 +72,7 @@ class AppSettings2 : PersistentStateComponent<AppSettings2> {
 
     override fun loadState(state: AppSettings2) {
         XmlSerializerUtil.copyBean(state, this)
-        llmClientConfigurations.filterNotNull().forEach { it.afterSerialization() }
+        llmClientConfigurations.toList().forEach { it.afterSerialization() }
     }
 
     override fun noStateLoaded() {
@@ -95,7 +95,7 @@ class AppSettings2 : PersistentStateComponent<AppSettings2> {
     fun recordHit() {
         hits++
         // Show support notification less frequently: at 50 uses, then every 250 uses
-        if (requestSupport && (hits == 50 || (hits > 50 && hits % 250 == 0))) {
+        if (requestSupport && (hits == 50 || hits > 50 && hits % 250 == 0)) {
             sendNotification(Notification.star())
         }
     }
@@ -109,17 +109,17 @@ class AppSettings2 : PersistentStateComponent<AppSettings2> {
     }
 
     fun getActiveLLMClientConfiguration(activeLLMClientConfigurationId: String?): LLMClientConfiguration? {
-        val validConfigurations = llmClientConfigurations.filterNotNull()
+        val validConfigurations = llmClientConfigurations.toList()
         return validConfigurations.find { it.id == activeLLMClientConfigurationId }
             ?: validConfigurations.firstOrNull()
     }
 
-//    fun setActiveLlmClient(newId: String) {
-//        // TODO @FrancoStino: Throw exception if llm client id is not valid
-//        llmClientConfigurations.filterNotNull().find { it.id == newId }?.let {
-//            activeLlmClientId = newId
-//        }
-//    }
+    fun setActiveLlmClient(newId: String) {
+        // TODO @FrancoStino: Throw exception if llm client id is not valid
+        llmClientConfigurations.filterNotNull().find { it.id == newId }?.let {
+            activeLlmClientId = newId
+        }
+    }
 
     class LocaleConverter : Converter<Locale>() {
         override fun toString(value: Locale): String? {
