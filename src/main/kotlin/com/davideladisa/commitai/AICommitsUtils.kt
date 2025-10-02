@@ -51,13 +51,19 @@ object CommitAIUtils {
         content = replaceBranch(content, branch)
         content = replaceHint(content, hint)
 
-        // TODO @FrancoStino: If TaskManager is null, the prompt might be incorrect...
-        TaskManager.getManager(project)?.let {
-            val activeTask = it.activeTask
+        // If TaskManager is not available, remove the placeholders to avoid an incorrect prompt
+        val taskManager = TaskManager.getManager(project)
+        if (taskManager != null) {
+            val activeTask = taskManager.activeTask
             content = content.replace("{taskId}", activeTask.id)
             content = content.replace("{taskSummary}", activeTask.summary)
             content = content.replace("{taskDescription}", activeTask.description.orEmpty())
             content = content.replace("{taskTimeSpent}", DateFormatUtil.formatTime(activeTask.totalTimeSpent))
+        } else {
+            content = content.replace("{taskId}", "")
+            content = content.replace("{taskSummary}", "")
+            content = content.replace("{taskDescription}", "")
+            content = content.replace("{taskTimeSpent}", "")
         }
 
         return if (content.contains("{diff}")) {
