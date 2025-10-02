@@ -114,13 +114,6 @@ class AppSettings2 : PersistentStateComponent<AppSettings2> {
             ?: validConfigurations.firstOrNull()
     }
 
-    fun setActiveLlmClient(newId: String) {
-        // TODO @FrancoStino: Throw exception if llm client id is not valid
-        llmClientConfigurations.filterNotNull().find { it.id == newId }?.let {
-            activeLlmClientId = newId
-        }
-    }
-
     class LocaleConverter : Converter<Locale>() {
         override fun toString(value: Locale): String? {
             return value.toLanguageTag()
