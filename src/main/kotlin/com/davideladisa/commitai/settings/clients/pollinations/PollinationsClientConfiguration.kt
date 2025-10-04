@@ -1,15 +1,15 @@
 package com.davideladisa.commitai.settings.clients.pollinations
 
 import com.davideladisa.commitai.Icons
+import com.davideladisa.commitai.settings.clients.BaseRestLLMClientConfiguration
 import com.davideladisa.commitai.settings.clients.LLMClientConfiguration
 import com.intellij.openapi.project.Project
 import com.intellij.util.xmlb.annotations.Attribute
-import com.intellij.util.xmlb.annotations.Transient
 import com.intellij.vcs.commit.AbstractCommitWorkflowHandler
 import kotlinx.coroutines.Job
 import javax.swing.Icon
 
-class PollinationsClientConfiguration : LLMClientConfiguration(
+class PollinationsClientConfiguration : BaseRestLLMClientConfiguration(
     "openai-large",
     "openai-large",
     "0.7"
@@ -17,18 +17,9 @@ class PollinationsClientConfiguration : LLMClientConfiguration(
 
     init {
         templatePresentation.text = "${getClientName()}: $modelId"
+        host = "https://text.pollinations.ai/openai"
     }
 
-    @Attribute
-    var host: String = "https://text.pollinations.ai/openai"
-    @Attribute
-    var timeout: Int = 30
-    @Attribute
-    var tokenIsStored: Boolean = false
-    @Transient
-    var token: String? = null
-    @Attribute
-    var topP: Double? = null
     @Attribute
     var seed: Int = (0..Int.MAX_VALUE).random()
 
@@ -58,14 +49,7 @@ class PollinationsClientConfiguration : LLMClientConfiguration(
 
     override fun clone(): LLMClientConfiguration {
         val copy = PollinationsClientConfiguration()
-        copy.id = id
-        copy.name = name
-        copy.host = host
-        copy.timeout = timeout
-        copy.modelId = modelId
-        copy.temperature = temperature
-        copy.tokenIsStored = tokenIsStored
-        copy.topP = topP
+        copyFieldsTo(copy)
         copy.seed = seed
         return copy
     }
@@ -76,19 +60,11 @@ class PollinationsClientConfiguration : LLMClientConfiguration(
         if (!super.equals(other)) return false
         if (other !is PollinationsClientConfiguration) return false
 
-        return host == other.host &&
-                timeout == other.timeout &&
-                tokenIsStored == other.tokenIsStored &&
-                topP == other.topP &&
-                seed == other.seed
+        return seed == other.seed
     }
 
     override fun hashCode(): Int {
         var result = super.hashCode()
-        result = 31 * result + host.hashCode()
-        result = 31 * result + timeout
-        result = 31 * result + tokenIsStored.hashCode()
-        result = 31 * result + (topP?.hashCode() ?: 0)
         result = 31 * result + seed
         return result
     }

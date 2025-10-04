@@ -51,13 +51,19 @@ object CommitAIUtils {
         content = replaceBranch(content, branch)
         content = replaceHint(content, hint)
 
-        // TODO @FrancoStino: If TaskManager is null, the prompt might be incorrect...
-        TaskManager.getManager(project)?.let {
-            val activeTask = it.activeTask
+        // If TaskManager is not available, remove the placeholders to avoid an incorrect prompt
+        val taskManager = TaskManager.getManager(project)
+        if (taskManager != null) {
+            val activeTask = taskManager.activeTask
             content = content.replace("{taskId}", activeTask.id)
             content = content.replace("{taskSummary}", activeTask.summary)
             content = content.replace("{taskDescription}", activeTask.description.orEmpty())
             content = content.replace("{taskTimeSpent}", DateFormatUtil.formatTime(activeTask.totalTimeSpent))
+        } else {
+            content = content.replace("{taskId}", "")
+            content = content.replace("{taskSummary}", "")
+            content = content.replace("{taskDescription}", "")
+            content = content.replace("{taskTimeSpent}", "")
         }
 
         return if (content.contains("{diff}")) {
@@ -80,18 +86,7 @@ object CommitAIUtils {
     }
 
     fun replaceHint(promptContent: String, hint: String?): String {
-        val hintRegex = Regex("\\{[^{}]*(\\\$hint)[^{}]*}")
-
-        hintRegex.find(promptContent, 0)?.let {
-            if (!hint.isNullOrBlank()) {
-                var hintValue = it.value.replace("\$hint", hint)
-                hintValue = hintValue.replace("{", "")
-                hintValue = hintValue.replace("}", "")
-                return promptContent.replace(it.value, hintValue)
-            } else {
-                return promptContent.replace(it.value, "")
-            }
-        }
+        // For now, only support the simple {hint} placeholder to avoid regex issues.
         return promptContent.replace("{hint}", hint.orEmpty())
     }
 
@@ -120,7 +115,7 @@ object CommitAIUtils {
                     branches.add(branch)
                 }
             }
-            branches.groupingBy<String, String> { it }.eachCount().maxByOrNull { it.value }?.key
+            branches.groupingBy { it }.eachCount().maxByOrNull { it.value }?.key
         }
     }
 
@@ -172,13 +167,13 @@ object CommitAIUtils {
             normalizedUrl.contains("/branches/") -> {
                 val branchPart = url.substringAfter("/branches/")
                 val endIndex = branchPart.indexOf('/')
-                if (endIndex > 0) branchPart.substring(0, endIndex) else branchPart
+                if (endIndex > 0) branchPart.take(endIndex) else branchPart
             }
 
             normalizedUrl.contains("/tags/") -> {
                 val tagPart = url.substringAfter("/tags/")
                 val endIndex = tagPart.indexOf('/')
-                if (endIndex > 0) "tag: ${tagPart.substring(0, endIndex)}" else "tag: $tagPart"
+                if (endIndex > 0) "tag: ${tagPart.take(endIndex)}" else "tag: $tagPart"
             }
 
             normalizedUrl.contains("/trunk") -> "trunk"

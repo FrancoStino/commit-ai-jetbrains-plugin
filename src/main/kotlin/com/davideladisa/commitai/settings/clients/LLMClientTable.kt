@@ -3,8 +3,7 @@ package com.davideladisa.commitai.settings.clients
 import com.davideladisa.commitai.CommitAIBundle.message
 import com.davideladisa.commitai.createColumn
 import com.davideladisa.commitai.settings.AppSettings2
-import com.davideladisa.commitai.settings.clients.pollinations.PollinationsClientConfiguration
-import com.davideladisa.commitai.settings.clients.groq.GroqClientConfiguration
+import com.intellij.openapi.extensions.ExtensionPointName
 import com.intellij.openapi.ui.DialogPanel
 import com.intellij.openapi.ui.DialogWrapper
 import com.intellij.openapi.ui.Splitter
@@ -18,7 +17,6 @@ import com.intellij.util.containers.ContainerUtil
 import com.intellij.util.ui.JBUI
 import com.intellij.util.ui.ListTableModel
 import com.intellij.util.ui.UIUtil
-import java.awt.Color
 import java.awt.Component
 import java.awt.Dimension
 import java.awt.event.MouseAdapter
@@ -26,7 +24,6 @@ import java.awt.event.MouseEvent
 import javax.swing.*
 import javax.swing.ListSelectionModel.SINGLE_SELECTION
 import javax.swing.table.DefaultTableCellRenderer
-import kotlin.math.max
 
 class LLMClientTable {
     private var llmClients = fetchSortedLlmClients()
@@ -52,7 +49,7 @@ class LLMClientTable {
 
     private fun createTableModel(): ListTableModel<LLMClientConfiguration> = ListTableModel(
         arrayOf(
-            createColumn<LLMClientConfiguration, String>(message("settings.llmClient.name")) { llmClient -> llmClient.getClientName() },
+            createColumn(message("settings.llmClient.name")) { llmClient -> llmClient.getClientName() },
             createColumn<LLMClientConfiguration, LLMClientConfiguration>(message("settings.llmClient.modelId")) { llmClient -> llmClient },
             createColumn<LLMClientConfiguration, String>(message("settings.llmClient.temperature")) { llmClient -> llmClient.temperature }
         ),
@@ -60,14 +57,15 @@ class LLMClientTable {
     )
 
     private fun fetchSortedLlmClients(): List<LLMClientConfiguration> {
-        val sortedWith = AppSettings2.instance.llmClientConfigurations.filterNotNull().sortedWith(
+        val sortedWith = AppSettings2.instance.llmClientConfigurations.toList().sortedWith(
             compareBy({ if (it.getClientName() == "Pollinations") 0 else 1 }, { it.name })
         )
         return sortedWith
     }
 
     private fun updateLlmClients(newClients: List<LLMClientConfiguration>) {
-        llmClients = newClients.filterNotNull().sortedWith(compareBy({ if (it.getClientName() == "Pollinations") 0 else 1 }, { it.name }))
+        llmClients =
+            newClients.sortedWith(compareBy({ if (it.getClientName() == "Pollinations") 0 else 1 }, { it.name }))
         refreshTableModel()
     }
 
@@ -153,11 +151,9 @@ class LLMClientTable {
 
         private fun getLlmClients(newLLMClientConfiguration: LLMClientConfiguration?): List<LLMClientConfiguration> {
             return if (newLLMClientConfiguration == null) {
-                // TODO(@FrancoStino): Is there a better way to create the list of all possible LLM Clients that implement LLMClient abstract class
-                listOf(
-                    PollinationsClientConfiguration(),
-                    GroqClientConfiguration()
-                ).sortedBy { if (it.getClientName() == "Pollinations") 0 else 1 }
+                val epName =
+                    ExtensionPointName.create<LLMClientConfiguration>("com.davideladisa.commit-ai.llmClientConfiguration")
+                epName.extensionList
             } else {
                 listOf(newLLMClientConfiguration)
             }
@@ -210,7 +206,7 @@ class LLMClientTable {
     class IconTextCellRenderer : DefaultTableCellRenderer() {
         override fun getTableCellRendererComponent(table: JTable, value: Any, isSelected: Boolean, hasFocus: Boolean, row: Int, column: Int): Component {
             val llmClientConfiguration = value as LLMClientConfiguration
-            return JLabel(llmClientConfiguration.modelId, llmClientConfiguration.getClientIcon(), SwingConstants.LEFT)
+            return JLabel(llmClientConfiguration.modelId, llmClientConfiguration.getClientIcon(), LEFT)
         }
     }
 

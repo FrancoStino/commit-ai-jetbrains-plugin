@@ -63,6 +63,15 @@
 
     </extensions>
 
+    <extensionPoints>
+        <extensionPoint name="llmClientConfiguration" interface="com.davideladisa.commitai.settings.clients.LLMClientConfiguration" dynamic="true"/>
+    </extensionPoints>
+
+    <extensions defaultExtensionNs="com.davideladisa.commit-ai">
+        <llmClientConfiguration implementation="com.davideladisa.commitai.settings.clients.pollinations.PollinationsClientConfiguration"/>
+        <llmClientConfiguration implementation="com.davideladisa.commitai.settings.clients.groq.GroqClientConfiguration"/>
+    </extensions>
+
     <actions>
         <!-- Keyboard shortcut action that directly executes -->
         <action id="CommitAI" class="com.davideladisa.commitai.CommitAIAction">
