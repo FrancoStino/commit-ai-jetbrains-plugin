@@ -62,7 +62,12 @@ class CommitAIAction : AnAction(), DumbAware, Disposable {
             val freshClient = AppSettings2.instance.llmClientConfigurations.toList()
                 .find { config -> config.id == it.id } ?: it
 
-            e.presentation.icon = freshClient.getClientIcon()
+            // Show STOP icon if job is active, otherwise show client icon
+            if (freshClient.getGenerateCommitMessageJob()?.isActive == true) {
+                e.presentation.icon = Icons.Process.STOP.getThemeBasedIcon()
+            } else {
+                e.presentation.icon = freshClient.getClientIcon()
+            }
             e.presentation.text = "Generate Commit Message (${freshClient.getClientName()}: ${freshClient.modelId})"
         }
     }
