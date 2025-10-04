@@ -6,6 +6,27 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+#  (2025-10-04)
+
+
+### Bug Fixes
+
+* Address LLM client synchronization and UI update issues ([e1d264e](https://github.com/FrancoStino/commit-ai-jetbrains-plugin/commit/e1d264ecf1018e7bcb90a31fe6d50375cb0781d4))
+* Handle TaskManager null case in prompt generation (develop) ([dad7e57](https://github.com/FrancoStino/commit-ai-jetbrains-plugin/commit/dad7e57224cb467935e84355003b2956a2e07b17))
+* Refine regex and string manipulation in AICommitsUtils (develop) ([0d7b1c5](https://github.com/FrancoStino/commit-ai-jetbrains-plugin/commit/0d7b1c5ca0da74fea5390dbd57bf9008e02b5076))
+* Simplify hint replacement logic ([a8e3bda](https://github.com/FrancoStino/commit-ai-jetbrains-plugin/commit/a8e3bdab4779218919c2ee90c0ac3f5a845e35b0))
+
+
+### Features
+
+* Add SonarCloud Quality Gate badge to README (develop) ([224eeba](https://github.com/FrancoStino/commit-ai-jetbrains-plugin/commit/224eeba6143b107410fc78c10e55617a61c1ec48))
+* Differentiate main and child actions in LLM client wrapper ([4a74e4a](https://github.com/FrancoStino/commit-ai-jetbrains-plugin/commit/4a74e4a24ec46f7d59f6808796261dd75a9c7fca))
+* Implement extension points for LLM clients (develop) ([8a9c562](https://github.com/FrancoStino/commit-ai-jetbrains-plugin/commit/8a9c562a75c734cca52178d17bf0329bb5f4dc56))
+* Increment plugin version to 1.5.1 (develop) ([312a7e2](https://github.com/FrancoStino/commit-ai-jetbrains-plugin/commit/312a7e2be9ebe3a3799d5191e8596fb36445f2c5))
+* Remove unused setActiveLlmClient function (develop) ([2caedde](https://github.com/FrancoStino/commit-ai-jetbrains-plugin/commit/2caedde14b49df2270159ac278b909895a866e9a))
+
+
+
 #  (2025-10-01)
 
 
