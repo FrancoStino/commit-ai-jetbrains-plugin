@@ -109,7 +109,12 @@ class CommitAISplitButtonAction : SplitButtonAction(object : ActionGroup() {
     private fun updatePresentationWithFreshClient(presentation: Presentation, clientId: String) {
         val freshClient = getFreshLLMClient(clientId)
         freshClient?.let {
-            presentation.icon = it.getClientIcon()
+            // Show STOP icon if job is active, otherwise show client icon
+            if (it.getGenerateCommitMessageJob()?.isActive == true) {
+                presentation.icon = Icons.Process.STOP.getThemeBasedIcon()
+            } else {
+                presentation.icon = it.getClientIcon()
+            }
             presentation.text = "Generate Commit Message (${it.getClientName()}: ${it.modelId})"
         }
     }
@@ -156,7 +161,12 @@ private class LLMClientWrapperAction(
         if (freshClient != null) {
             // Update presentation with fresh data
             e.presentation.text = "${freshClient.getClientName()}: ${freshClient.modelId}"
-            e.presentation.icon = freshClient.getClientIcon()
+            // Show STOP icon if job is active, otherwise show client icon
+            if (freshClient.getGenerateCommitMessageJob()?.isActive == true) {
+                e.presentation.icon = Icons.Process.STOP.getThemeBasedIcon()
+            } else {
+                e.presentation.icon = freshClient.getClientIcon()
+            }
             e.presentation.isEnabledAndVisible = true
             e.presentation.description = "Generate commit message using ${freshClient.getClientName()} - ${freshClient.modelId}"
         } else {
