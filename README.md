@@ -1,3 +1,4 @@
+<!-- Plugin description -->
 <div align="center">
     <a href="https://plugins.jetbrains.com/plugin/28558-commit-ai/">
         <img src="./src/main/resources/META-INF/pluginIcon.svg" alt="logo" width="150"/>
@@ -20,7 +21,6 @@
 - [Install](#install)
 - [Installation from zip](#installation-from-zip)
 
-<!-- Plugin description -->
 ## Description
 
 Commit AI is a plugin that generates your commit messages by using git diff and LLMs.
@@ -29,17 +29,19 @@ Commit AI is a plugin that generates your commit messages by using git diff and 
 - **AI-powered commit messages**: Generate meaningful commit messages from your code changes
 - **Multiple LLM providers**: Support for Groq and Pollinations with top models like Llama 3.3 70B
 - **Smart diff analysis**: Analyzes only selected files and lines in the commit dialog
+- **Amend mode support**: Generate commit messages for previous commits in amend mode
 - **Custom prompts**: Create and customize your own prompt templates with variables
 - **Universal IDE support**: Works across all JetBrains IDEs (IntelliJ, PhpStorm, PyCharm, WebStorm, etc.)
 - **Git & SVN support**: Compatible with both Git and Subversion version control systems
 
 ### 🚀 Getting Started
 Install the plugin and configure your LLM client in <kbd>Settings</kbd> > <kbd>Tools</kbd> > <kbd>Commit AI</kbd>
-<!-- Plugin description end -->
+
 
 ## Features
 
 - Generate commit message from git diff using LLM
+- Generate commit message for previous commit when in amend mode
 - Compute diff only from the selected files and lines in the commit dialog
 - Create your own prompt for commit message generation
 - Use predefined variables and hint to customize your prompt
@@ -118,3 +120,4 @@ Please see [LICENSE](LICENSE) for details.
    <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=FrancoStino/commit-ai-jetbrains-plugin&type=Date" />
  </picture>
 </a>
+<!-- Plugin description end -->
