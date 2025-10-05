@@ -1,5 +1,8 @@
 package com.davideladisa.commitai.settings.prompts
 
+private const val HINT_PLACEHOLDER = "{Use this hint to improve the commit message: \$hint}\n"
+private const val DIFF_PLACEHOLDER = "{diff}"
+
 enum class DefaultPrompts(val prompt: Prompt) {
 
     // Generate UUIDs for game objects in Mine.py and call the function in start_game().
@@ -11,16 +14,16 @@ enum class DefaultPrompts(val prompt: Prompt) {
                     "following diff without prefacing it with anything, the response must be in the language {locale} and must " +
                     "NOT be longer than 74 characters. The sent text will be the differences between files, where deleted lines " +
                     "are prefixed with a single minus sign and added lines are prefixed with a single plus sign.\n" +
-                    "{Use this hint to improve the commit message: \$hint}\n" +
-                    "{diff}",
+                    HINT_PLACEHOLDER +
+                    DIFF_PLACEHOLDER,
             canBeChanged = true,
             isDefault = true,
             originalContent = "Write an insightful but concise Git commit message in a complete sentence in present tense for the " +
                     "following diff without prefacing it with anything, the response must be in the language {locale} and must " +
                     "NOT be longer than 74 characters. The sent text will be the differences between files, where deleted lines " +
                     "are prefixed with a single minus sign and added lines are prefixed with a single plus sign.\n" +
-                    "{Use this hint to improve the commit message: \$hint}\n" +
-                    "{diff}"
+                    HINT_PLACEHOLDER +
+                    DIFF_PLACEHOLDER
         )
     ),
 
@@ -29,44 +32,82 @@ enum class DefaultPrompts(val prompt: Prompt) {
         Prompt(
             name = "Conventional",
             description = "Prompt for commit message in the conventional commit convention.",
-            content = "Write a commit message in the conventional commit convention. I'll send you an output " +
-                    "of 'git diff --staged' command, and you convert it into a commit message. " +
-                    "The subject should not contain the type and scope. " +
-                    "Lines must not be longer than 74 characters. Use {locale} language to answer. " +
-                    "End commit title with issue number if you can get it from the branch name: " +
-                    "{branch} in parenthesis.\n" +
-                    "{Use this hint to improve the commit message: \$hint}\n" +
-                    "{diff}",
+            content = "Generate a conventional commit message with title and body. Follow this format:\n\n" +
+                    "type(scope): short description\n\n" +
+                    "Longer explanation of what changed and why. Wrap at 72 characters.\n\n" +
+                    "Rules:\n" +
+                    "- Title: type(scope): description (max 74 chars, present tense)\n" +
+                    "- Types: feat, fix, refactor, docs, style, test, chore, perf, ci, build\n" +
+                    "- Body: explain what and why, not how (wrap at 72 chars)\n" +
+                    "- Use {locale} language\n" +
+                    "- Add issue from branch {branch} if available\n" +
+                    "- NO words like 'commit', 'message', 'change'\n\n" +
+                    "Example:\n" +
+                    "refactor(auth): extract user validation into separate service\n\n" +
+                    "Move validation logic from UserController to UserValidationService\n" +
+                    "to improve code reusability and testability. This reduces coupling\n" +
+                    "between the controller and business logic.\n\n" +
+                    HINT_PLACEHOLDER +
+                    DIFF_PLACEHOLDER,
             canBeChanged = true,
             isDefault = true,
-            originalContent = "Write a commit message in the conventional commit convention. I'll send you an output " +
-                    "of 'git diff --staged' command, and you convert it into a commit message. " +
-                    "The subject should not contain the type and scope. " +
-                    "Lines must not be longer than 74 characters. Use {locale} language to answer. " +
-                    "End commit title with issue number if you can get it from the branch name: " +
-                    "{branch} in parenthesis.\n" +
-                    "{Use this hint to improve the commit message: \$hint}\n" +
-                    "{diff}"
+            originalContent = "Generate a conventional commit message with title and body. Follow this format:\n\n" +
+                    "type(scope): short description\n\n" +
+                    "Longer explanation of what changed and why. Wrap at 72 characters.\n\n" +
+                    "Rules:\n" +
+                    "- Title: type(scope): description (max 74 chars, present tense)\n" +
+                    "- Types: feat, fix, refactor, docs, style, test, chore, perf, ci, build\n" +
+                    "- Body: explain what and why, not how (wrap at 72 chars)\n" +
+                    "- Use {locale} language\n" +
+                    "- Add issue from branch {branch} if available\n" +
+                    "- NO words like 'commit', 'message', 'change'\n\n" +
+                    "Example:\n" +
+                    "refactor(auth): extract user validation into separate service\n\n" +
+                    "Move validation logic from UserController to UserValidationService\n" +
+                    "to improve code reusability and testability. This reduces coupling\n" +
+                    "between the controller and business logic.\n\n" +
+                    HINT_PLACEHOLDER +
+                    DIFF_PLACEHOLDER
         )
     ),
 
-    // author: ljgonzalez1
-    // source: https://github.com/FrancoStino/commit-ai-jetbrains-plugin/28558-commit-ai/discussions/18#discussioncomment-10718381
     // ✨ feat(conditions): add HpComparisonType enum and ICondition interface for unit comparison logic
     EMOJI(
         Prompt(
             name = "GitMoji",
             description = "Prompt for generating commit messages with GitMoji.",
-            content = "Write a concise commit message from 'git diff --staged' output in the format " +
-                    "`[EMOJI] [TYPE](file/topic): [description in {locale}]`. Use GitMoji emojis (e.g., ✨ → feat), " +
-                    "present tense, active voice, max 120 characters per line, no code blocks.\n" +
+            content = "Generate a GitMoji commit message with title and body. Follow this format:\n\n" +
+                    "🔧 type(scope): short description\n\n" +
+                    "Longer explanation of what changed and why. Wrap at 72 characters.\n\n" +
+                    "Rules:\n" +
+                    "- Title: emoji type(scope): description (max 74 chars, present tense)\n" +
+                    "- GitMoji: ✨ feat, 🐛 fix, ♻️ refactor, 📝 docs, 💄 style, ✅ test, 🔧 chore, ⚡ perf, 👷 ci, 📦 build\n" +
+                    "- Body: explain what and why, not how (wrap at 72 chars)\n" +
+                    "- Use {locale} language\n" +
+                    "- NO words like 'commit', 'message', 'change'\n\n" +
+                    "Example:\n" +
+                    "♻️ refactor(auth): extract user validation into separate service\n\n" +
+                    "Move validation logic from UserController to UserValidationService\n" +
+                    "to improve code reusability and testability. This reduces coupling\n" +
+                    "between the controller and business logic.\n\n" +
                     "---\n" +
                     "{diff}",
             canBeChanged = true,
             isDefault = true,
-            originalContent = "Write a concise commit message from 'git diff --staged' output in the format " +
-                    "`[EMOJI] [TYPE](file/topic): [description in {locale}]`. Use GitMoji emojis (e.g., ✨ → feat), " +
-                    "present tense, active voice, max 120 characters per line, no code blocks.\n" +
+            originalContent = "Generate a GitMoji commit message with title and body. Follow this format:\n\n" +
+                    "🔧 type(scope): short description\n\n" +
+                    "Longer explanation of what changed and why. Wrap at 72 characters.\n\n" +
+                    "Rules:\n" +
+                    "- Title: emoji type(scope): description (max 74 chars, present tense)\n" +
+                    "- GitMoji: ✨ feat, 🐛 fix, ♻️ refactor, 📝 docs, 💄 style, ✅ test, 🔧 chore, ⚡ perf, 👷 ci, 📦 build\n" +
+                    "- Body: explain what and why, not how (wrap at 72 chars)\n" +
+                    "- Use {locale} language\n" +
+                    "- NO words like 'commit', 'message', 'change'\n\n" +
+                    "Example:\n" +
+                    "♻️ refactor(auth): extract user validation into separate service\n\n" +
+                    "Move validation logic from UserController to UserValidationService\n" +
+                    "to improve code reusability and testability. This reduces coupling\n" +
+                    "between the controller and business logic.\n\n" +
                     "---\n" +
                     "{diff}"
         )
