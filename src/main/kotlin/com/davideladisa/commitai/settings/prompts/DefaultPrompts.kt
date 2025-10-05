@@ -2,6 +2,20 @@ package com.davideladisa.commitai.settings.prompts
 
 private const val HINT_PLACEHOLDER = "{Use this hint to improve the commit message: \$hint}\n"
 private const val DIFF_PLACEHOLDER = "{diff}"
+private const val BODY_EXPLANATION = "Longer explanation of what changed and why. Wrap at 72 characters.\n\n"
+private const val RULES_SECTION = "Rules:\n"
+private const val USE_LOCALE_LANGUAGE = "- Use {locale} language\n"
+private const val NO_COMMIT_WORDS = "- NO words like 'commit', 'message', 'change'\n\n"
+private const val BODY_RULE = "- Body: explain what and why, not how (wrap at 72 chars)\n"
+private const val EXAMPLE_SECTION = "Example:\n"
+private const val REFACTOR_EXAMPLE_TITLE = "refactor(auth): extract user validation into separate service\n\n"
+private const val REFACTOR_EXAMPLE_BODY = "Move validation logic from UserController to UserValidationService\n" +
+                                          "to improve code reusability and testability. This reduces coupling\n" +
+                                          "between the controller and business logic.\n\n"
+private const val GITMO_JI_EXAMPLE_TITLE = "♻️ refactor(auth): extract user validation into separate service\n\n"
+private const val TYPES_RULE = "- Types: feat, fix, refactor, docs, style, test, chore, perf, ci, build\n"
+private const val TYPE_SCOPE_FORMAT = "type(scope): short description\n\n"
+private const val GITMO_JI_TYPE_SCOPE_FORMAT = "🔧 type(scope): short description\n\n"
 
 enum class DefaultPrompts(val prompt: Prompt) {
 
@@ -33,39 +47,35 @@ enum class DefaultPrompts(val prompt: Prompt) {
             name = "Conventional",
             description = "Prompt for commit message in the conventional commit convention.",
             content = "Generate a conventional commit message with title and body. Follow this format:\n\n" +
-                    "type(scope): short description\n\n" +
-                    "Longer explanation of what changed and why. Wrap at 72 characters.\n\n" +
-                    "Rules:\n" +
+                    TYPE_SCOPE_FORMAT +
+                    BODY_EXPLANATION +
+                    RULES_SECTION +
                     "- Title: type(scope): description (max 74 chars, present tense)\n" +
-                    "- Types: feat, fix, refactor, docs, style, test, chore, perf, ci, build\n" +
-                    "- Body: explain what and why, not how (wrap at 72 chars)\n" +
-                    "- Use {locale} language\n" +
+                    TYPES_RULE +
+                    BODY_RULE +
+                    USE_LOCALE_LANGUAGE +
                     "- Add issue from branch {branch} if available\n" +
-                    "- NO words like 'commit', 'message', 'change'\n\n" +
-                    "Example:\n" +
-                    "refactor(auth): extract user validation into separate service\n\n" +
-                    "Move validation logic from UserController to UserValidationService\n" +
-                    "to improve code reusability and testability. This reduces coupling\n" +
-                    "between the controller and business logic.\n\n" +
+                    NO_COMMIT_WORDS +
+                    EXAMPLE_SECTION +
+                    REFACTOR_EXAMPLE_TITLE +
+                    REFACTOR_EXAMPLE_BODY +
                     HINT_PLACEHOLDER +
                     DIFF_PLACEHOLDER,
             canBeChanged = true,
             isDefault = true,
             originalContent = "Generate a conventional commit message with title and body. Follow this format:\n\n" +
-                    "type(scope): short description\n\n" +
-                    "Longer explanation of what changed and why. Wrap at 72 characters.\n\n" +
-                    "Rules:\n" +
+                    TYPE_SCOPE_FORMAT +
+                    BODY_EXPLANATION +
+                    RULES_SECTION +
                     "- Title: type(scope): description (max 74 chars, present tense)\n" +
-                    "- Types: feat, fix, refactor, docs, style, test, chore, perf, ci, build\n" +
-                    "- Body: explain what and why, not how (wrap at 72 chars)\n" +
-                    "- Use {locale} language\n" +
+                    TYPES_RULE +
+                    BODY_RULE +
+                    USE_LOCALE_LANGUAGE +
                     "- Add issue from branch {branch} if available\n" +
-                    "- NO words like 'commit', 'message', 'change'\n\n" +
-                    "Example:\n" +
-                    "refactor(auth): extract user validation into separate service\n\n" +
-                    "Move validation logic from UserController to UserValidationService\n" +
-                    "to improve code reusability and testability. This reduces coupling\n" +
-                    "between the controller and business logic.\n\n" +
+                    NO_COMMIT_WORDS +
+                    EXAMPLE_SECTION +
+                    REFACTOR_EXAMPLE_TITLE +
+                    REFACTOR_EXAMPLE_BODY +
                     HINT_PLACEHOLDER +
                     DIFF_PLACEHOLDER
         )
@@ -77,39 +87,35 @@ enum class DefaultPrompts(val prompt: Prompt) {
             name = "GitMoji",
             description = "Prompt for generating commit messages with GitMoji.",
             content = "Generate a GitMoji commit message with title and body. Follow this format:\n\n" +
-                    "🔧 type(scope): short description\n\n" +
-                    "Longer explanation of what changed and why. Wrap at 72 characters.\n\n" +
-                    "Rules:\n" +
+                    GITMO_JI_TYPE_SCOPE_FORMAT +
+                    BODY_EXPLANATION +
+                    RULES_SECTION +
                     "- Title: emoji type(scope): description (max 74 chars, present tense)\n" +
                     "- GitMoji: ✨ feat, 🐛 fix, ♻️ refactor, 📝 docs, 💄 style, ✅ test, 🔧 chore, ⚡ perf, 👷 ci, 📦 build\n" +
-                    "- Body: explain what and why, not how (wrap at 72 chars)\n" +
-                    "- Use {locale} language\n" +
-                    "- NO words like 'commit', 'message', 'change'\n\n" +
-                    "Example:\n" +
-                    "♻️ refactor(auth): extract user validation into separate service\n\n" +
-                    "Move validation logic from UserController to UserValidationService\n" +
-                    "to improve code reusability and testability. This reduces coupling\n" +
-                    "between the controller and business logic.\n\n" +
+                    BODY_RULE +
+                    USE_LOCALE_LANGUAGE +
+                    NO_COMMIT_WORDS +
+                    EXAMPLE_SECTION +
+                    GITMO_JI_EXAMPLE_TITLE +
+                    REFACTOR_EXAMPLE_BODY +
                     "---\n" +
-                    "{diff}",
+                    DIFF_PLACEHOLDER,
             canBeChanged = true,
             isDefault = true,
             originalContent = "Generate a GitMoji commit message with title and body. Follow this format:\n\n" +
-                    "🔧 type(scope): short description\n\n" +
-                    "Longer explanation of what changed and why. Wrap at 72 characters.\n\n" +
-                    "Rules:\n" +
+                    GITMO_JI_TYPE_SCOPE_FORMAT +
+                    BODY_EXPLANATION +
+                    RULES_SECTION +
                     "- Title: emoji type(scope): description (max 74 chars, present tense)\n" +
                     "- GitMoji: ✨ feat, 🐛 fix, ♻️ refactor, 📝 docs, 💄 style, ✅ test, 🔧 chore, ⚡ perf, 👷 ci, 📦 build\n" +
-                    "- Body: explain what and why, not how (wrap at 72 chars)\n" +
-                    "- Use {locale} language\n" +
-                    "- NO words like 'commit', 'message', 'change'\n\n" +
-                    "Example:\n" +
-                    "♻️ refactor(auth): extract user validation into separate service\n\n" +
-                    "Move validation logic from UserController to UserValidationService\n" +
-                    "to improve code reusability and testability. This reduces coupling\n" +
-                    "between the controller and business logic.\n\n" +
+                    BODY_RULE +
+                    USE_LOCALE_LANGUAGE +
+                    NO_COMMIT_WORDS +
+                    EXAMPLE_SECTION +
+                    GITMO_JI_EXAMPLE_TITLE +
+                    REFACTOR_EXAMPLE_BODY +
                     "---\n" +
-                    "{diff}"
+                    DIFF_PLACEHOLDER
         )
     );
 

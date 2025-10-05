@@ -28,7 +28,7 @@ class PollinationsClientSharedState : PersistentStateComponent<PollinationsClien
     override var modelIds: MutableSet<String> = mutableSetOf(
         "gemini",
         "gemini-search",
-        "openai-large",
+        PollinationsClientConfiguration.DEFAULT_MODEL,
         "openai-reasoning",
         "bidara",
         "evil",

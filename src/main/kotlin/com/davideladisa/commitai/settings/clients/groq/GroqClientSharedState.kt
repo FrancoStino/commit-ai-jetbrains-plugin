@@ -27,7 +27,7 @@ class GroqClientSharedState : PersistentStateComponent<GroqClientSharedState>, L
 
     override var modelIds: MutableSet<String> = mutableSetOf(
         // Recommended models for text generation (ordered by performance)
-        "llama-3.3-70b-versatile",
+        GroqClientConfiguration.DEFAULT_MODEL,
         "deepseek-r1-distill-llama-70b",
         "llama-3.1-8b-instant",
         "groq/compound",
