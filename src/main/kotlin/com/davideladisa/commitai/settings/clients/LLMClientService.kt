@@ -7,6 +7,7 @@ import com.davideladisa.commitai.CommitAIUtils.getCommonBranch
 import com.davideladisa.commitai.settings.AppSettings2
 import com.davideladisa.commitai.settings.ProjectSettings
 import com.davideladisa.commitai.wrap
+import com.intellij.execution.configurations.GeneralCommandLine
 import com.intellij.icons.AllIcons
 import com.intellij.openapi.application.EDT
 import com.intellij.openapi.application.ModalityState
@@ -42,11 +43,19 @@ abstract class LLMClientService<C : LLMClientConfiguration>(private val cs: Coro
         generateCommitMessageJob = cs.launch(ModalityState.current().asContextElement()) {
             withBackgroundProgress(project, message("action.background")) {
 
-                if (commitContext.isAmendCommitMode) {
-                    includedChanges += getLastCommitChanges(project)
+                val diff = if (commitContext.isAmendCommitMode) {
+                    try {
+                        val commandLine = GeneralCommandLine("git", "show", "HEAD")
+                        commandLine.setWorkDirectory(project.basePath)
+                        val output = com.intellij.execution.process.ScriptRunnerUtil.getProcessOutput(commandLine)
+                        output
+                    } catch (e: Exception) {
+                        // fallback to old behavior
+                        computeDiff(includedChanges, false, project)
+                    }
+                } else {
+                    computeDiff(includedChanges, false, project)
                 }
-
-                val diff = computeDiff(includedChanges, false, project)
 
                 val branch = getCommonBranch(includedChanges, project)
                 val prompt = constructPrompt(project.service<ProjectSettings>().activePrompt.content, diff, branch, commitWorkflowHandler.getCommitMessage(), project)
@@ -155,20 +164,6 @@ abstract class LLMClientService<C : LLMClientConfiguration>(private val cs: Coro
             ).aiMessage().text()
         }
         onSuccess(response)
-    }
-
-    private suspend fun getLastCommitChanges(project: Project): List<Change> {
-        return withContext(Dispatchers.IO) {
-            try {
-                // Use ChangeListManager to get current changes instead of accessing commit changes
-                // This avoids the experimental API usage from VcsChangesLazilyParsedDetails.getChanges()
-                val changeListManager = com.intellij.openapi.vcs.changes.ChangeListManager.getInstance(project)
-                changeListManager.allChanges.toList()
-            } catch (_: Exception) {
-                // If we can't get changes, return empty list
-                emptyList()
-            }
-        }
     }
 
     private fun cleanCommitMessage(message: String): String {

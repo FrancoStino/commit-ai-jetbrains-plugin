@@ -16,6 +16,7 @@ import com.intellij.openapi.project.Project
 import com.intellij.openapi.util.Disposer
 import com.intellij.openapi.vcs.VcsDataKeys
 import com.intellij.vcs.commit.AbstractCommitWorkflowHandler
+import com.intellij.vcs.commit.isAmendCommitMode
 
 class CommitAIAction : AnAction(), DumbAware, Disposable {
 
@@ -50,11 +51,12 @@ class CommitAIAction : AnAction(), DumbAware, Disposable {
         val activeLlmClient = getActiveLlmClient(e.project)
         val hasActiveLlmClient = activeLlmClient != null
         val hasStagedFiles = commitWorkflowHandler?.ui?.getIncludedChanges()?.isNotEmpty() == true
+        val isAmendMode = commitWorkflowHandler?.workflow?.commitContext?.isAmendCommitMode == true
 
         // Always visible when commit dialog is open and has LLM client
         e.presentation.isVisible = commitWorkflowHandler != null && hasActiveLlmClient
-        // Enabled only when there are also staged files
-        e.presentation.isEnabled = e.presentation.isVisible && hasStagedFiles
+        // Enabled only when there are also staged files or amend mode is active
+        e.presentation.isEnabled = e.presentation.isVisible && (hasStagedFiles || isAmendMode)
 
         // Update icon to match the selected LLM client
         activeLlmClient?.let {
