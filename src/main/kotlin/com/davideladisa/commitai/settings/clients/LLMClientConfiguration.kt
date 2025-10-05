@@ -3,11 +3,9 @@ package com.davideladisa.commitai.settings.clients
 import com.davideladisa.commitai.Icons
 import com.davideladisa.commitai.notifications.Notification
 import com.davideladisa.commitai.notifications.sendNotification
-import com.davideladisa.commitai.settings.ProjectSettings
 import com.intellij.openapi.actionSystem.ActionUpdateThread
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
-import com.intellij.openapi.components.service
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vcs.VcsDataKeys
 import com.intellij.util.xmlb.annotations.Attribute

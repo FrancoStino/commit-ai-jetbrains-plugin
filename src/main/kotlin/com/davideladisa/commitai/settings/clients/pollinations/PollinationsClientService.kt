@@ -30,9 +30,7 @@ class PollinationsClientService(private val cs: CoroutineScope) : LLMClientServi
 
     override suspend fun buildChatModel(client: PollinationsClientConfiguration): ChatModel {
         val token = client.token.nullize(true) ?: retrieveToken(client.id)?.toString(true)
-        if (seedModels.contains(client.modelId) && token.isNullOrEmpty()) {
-            throw IllegalArgumentException("Token is required for the selected model.")
-        }
+        require(!(seedModels.contains(client.modelId) && token.isNullOrEmpty())) { "Token is required for the selected model." }
         val builder = OpenAiChatModel.builder()
             .apiKey(token ?: "")
             .modelName(client.modelId)
@@ -50,9 +48,7 @@ class PollinationsClientService(private val cs: CoroutineScope) : LLMClientServi
 
     override suspend fun buildStreamingChatModel(client: PollinationsClientConfiguration): StreamingChatModel {
         val token = client.token.nullize(true) ?: retrieveToken(client.id)?.toString(true)
-        if (seedModels.contains(client.modelId) && token.isNullOrEmpty()) {
-            throw IllegalArgumentException("Token is required for the selected model.")
-        }
+        require(!(seedModels.contains(client.modelId) && token.isNullOrEmpty())) { "Token is required for the selected model." }
         val builder = OpenAiStreamingChatModel.builder()
             .apiKey(token ?: "")
             .modelName(client.modelId)

@@ -56,13 +56,10 @@ fun ValidationInfoBuilder.isInt(value: String): ValidationInfo? {
     if (value.isBlank()) {
         return null
     }
-
-    value.toIntOrNull().let {
-        if (it == null) {
-            return error(message("validation.integer"))
-        } else {
-            return null
-        }
+    return if (value.toIntOrNull() == null) {
+        error(message("validation.integer"))
+    } else {
+        null
     }
 }
 
@@ -70,13 +67,10 @@ fun ValidationInfoBuilder.isFloat(value: String): ValidationInfo? {
     if (value.isBlank()) {
         return null
     }
-
-    value.toFloatOrNull().let {
-        if (it == null) {
-            return error(message("validation.float"))
-        } else {
-            return null
-        }
+    return if (value.toFloatOrNull() == null) {
+        error(message("validation.float"))
+    } else {
+        null
     }
 }
 
@@ -84,13 +78,10 @@ fun ValidationInfoBuilder.isDouble(value: String): ValidationInfo? {
     if (value.isBlank()) {
         return null
     }
-
-    value.toDoubleOrNull().let {
-        if (it == null) {
-            return error(message("validation.double"))
-        } else {
-            return null
-        }
+    return if (value.toDoubleOrNull() == null) {
+        error(message("validation.double"))
+    } else {
+        null
     }
 }
 
