@@ -23,13 +23,11 @@ class CommitAIAction : AnAction(), DumbAware, Disposable {
     init {
         // Listen for LLM client settings changes to force update
         val connection = ApplicationManager.getApplication().messageBus.connect(this)
-        connection.subscribe(LLMClientSettingsChangeNotifier.TOPIC, object : LLMClientSettingsChangeNotifier {
-            override fun settingsChanged() {
-                // Force recreation of the action presentation
-                ApplicationManager.getApplication().invokeLater {
-                    templatePresentation.text = null
-                    templatePresentation.icon = null
-                }
+        connection.subscribe(LLMClientSettingsChangeNotifier.TOPIC, LLMClientSettingsChangeNotifier {
+            // Force recreation of the action presentation
+            ApplicationManager.getApplication().invokeLater {
+                templatePresentation.text = null
+                templatePresentation.icon = null
             }
         })
 
