@@ -4,8 +4,6 @@ import com.davideladisa.commitai.CommitAIUtils.getCredentialAttributes
 import com.davideladisa.commitai.CommitAIUtils.retrieveToken
 import com.davideladisa.commitai.notifications.Notification
 import com.davideladisa.commitai.notifications.sendNotification
-import com.davideladisa.commitai.settings.AppSettings2
-import com.davideladisa.commitai.settings.clients.LLMClientConfiguration
 import com.davideladisa.commitai.settings.clients.LLMClientService
 import com.intellij.ide.passwordSafe.PasswordSafe
 import com.intellij.openapi.components.Service
@@ -27,7 +25,7 @@ class PollinationsClientService(private val cs: CoroutineScope) : LLMClientServi
         @JvmStatic
         fun getInstance(): PollinationsClientService = service()
 
-        private val seedModels = setOf("gemini", "gemini-search", "openai-large", "openai-reasoning", "evil", "unity")
+        private val seedModels = setOf("gemini", "gemini-search", PollinationsClientConfiguration.DEFAULT_MODEL, "openai-reasoning", "evil", "unity")
     }
 
     override suspend fun buildChatModel(client: PollinationsClientConfiguration): ChatModel {
@@ -87,7 +85,7 @@ class PollinationsClientService(private val cs: CoroutineScope) : LLMClientServi
                 PasswordSafe.instance.setPassword(getCredentialAttributes(client.id), null)
                 client.tokenIsStored = false
                 client.token = null
-                sendNotification(Notification(title = "Token cleared", message = "Pollinations token has been cleared."))
+                sendNotification(Notification(title = "Token cleared", message = "${PollinationsClientConfiguration.CLIENT_NAME} token has been cleared."))
             } catch (e: Exception) {
                 sendNotification(Notification.unableToSaveToken(e.message))
             }

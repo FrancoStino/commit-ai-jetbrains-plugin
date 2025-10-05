@@ -66,29 +66,7 @@ class AppSettingsConfigurable(val project: Project, cs: CoroutineScope) : BoundC
                 }
                 .setEditAction {
                     llmClientTable.editLlmClient()?.let { (oldClient, newClient) ->
-                        // Check if we're editing the active client
-                        val wasActive = llmClientConfigurationComboBox.selectedItem == oldClient
-                        val wasActiveById = if (projectSettings.isProjectSpecificLLMClient) {
-                            projectSettings.activeLlmClientId == oldClient.id
-                        } else {
-                            AppSettings2.instance.activeLlmClientId == oldClient.id
-                        }
-
-                        // Update combo box
-                        llmClientConfigurationComboBox.removeItem(oldClient)
-                        llmClientConfigurationComboBox.addItem(newClient)
-
-                        // Restore selection if it was active
-                        if (wasActive || wasActiveById) {
-                            llmClientConfigurationComboBox.selectedItem = newClient
-                            // Update the stored ID reference
-                            if (projectSettings.isProjectSpecificLLMClient) {
-                                projectSettings.activeLlmClientId = newClient.id
-                            } else {
-                                AppSettings2.instance.activeLlmClientId = newClient.id
-                            }
-                        }
-
+                        handleLLMClientEdit(oldClient, newClient)
                     }
                 }
                 .setRemoveAction {
@@ -109,23 +87,7 @@ class AppSettingsConfigurable(val project: Project, cs: CoroutineScope) : BoundC
 
         row {
             label(message("settings.locale")).widthGroup("labelPrompt")
-            val ideLocale = CommitAIUtils.getIDELocale()
-
-            // Configures locale-aware text comparator for proper language name sorting
-            // Without a Collator, we would get incorrect sorting based on raw Unicode values
-            val collator = Collator.getInstance(ideLocale).apply {
-                strength = Collator.TERTIARY
-                decomposition = Collator.CANONICAL_DECOMPOSITION
-            }
-
-            val locales = Locale.getAvailableLocales()
-                .asSequence()
-                .filter { it.language.isNotBlank() }
-                .distinctBy { it.language }
-                .sortedWith(compareBy(collator) { locale ->
-                    locale.getDisplayLanguage(ideLocale)
-                })
-                .toList()
+            val locales = createSortedLocaleList()
 
             comboBox(locales, CommitAIListCellRenderer())
                 .widthGroup("input")
@@ -159,14 +121,8 @@ class AppSettingsConfigurable(val project: Project, cs: CoroutineScope) : BoundC
                     }
                 }
                 .setEditAction {
-                    promptTable.editPrompt()?.let {
-                        val editingSelected = promptComboBox.selectedItem == it.first
-                        promptComboBox.removeItem(it.first)
-                        promptComboBox.addItem(it.second)
-
-                        if (editingSelected) {
-                            promptComboBox.selectedItem = it.second
-                        }
+                    promptTable.editPrompt()?.let { (oldPrompt, newPrompt) ->
+                        handlePromptEdit(oldPrompt, newPrompt)
                     }
                 }
                 .setEditActionUpdater {
@@ -224,6 +180,64 @@ class AppSettingsConfigurable(val project: Project, cs: CoroutineScope) : BoundC
                 AppSettings2.instance.locale = it
             }
         }
+    }
+
+    private fun handleLLMClientEdit(oldClient: LLMClientConfiguration, newClient: LLMClientConfiguration) {
+        val wasActive = isClientCurrentlyActive(oldClient)
+        updateClientInComboBox(oldClient, newClient)
+        if (wasActive) {
+            selectClientAndUpdateSettings(newClient)
+        }
+    }
+
+    private fun isClientCurrentlyActive(client: LLMClientConfiguration): Boolean {
+        val wasSelectedInComboBox = llmClientConfigurationComboBox.selectedItem == client
+        val wasActiveById = if (projectSettings.isProjectSpecificLLMClient) {
+            projectSettings.activeLlmClientId == client.id
+        } else {
+            AppSettings2.instance.activeLlmClientId == client.id
+        }
+        return wasSelectedInComboBox || wasActiveById
+    }
+
+    private fun updateClientInComboBox(oldClient: LLMClientConfiguration, newClient: LLMClientConfiguration) {
+        llmClientConfigurationComboBox.removeItem(oldClient)
+        llmClientConfigurationComboBox.addItem(newClient)
+    }
+
+    private fun selectClientAndUpdateSettings(client: LLMClientConfiguration) {
+        llmClientConfigurationComboBox.selectedItem = client
+        if (projectSettings.isProjectSpecificLLMClient) {
+            projectSettings.activeLlmClientId = client.id
+        } else {
+            AppSettings2.instance.activeLlmClientId = client.id
+        }
+    }
+
+    private fun handlePromptEdit(oldPrompt: Prompt, newPrompt: Prompt) {
+        val wasSelected = promptComboBox.selectedItem == oldPrompt
+        promptComboBox.removeItem(oldPrompt)
+        promptComboBox.addItem(newPrompt)
+        if (wasSelected) {
+            promptComboBox.selectedItem = newPrompt
+        }
+    }
+
+    private fun createSortedLocaleList(): List<Locale> {
+        val ideLocale = CommitAIUtils.getIDELocale()
+        val collator = Collator.getInstance(ideLocale).apply {
+            strength = Collator.TERTIARY
+            decomposition = Collator.CANONICAL_DECOMPOSITION
+        }
+
+        return Locale.getAvailableLocales()
+            .asSequence()
+            .filter { it.language.isNotBlank() }
+            .distinctBy { it.language }
+            .sortedWith(compareBy(collator) { locale ->
+                locale.getDisplayLanguage(ideLocale)
+            })
+            .toList()
     }
 
     private fun updateActionAvailability(action: CommonActionsPanel.Buttons) {

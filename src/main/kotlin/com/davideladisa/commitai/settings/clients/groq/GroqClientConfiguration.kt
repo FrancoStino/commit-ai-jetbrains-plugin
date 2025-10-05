@@ -9,8 +9,8 @@ import kotlinx.coroutines.Job
 import javax.swing.Icon
 
 class GroqClientConfiguration : BaseRestLLMClientConfiguration(
-    "llama-3.3-70b-versatile",
-    "llama-3.3-70b-versatile",
+    DEFAULT_MODEL,
+    DEFAULT_MODEL,
     "0.7"
 ) {
 
@@ -21,6 +21,7 @@ class GroqClientConfiguration : BaseRestLLMClientConfiguration(
 
     companion object {
         const val CLIENT_NAME = "Groq"
+        const val DEFAULT_MODEL = "llama-3.3-70b-versatile"
     }
 
     override fun getClientName(): String {

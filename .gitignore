@@ -44,3 +44,6 @@ bin/
 /.intellijPlatform/
 /.intellijPlatform/
 /.kotlin
+
+.gemini/
+gha-creds-*.json
