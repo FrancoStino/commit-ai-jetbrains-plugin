@@ -47,7 +47,7 @@ abstract class LLMClientService<C : LLMClientConfiguration>(private val cs: Coro
                         commandLine.setWorkDirectory(project.basePath)
                         val output = com.intellij.execution.process.ScriptRunnerUtil.getProcessOutput(commandLine)
                         output
-                    } catch (e: Exception) {
+                    } catch (_: Exception) {
                         // fallback to old behavior
                         computeDiff(includedChanges, false, project)
                     }
