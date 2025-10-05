@@ -14,7 +14,6 @@ import com.intellij.openapi.application.ModalityState
 import com.intellij.openapi.application.asContextElement
 import com.intellij.openapi.components.service
 import com.intellij.openapi.project.Project
-import com.intellij.openapi.vcs.changes.Change
 import com.intellij.platform.ide.progress.withBackgroundProgress
 import com.intellij.ui.components.JBLabel
 import com.intellij.vcs.commit.AbstractCommitWorkflowHandler
@@ -25,7 +24,6 @@ import dev.langchain4j.model.chat.StreamingChatModel
 import dev.langchain4j.model.chat.response.ChatResponse
 import dev.langchain4j.model.chat.response.StreamingChatResponseHandler
 import kotlinx.coroutines.*
-import kotlin.text.RegexOption
 
 abstract class LLMClientService<C : LLMClientConfiguration>(private val cs: CoroutineScope) {
 
