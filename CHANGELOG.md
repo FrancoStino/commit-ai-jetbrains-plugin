@@ -6,6 +6,25 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+#  (2025-10-05)
+
+
+### Bug Fixes
+
+* Update branch names in CI workflows (develop) ([ba818e2](https://github.com/FrancoStino/commit-ai-jetbrains-plugin/commit/ba818e21cdf2f55d60b14a7306e2c50e7e377789))
+
+
+### Features
+
+* Add constants for branch placeholder and default branch (develop) ([5a2c443](https://github.com/FrancoStino/commit-ai-jetbrains-plugin/commit/5a2c443a18c19d695b037b4369f58381551d3f04))
+* Add Gemini CLI workflows for code review and issue triage ([59eead9](https://github.com/FrancoStino/commit-ai-jetbrains-plugin/commit/59eead9e8553f661d8534338da7dd1052e17ed7f))
+* Introduce constants for prompt placeholders ([106b733](https://github.com/FrancoStino/commit-ai-jetbrains-plugin/commit/106b733edc7323a400f67c08902ac5d7519d533e))
+* Refactor settings UI for better maintainability (develop) ([60cc9de](https://github.com/FrancoStino/commit-ai-jetbrains-plugin/commit/60cc9dea5613445e253069fee63ba942f12ce09c))
+* Show stop icon when job is active ([5b8e494](https://github.com/FrancoStino/commit-ai-jetbrains-plugin/commit/5b8e4942cf08a5ecc502ace514cbcf04682ee3f5))
+* Update plugin version to 1.5.2 (develop) ([1a88484](https://github.com/FrancoStino/commit-ai-jetbrains-plugin/commit/1a8848443c235e6b34f6c1dc4c4540f3dc83ec0f))
+
+
+
 #  (2025-10-04)
 
 
