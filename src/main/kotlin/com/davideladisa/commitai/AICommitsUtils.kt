@@ -29,6 +29,9 @@ import java.util.*
 
 object CommitAIUtils {
 
+    private const val BRANCH_PLACEHOLDER = "{branch}"
+    private const val DEFAULT_BRANCH = "main"
+
     fun isPathExcluded(path: String, project: Project): Boolean {
         return AppSettings2.instance.isPathExcluded(path) || project.service<ProjectSettings>().isPathExcluded(path)
     }
@@ -74,12 +77,12 @@ object CommitAIUtils {
     }
 
     fun replaceBranch(promptContent: String, branch: String?): String {
-        if (promptContent.contains("{branch}")) {
+        if (promptContent.contains(BRANCH_PLACEHOLDER)) {
             if (branch != null) {
-                return promptContent.replace("{branch}", branch)
+                return promptContent.replace(BRANCH_PLACEHOLDER, branch)
             } else {
                 sendNotification(Notification.noCommonBranch())
-                return promptContent.replace("{branch}", "main")
+                return promptContent.replace(BRANCH_PLACEHOLDER, DEFAULT_BRANCH)
             }
         }
         return promptContent
