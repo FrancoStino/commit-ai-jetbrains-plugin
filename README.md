@@ -84,7 +84,7 @@ for "Commit AI"</kbd> > <kbd>Install Plugin</kbd>  > <kbd>Restart IntelliJ IDEA<
 ### Installation from zip
 
 1. Download zip from [releases](https://github.com/FrancoStino/commit-ai-jetbrains-plugin/releases)
-2. Import to IntelliJ: <kbd>Settings</kbd> > <kbd>Plugins</kbd> > <kbd>Cog</kbd> > <kbd>Install plugin from
+2. Import to IntelliJ: <kbd>Settings</kbd> > <kbd>Plugins</kbd> > <kbd>Install plugin from
    disk...</kbd>
 3. Set LLM client configuration in plugin's settings: <kbd>Settings</kbd> > <kbd>Tools</kbd> > <kbd>Commit AI</kbd>
 
