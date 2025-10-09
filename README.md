@@ -108,7 +108,7 @@ Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
 
 ## License
 
-Please see [LICENSE](LICENSE) for details.
+Please see [LICENSE](LICENSE.md) for details.
 
 ## Star History
 
