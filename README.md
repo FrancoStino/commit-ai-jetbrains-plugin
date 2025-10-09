@@ -104,7 +104,6 @@ Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
 
 ## Acknowledgements
 
-- [openai-kotlin](https://github.com/aallam/openai-kotlin) for OpenAI API client.
 - [langchain4j](https://github.com/langchain4j/langchain4j) for LLM API clients.
 
 ## License
