@@ -29,7 +29,7 @@ class AppSettings : PersistentStateComponent<AppSettings> {
     var lastVersion: String? = null
 
     var prompts = DefaultPrompts.toPromptsMap()
-    var currentPrompt = prompts["basic"]!!
+    var currentPrompt = prompts["basic"] ?: DefaultPrompts.BASIC.prompt
 
     var appExclusions: Set<String> = setOf()
 

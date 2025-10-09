@@ -6,7 +6,7 @@ import com.intellij.util.messages.Topic
  * Topic for notifying when LLM client settings are changed.
  * This allows UI components to refresh when settings are applied.
  */
-interface LLMClientSettingsChangeNotifier {
+fun interface LLMClientSettingsChangeNotifier {
 
     companion object {
         val TOPIC = Topic.create(

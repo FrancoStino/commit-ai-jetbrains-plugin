@@ -77,15 +77,15 @@ object CommitAIUtils {
     }
 
     fun replaceBranch(promptContent: String, branch: String?): String {
-        if (promptContent.contains(BRANCH_PLACEHOLDER)) {
-            if (branch != null) {
-                return promptContent.replace(BRANCH_PLACEHOLDER, branch)
-            } else {
-                sendNotification(Notification.noCommonBranch())
-                return promptContent.replace(BRANCH_PLACEHOLDER, DEFAULT_BRANCH)
-            }
+        if (!promptContent.contains(BRANCH_PLACEHOLDER)) {
+            return promptContent
         }
-        return promptContent
+        return if (branch != null) {
+            promptContent.replace(BRANCH_PLACEHOLDER, branch)
+        } else {
+            sendNotification(Notification.noCommonBranch())
+            promptContent.replace(BRANCH_PLACEHOLDER, DEFAULT_BRANCH)
+        }
     }
 
     fun replaceHint(promptContent: String, hint: String?): String {
