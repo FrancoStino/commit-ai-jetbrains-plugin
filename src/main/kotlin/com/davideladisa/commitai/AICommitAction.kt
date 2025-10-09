@@ -82,25 +82,12 @@ class CommitAIAction : AnAction(), DumbAware, Disposable {
             return
         }
 
-        // Instead of calling actionPerformed directly (which is @ApiStatus.OverrideOnly),
-        // we duplicate the logic from LLMClientConfiguration.actionPerformed()
-        val generateCommitMessageJob = llmClient.getGenerateCommitMessageJob()
-        if (generateCommitMessageJob?.isActive == true) {
-            generateCommitMessageJob.cancel()
-            return
-        }
-
-        val commitWorkflowHandler = e.getData(VcsDataKeys.COMMIT_WORKFLOW_HANDLER) as? AbstractCommitWorkflowHandler<*, *>
-        if (commitWorkflowHandler == null) {
-            sendNotification(Notification.noCommitMessage())
-            return
-        }
-
         // Remember which LLM client was used for the shortcut action
         val projectSettings = project.service<ProjectSettings>()
         projectSettings.splitButtonActionSelectedLLMClientId = llmClient.id
 
-        llmClient.generateCommitMessage(commitWorkflowHandler, project)
+        // Execute the action on the LLM client
+        llmClient.execute(e)
     }
 
     private fun getActiveLlmClient(project: Project?) =
