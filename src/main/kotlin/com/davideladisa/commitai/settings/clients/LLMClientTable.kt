@@ -58,14 +58,14 @@ class LLMClientTable {
 
     private fun fetchSortedLlmClients(): List<LLMClientConfiguration> {
         val sortedWith = AppSettings2.instance.llmClientConfigurations.toList().sortedWith(
-            compareBy({ if (it.getClientName() == "Pollinations") 0 else 1 }, { it.name })
+            compareBy({ it.getClientName() }, { it.name })
         )
         return sortedWith
     }
 
     private fun updateLlmClients(newClients: List<LLMClientConfiguration>) {
         llmClients =
-            newClients.sortedWith(compareBy({ if (it.getClientName() == "Pollinations") 0 else 1 }, { it.name }))
+            newClients.sortedWith(compareBy({ it.getClientName() }, { it.name }))
         refreshTableModel()
     }
 
@@ -172,11 +172,7 @@ class LLMClientTable {
                     // Set darker background for better separation
                     background = UIUtil.getPanelBackground().darker()
                     val descriptor = object : ListItemDescriptorAdapter<LLMClientConfiguration>() {
-                        override fun getTextFor(value: LLMClientConfiguration) = when {
-                            value.getClientName() == "Pollinations" && newLlmClientConfiguration == null -> "${value.getClientName()} (Free)"
-                            value.getClientName() == "Groq" && newLlmClientConfiguration == null -> "${value.getClientName()} (Freemium)"
-                            else -> value.getClientName()
-                        }
+                        override fun getTextFor(value: LLMClientConfiguration) = value.getClientName()
                         override fun getIconFor(value: LLMClientConfiguration) = value.getClientIcon()
                     }
                     cellRenderer = object : GroupedItemsListRenderer<LLMClientConfiguration>(descriptor) {
