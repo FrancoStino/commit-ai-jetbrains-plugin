@@ -162,7 +162,7 @@ object CommitAIUtils {
             .joinToString("\n")
     }
 
-    private fun extractSvnBranchName(url: String): String? {
+    internal fun extractSvnBranchName(url: String): String? {
         val normalizedUrl = url.lowercase()
 
         // Standard SVN layout: repository/trunk, repository/branches/name, repository/tags/name
