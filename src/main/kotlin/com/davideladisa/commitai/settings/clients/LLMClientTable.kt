@@ -153,7 +153,7 @@ class LLMClientTable {
             return if (newLLMClientConfiguration == null) {
                 val epName =
                     ExtensionPointName.create<LLMClientConfiguration>("com.davideladisa.commit-ai.llmClientConfiguration")
-                epName.extensionList
+                epName.extensionList.sortedBy { it.getClientName() }
             } else {
                 listOf(newLLMClientConfiguration)
             }

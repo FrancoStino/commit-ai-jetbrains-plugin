@@ -39,7 +39,8 @@ class AppSettingsConfigurable(val project: Project, cs: CoroutineScope) : BoundC
                 .widthGroup("labelPrompt")
             llmClientConfigurationComboBox =
                 comboBox(
-                    AppSettings2.instance.llmClientConfigurations.toList().sortedBy { it.name },
+                    AppSettings2.instance.llmClientConfigurations.toList()
+                        .sortedWith(compareBy({ it.getClientName() }, { it.name })),
                     CommitAIListCellRenderer()
                 )
                     .bindItem(
@@ -273,7 +274,7 @@ class AppSettingsConfigurable(val project: Project, cs: CoroutineScope) : BoundC
         llmClientConfigurationComboBox.removeAllItems()
 
         val sortedClients = AppSettings2.instance.llmClientConfigurations.toList()
-            .sortedBy { it.name }
+            .sortedWith(compareBy({ it.getClientName() }, { it.name }))
 
         sortedClients.forEach { llmClientConfigurationComboBox.addItem(it) }
 
