@@ -91,7 +91,7 @@ for "Commit AI"</kbd> > <kbd>Install Plugin</kbd>  > <kbd>Restart IntelliJ IDEA<
 
 ## Support
 
-* Star the repository
+* [Star the repository](https://github.com/FrancoStino/commit-ai-jetbrains-plugin)
 * [Rate the plugin](https://plugins.jetbrains.com/plugin/28558-commit-ai/)
 * [Share the plugin](https://plugins.jetbrains.com/plugin/28558-commit-ai/)
 * [Sponsor me](https://github.com/sponsors/FrancoStino)
