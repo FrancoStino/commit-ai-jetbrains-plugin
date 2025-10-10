@@ -2,7 +2,7 @@ name: Sync multiple branches
 
 on:
   workflow_run:
-    workflows: ["Changelog"]
+    workflows: [ "Release" ]
     types:
       - completed
 
