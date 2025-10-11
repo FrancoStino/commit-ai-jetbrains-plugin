@@ -21,6 +21,7 @@
 - [Installation from zip](#installation-from-zip)
 
 ## Description
+
 <!-- Plugin description -->
 
 Commit AI is a plugin that generates your commit messages by using git diff and LLMs.
@@ -33,6 +34,7 @@ Commit AI is a plugin that generates your commit messages by using git diff and 
 - **Custom prompts**: Create and customize your own prompt templates with variables
 - **Universal IDE support**: Works across all JetBrains IDEs (IntelliJ, PhpStorm, PyCharm, WebStorm, etc.)
 - **Git & SVN support**: Compatible with both Git and Subversion version control systems
+
 <!-- Plugin description end -->
 
 ### 🚀 Getting Started
