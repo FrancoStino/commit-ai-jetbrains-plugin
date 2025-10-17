@@ -1,4 +1,3 @@
-<!-- Plugin description -->
 <div align="center">
     <a href="https://plugins.jetbrains.com/plugin/28558-commit-ai/">
         <img src="./src/main/resources/META-INF/pluginIcon.svg" alt="logo" width="200"/>
@@ -23,6 +22,8 @@
 
 ## Description
 
+<!-- Plugin description -->
+
 Commit AI is a plugin that generates your commit messages by using git diff and LLMs.
 
 ### ✨ Key Features
@@ -33,6 +34,8 @@ Commit AI is a plugin that generates your commit messages by using git diff and 
 - **Custom prompts**: Create and customize your own prompt templates with variables
 - **Universal IDE support**: Works across all JetBrains IDEs (IntelliJ, PhpStorm, PyCharm, WebStorm, etc.)
 - **Git & SVN support**: Compatible with both Git and Subversion version control systems
+
+<!-- Plugin description end -->
 
 ### 🚀 Getting Started
 Install the plugin and configure your LLM client in <kbd>Settings</kbd> > <kbd>Tools</kbd> > <kbd>Commit AI</kbd>
@@ -119,4 +122,3 @@ Please see [LICENSE](LICENSE.md) for details.
    <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=FrancoStino/commit-ai-jetbrains-plugin&type=Date" />
  </picture>
 </a>
-<!-- Plugin description end -->
