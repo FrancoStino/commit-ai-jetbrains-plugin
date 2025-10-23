@@ -53,8 +53,8 @@ Install the plugin and configure your LLM client in <kbd>Settings</kbd> > <kbd>T
 
 ## Supported models
 
-- Groq
-- Pollinations
+- Groq (Freemium)
+- Pollinations (Free)
 
 The plugin uses [langchain4j](https://github.com/langchain4j/langchain4j) for creating LLM API clients with OpenAI-compatible APIs. It currently supports Groq and Pollinations. If you would like support for additional LLM providers, please make a feature request in GitHub issues.
 
