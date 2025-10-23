@@ -8,7 +8,8 @@
 
 [![Version](https://img.shields.io/jetbrains/plugin/v/28558-commit-ai?style=for-the-badge&label=Version)](https://plugins.jetbrains.com/plugin/28558-commit-ai/)
 [![Installs](https://img.shields.io/jetbrains/plugin/d/28558-commit-ai?style=for-the-badge)](https://plugins.jetbrains.com/plugin/28558-commit-ai/)
-[![Rating](https://img.shields.io/jetbrains/plugin/r/stars/28558-commit-ai?style=for-the-badge)](https://plugins.jetbrains.com/plugin/28558-commit-ai/)
+
+[//]: # ([![Rating]&#40;https://img.shields.io/jetbrains/plugin/r/stars/28558-commit-ai?style=for-the-badge&#41;]&#40;https://plugins.jetbrains.com/plugin/28558-commit-ai/&#41;)
 [![Quality Gate Status](https://img.shields.io/sonar/alert_status/FrancoStino_commit-ai-jetbrains-plugin?server=https%3A%2F%2Fsonarcloud.io&style=for-the-badge&logo=sonarcloud)](https://sonarcloud.io/summary/new_code?id=FrancoStino_commit-ai-jetbrains-plugin)
 
 </div>
@@ -52,8 +53,8 @@ Install the plugin and configure your LLM client in <kbd>Settings</kbd> > <kbd>T
 
 ## Supported models
 
-- Groq
-- Pollinations
+- Groq (Freemium)
+- Pollinations (Free)
 
 The plugin uses [langchain4j](https://github.com/langchain4j/langchain4j) for creating LLM API clients with OpenAI-compatible APIs. It currently supports Groq and Pollinations. If you would like support for additional LLM providers, please make a feature request in GitHub issues.
 
