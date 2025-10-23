@@ -12,8 +12,7 @@
 ## JBIJPPTPL
 
 name: Build
-permissions:
-  contents: read
+
 on:
   # Trigger the workflow on pushes to only the 'master' branch (this avoids duplicate checks being run e.g., for dependabot pull requests)
   push:
@@ -24,9 +23,6 @@ on:
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
-
-permissions:
-  contents: read
 
 jobs:
 
@@ -179,8 +175,7 @@ jobs:
   prepare-changelog:
     name: Prepare Changelog
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
+
     steps:
       - name: Checkout
         uses: actions/checkout@v5
