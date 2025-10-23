@@ -8,7 +8,8 @@
 
 [![Version](https://img.shields.io/jetbrains/plugin/v/28558-commit-ai?style=for-the-badge&label=Version)](https://plugins.jetbrains.com/plugin/28558-commit-ai/)
 [![Installs](https://img.shields.io/jetbrains/plugin/d/28558-commit-ai?style=for-the-badge)](https://plugins.jetbrains.com/plugin/28558-commit-ai/)
-[![Rating](https://img.shields.io/jetbrains/plugin/r/stars/28558-commit-ai?style=for-the-badge)](https://plugins.jetbrains.com/plugin/28558-commit-ai/)
+
+[//]: # ([![Rating]&#40;https://img.shields.io/jetbrains/plugin/r/stars/28558-commit-ai?style=for-the-badge&#41;]&#40;https://plugins.jetbrains.com/plugin/28558-commit-ai/&#41;)
 [![Quality Gate Status](https://img.shields.io/sonar/alert_status/FrancoStino_commit-ai-jetbrains-plugin?server=https%3A%2F%2Fsonarcloud.io&style=for-the-badge&logo=sonarcloud)](https://sonarcloud.io/summary/new_code?id=FrancoStino_commit-ai-jetbrains-plugin)
 
 </div>
