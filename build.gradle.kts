@@ -29,7 +29,7 @@ dependencies {
     testImplementation(libs.junit)
     testImplementation(libs.opentest4j)
     intellijPlatform {
-        create(providers.gradleProperty("platformType"), providers.gradleProperty("platformVersion"))
+        intellijIdea(providers.gradleProperty("platformVersion"))
 
         testFramework(org.jetbrains.intellij.platform.gradle.TestFrameworkType.Platform)
         bundledPlugin("com.intellij.java")
@@ -80,7 +80,7 @@ intellijPlatform {
     }
     pluginVerification {
         ides {
-            create(providers.gradleProperty("platformType"), providers.gradleProperty("platformVersion"))
+            intellijIdea(providers.gradleProperty("platformVersion"))
         }
     }
 }
