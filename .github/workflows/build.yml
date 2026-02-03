@@ -43,7 +43,7 @@ jobs:
 
       # Check out the current repository
       - name: Fetch Sources
-        uses: actions/checkout@v6
+        uses: actions/checkout@v6.0.2
 
       # Set up the Java environment for the next steps
       - name: Setup Java
@@ -73,7 +73,7 @@ jobs:
 
       # Store an already-built plugin as an artifact for downloading
       - name: Upload artifact
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: ${{ steps.artifact.outputs.filename }}
           path: ./build/distributions/content/*/*
@@ -94,7 +94,7 @@ jobs:
 
       # Check out the current repository
       - name: Fetch Sources
-        uses: actions/checkout@v6
+        uses: actions/checkout@v6.0.2
 
       # Set up the Java environment for the next steps
       - name: Setup Java
@@ -116,7 +116,7 @@ jobs:
       # Collect Tests Result of failed tests
       - name: Collect Tests Result
         if: ${{ failure() }}
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: tests-result
           path: ${{ github.workspace }}/build/reports/tests
@@ -145,7 +145,7 @@ jobs:
 
       # Check out the current repository
       - name: Fetch Sources
-        uses: actions/checkout@v6
+        uses: actions/checkout@v6.0.2
 
       # Set up the Java environment for the next steps
       - name: Setup Java
@@ -167,7 +167,7 @@ jobs:
       # Collect Plugin Verifier Result
       - name: Collect Plugin Verifier Result
         if: ${{ always() }}
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: pluginVerifier-result
           path: ${{ github.workspace }}/build/reports/pluginVerifier
@@ -178,7 +178,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v6.0.2
         with:
           fetch-depth: 0 # Fetch full history for changelog generation
 
@@ -196,7 +196,7 @@ jobs:
           conventional-changelog -p angular > RELEASE_NOTE.md
       
       - name: Upload Release Note
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: release-note
           path: RELEASE_NOTE.md
@@ -214,10 +214,10 @@ jobs:
 
       # Check out the current repository
       - name: Fetch Sources
-        uses: actions/checkout@v6
+        uses: actions/checkout@v6.0.2
 
       - name: Download Release Note
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v7
         with:
           name: release-note
           path: .
