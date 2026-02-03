@@ -29,13 +29,7 @@ dependencies {
     testImplementation(libs.junit)
     testImplementation(libs.opentest4j)
     intellijPlatform {
-        val pv = providers.gradleProperty("platformVersion")
-        val majorVersion = pv.get().substringBefore(".").toIntOrNull() ?: 0
-        if (majorVersion >= 2026) {
-            intellijIdea(pv.get())
-        } else {
-            create(providers.gradleProperty("platformType"), pv)
-        }
+        create(providers.gradleProperty("platformType"), providers.gradleProperty("platformVersion"))
 
         testFramework(org.jetbrains.intellij.platform.gradle.TestFrameworkType.Platform)
         bundledPlugin("com.intellij.java")
@@ -86,12 +80,7 @@ intellijPlatform {
     }
     pluginVerification {
         ides {
-            val pv = providers.gradleProperty("platformVersion")
-            if (pv.get().startsWith("2026")) {
-                intellijIdea(pv.get())
-            } else {
-                ide(providers.gradleProperty("platformType"), pv)
-            }
+            create(providers.gradleProperty("platformType"), providers.gradleProperty("platformVersion"))
         }
     }
 }
