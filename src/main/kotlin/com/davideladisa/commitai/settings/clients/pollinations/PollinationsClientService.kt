@@ -25,7 +25,7 @@ class PollinationsClientService(private val cs: CoroutineScope) : LLMClientServi
         @JvmStatic
         fun getInstance(): PollinationsClientService = service()
 
-        private val seedModels = setOf("gemini", "gemini-search", PollinationsClientConfiguration.DEFAULT_MODEL, "openai-reasoning", "evil", "unity")
+        private val seedModels = setOf("gemini", "gemini-search", PollinationsClientConfiguration.DEFAULT_MODEL)
     }
 
     override suspend fun buildChatModel(client: PollinationsClientConfiguration): ChatModel {
