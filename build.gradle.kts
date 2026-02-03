@@ -80,7 +80,7 @@ intellijPlatform {
     }
     pluginVerification {
         ides {
-            intellijIdea(providers.gradleProperty("platformVersion"))
+            recommended()
         }
     }
 }
