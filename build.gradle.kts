@@ -30,7 +30,8 @@ dependencies {
     testImplementation(libs.opentest4j)
     intellijPlatform {
         val pv = providers.gradleProperty("platformVersion")
-        if (pv.get().startsWith("2026")) {
+        val majorVersion = pv.get().substringBefore(".").toIntOrNull() ?: 0
+        if (majorVersion >= 2026) {
             intellijIdea(pv.get())
         } else {
             create(providers.gradleProperty("platformType"), pv)
