@@ -81,6 +81,9 @@ intellijPlatform {
     pluginVerification {
         ides {
             recommended()
+            ide(IntelliJPlatformType.IntellijIdeaCommunity, "261-EAP-SNAPSHOT") {
+                useInstaller = false
+            }
         }
     }
 }
