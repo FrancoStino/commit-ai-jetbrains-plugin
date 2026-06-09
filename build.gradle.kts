@@ -36,6 +36,10 @@ dependencies {
             useInstaller = false
         }
 
+        // Resolving the platform from the maven intellij-repository (useInstaller = false)
+        // does not bundle the code instrumentation compiler, so request it explicitly.
+        javaCompiler(providers.gradleProperty("platformVersion"))
+
         testFramework(org.jetbrains.intellij.platform.gradle.TestFrameworkType.Platform)
         bundledPlugin("com.intellij.java")
         bundledPlugin("com.intellij.tasks")
