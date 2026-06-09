@@ -1,5 +1,8 @@
 import org.jetbrains.changelog.Changelog
 import org.jetbrains.changelog.markdownToHTML
+import org.jetbrains.intellij.platform.gradle.IntelliJPlatformType
+import org.jetbrains.intellij.platform.gradle.models.ProductRelease
+import org.jetbrains.intellij.platform.gradle.tasks.VerifyPluginTask.FailureLevel
 
 fun properties(key: String) = project.findProperty(key).toString()
 
@@ -29,7 +32,9 @@ dependencies {
     testImplementation(libs.junit)
     testImplementation(libs.opentest4j)
     intellijPlatform {
-        intellijIdea(providers.gradleProperty("platformVersion"))
+        intellijIdea(providers.gradleProperty("platformVersion")) {
+            useInstaller = false
+        }
 
         testFramework(org.jetbrains.intellij.platform.gradle.TestFrameworkType.Platform)
         bundledPlugin("com.intellij.java")
@@ -41,6 +46,10 @@ dependencies {
 }
 
 intellijPlatform {
+    // Pure Kotlin codebase — no JetBrains @NotNull/@Nullable annotations or
+    // GUI Designer .form files, so Ant-based instrumentation is unnecessary.
+    instrumentCode = false
+
     pluginConfiguration {
         name = providers.gradleProperty("pluginName")
         version = providers.gradleProperty("pluginVersion")
@@ -79,11 +88,25 @@ intellijPlatform {
         channels = providers.gradleProperty("pluginVersion").map { listOf(it.substringAfter('-', "").substringBefore('.').ifEmpty { "default" }) }
     }
     pluginVerification {
+        // Exclude INTERNAL_API_USAGES (PluginManagerCore.getPlugin has no public replacement)
+        // and DEPRECATED_API_USAGES (isAmendCommitMode has no non-deprecated alternative yet).
+        failureLevel = FailureLevel.entries.toList() - listOf(
+            FailureLevel.INTERNAL_API_USAGES,
+            FailureLevel.DEPRECATED_API_USAGES,
+        )
         ides {
             recommended()
-            ide(IntelliJPlatformType.IntellijIdeaCommunity, "251")
-            ide(IntelliJPlatformType.IntellijIdeaCommunity, "261-EAP-SNAPSHOT") {
-                useInstaller = false
+            select {
+                types = listOf(IntelliJPlatformType.IntellijIdeaCommunity)
+                channels = listOf(ProductRelease.Channel.RELEASE)
+                sinceBuild = "251"
+                untilBuild = "251.*"
+            }
+            select {
+                types = listOf(IntelliJPlatformType.IntellijIdeaCommunity)
+                channels = listOf(ProductRelease.Channel.EAP)
+                sinceBuild = "261"
+                untilBuild = "261.*"
             }
         }
     }
