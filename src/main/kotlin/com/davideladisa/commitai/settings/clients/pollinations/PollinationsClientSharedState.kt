@@ -22,17 +22,35 @@ class PollinationsClientSharedState : PersistentStateComponent<PollinationsClien
     }
 
     override var hosts: MutableSet<String> = mutableSetOf(
-        "https://text.pollinations.ai/openai"
+        "https://gen.pollinations.ai/v1"
     )
 
     override var modelIds: MutableSet<String> = mutableSetOf(
-        "gemini",
-        "gemini-search",
+        "openai",
+        "openai-fast",
         PollinationsClientConfiguration.DEFAULT_MODEL,
-        "openai-reasoning",
-        "bidara",
-        "evil",
-        "unity"
+        "qwen-coder",
+        "mistral",
+        "openai-audio",
+        "gemini",
+        "gemini-fast",
+        "deepseek",
+        "grok",
+        "gemini-search",
+        "chickytutor",
+        "midijourney",
+        "claude-fast",
+        "claude",
+        "claude-large",
+        "perplexity-fast",
+        "perplexity-reasoning",
+        "kimi",
+        "gemini-large",
+        "gemini-legacy",
+        "nova-fast",
+        "glm",
+        "minimax",
+        "nomnom"
     )
 
     override fun getState(): PollinationsClientSharedState = this

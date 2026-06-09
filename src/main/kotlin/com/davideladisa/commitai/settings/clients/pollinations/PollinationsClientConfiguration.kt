@@ -17,7 +17,7 @@ class PollinationsClientConfiguration : BaseRestLLMClientConfiguration(
 
     init {
         templatePresentation.text = "${getClientName()}: $modelId"
-        host = "https://text.pollinations.ai/openai"
+        host = "https://gen.pollinations.ai/v1"
     }
 
     @Attribute
