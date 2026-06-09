@@ -31,7 +31,9 @@ dependencies {
     testImplementation(libs.junit)
     testImplementation(libs.opentest4j)
     intellijPlatform {
-        intellijIdea(providers.gradleProperty("platformVersion"))
+        intellijIdea(providers.gradleProperty("platformVersion")) {
+            useInstaller = false
+        }
 
         testFramework(org.jetbrains.intellij.platform.gradle.TestFrameworkType.Platform)
         bundledPlugin("com.intellij.java")
