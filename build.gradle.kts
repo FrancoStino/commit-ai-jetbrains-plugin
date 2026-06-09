@@ -2,6 +2,7 @@ import org.jetbrains.changelog.Changelog
 import org.jetbrains.changelog.markdownToHTML
 import org.jetbrains.intellij.platform.gradle.IntelliJPlatformType
 import org.jetbrains.intellij.platform.gradle.models.ProductRelease
+import org.jetbrains.intellij.platform.gradle.tasks.VerifyPluginTask.FailureLevel
 
 fun properties(key: String) = project.findProperty(key).toString()
 
@@ -83,6 +84,13 @@ intellijPlatform {
         channels = providers.gradleProperty("pluginVersion").map { listOf(it.substringAfter('-', "").substringBefore('.').ifEmpty { "default" }) }
     }
     pluginVerification {
+        // PluginManagerCore.getPlugin(PluginId) became @ApiStatus.Internal in build 262 and
+        // has no public replacement yet, so exclude INTERNAL_API_USAGES while keeping all
+        // real compatibility checks (default set minus INTERNAL_API_USAGES).
+        failureLevel = listOf(
+            FailureLevel.COMPATIBILITY_PROBLEMS,
+            FailureLevel.OVERRIDE_ONLY_API_USAGES,
+        )
         ides {
             recommended()
             select {
