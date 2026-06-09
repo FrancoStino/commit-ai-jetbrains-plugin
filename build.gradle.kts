@@ -91,10 +91,7 @@ intellijPlatform {
         // PluginManagerCore.getPlugin(PluginId) became @ApiStatus.Internal in build 262 and
         // has no public replacement yet, so exclude INTERNAL_API_USAGES while keeping all
         // real compatibility checks (default set minus INTERNAL_API_USAGES).
-        failureLevel = listOf(
-            FailureLevel.COMPATIBILITY_PROBLEMS,
-            FailureLevel.OVERRIDE_ONLY_API_USAGES,
-        )
+        failureLevel = FailureLevel.entries.toList() - FailureLevel.INTERNAL_API_USAGES
         ides {
             recommended()
             select {
