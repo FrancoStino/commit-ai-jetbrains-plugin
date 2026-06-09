@@ -36,10 +36,6 @@ dependencies {
             useInstaller = false
         }
 
-        // Resolving the platform from the maven intellij-repository (useInstaller = false)
-        // does not bundle the code instrumentation compiler, so request it explicitly.
-        javaCompiler(providers.gradleProperty("platformVersion"))
-
         testFramework(org.jetbrains.intellij.platform.gradle.TestFrameworkType.Platform)
         bundledPlugin("com.intellij.java")
         bundledPlugin("com.intellij.tasks")
@@ -50,6 +46,10 @@ dependencies {
 }
 
 intellijPlatform {
+    // Pure Kotlin codebase — no JetBrains @NotNull/@Nullable annotations or
+    // GUI Designer .form files, so Ant-based instrumentation is unnecessary.
+    instrumentCode = false
+
     pluginConfiguration {
         name = providers.gradleProperty("pluginName")
         version = providers.gradleProperty("pluginVersion")
