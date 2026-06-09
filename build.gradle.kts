@@ -1,5 +1,7 @@
 import org.jetbrains.changelog.Changelog
 import org.jetbrains.changelog.markdownToHTML
+import org.jetbrains.intellij.platform.gradle.IntelliJPlatformType
+import org.jetbrains.intellij.platform.gradle.models.ProductRelease
 
 fun properties(key: String) = project.findProperty(key).toString()
 
@@ -81,9 +83,17 @@ intellijPlatform {
     pluginVerification {
         ides {
             recommended()
-            ide(IntelliJPlatformType.IntellijIdeaCommunity, "251")
-            ide(IntelliJPlatformType.IntellijIdeaCommunity, "261-EAP-SNAPSHOT") {
-                useInstaller = false
+            select {
+                types = listOf(IntelliJPlatformType.IntellijIdeaCommunity)
+                channels = listOf(ProductRelease.Channel.RELEASE)
+                sinceBuild = "251"
+                untilBuild = "251.*"
+            }
+            select {
+                types = listOf(IntelliJPlatformType.IntellijIdeaCommunity)
+                channels = listOf(ProductRelease.Channel.EAP)
+                sinceBuild = "261"
+                untilBuild = "261.*"
             }
         }
     }
