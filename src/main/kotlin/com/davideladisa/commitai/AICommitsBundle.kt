@@ -42,7 +42,9 @@ object CommitAIBundle : DynamicBundle(BUNDLE) {
         BrowserLauncher.instance.open("https://github.com/FrancoStino/commit-ai-jetbrains-plugin")
     }
 
-    fun plugin() = PluginManagerCore.getPlugin(PluginId.getId("com.davideladisa.commit-ai"))
+    private const val PLUGIN_ID = "com.davideladisa.commit-ai"
+
+    fun plugin() = PluginManagerCore.getPlugin(PluginId.getId(PLUGIN_ID))
 
 
 }
