@@ -39,14 +39,24 @@ abstract class LLMClientService<C : LLMClientConfiguration>(private val cs: Coro
         generateCommitMessageJob = cs.launch(ModalityState.current().asContextElement()) {
             withBackgroundProgress(project, message("action.background")) {
 
-                val diff = if (commitWorkflowHandler.amendCommitHandler?.isAmendCommitMode == true) {
+                val amendCommitHandler = commitWorkflowHandler.amendCommitHandler
+                val isAmendMode = amendCommitHandler.isAmendCommitMode
+
+                val diff = if (isAmendMode) {
                     try {
-                        val commandLine = GeneralCommandLine("git", "show", "HEAD")
+                        // For Git, we want the diff between the parent of HEAD and the current staged changes
+                        // to capture the full state of the amended commit.
+                        val commandLine = GeneralCommandLine("git", "diff", "HEAD^", "--cached")
                         commandLine.setWorkDirectory(project.basePath)
                         val output = com.intellij.execution.process.ScriptRunnerUtil.getProcessOutput(commandLine)
-                        output
+                        output.ifEmpty {
+                            // If HEAD^ doesn't exist (first commit) or other issue, fallback to showing HEAD
+                            val showHead = GeneralCommandLine("git", "show", "HEAD")
+                            showHead.setWorkDirectory(project.basePath)
+                            com.intellij.execution.process.ScriptRunnerUtil.getProcessOutput(showHead)
+                        }
                     } catch (_: Exception) {
-                        // fallback to old behavior
+                        // fallback to showing just the new changes
                         computeDiff(includedChanges, false, project)
                     }
                 } else {

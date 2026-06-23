@@ -88,12 +88,8 @@ intellijPlatform {
         channels = providers.gradleProperty("pluginVersion").map { listOf(it.substringAfter('-', "").substringBefore('.').ifEmpty { "default" }) }
     }
     pluginVerification {
-        // Exclude INTERNAL_API_USAGES (PluginManagerCore.getPlugin has no public replacement)
-        // and EXPERIMENTAL_API_USAGES (amendCommitHandler is currently experimental).
-        failureLevel = FailureLevel.entries.toList() - listOf(
-            FailureLevel.INTERNAL_API_USAGES,
-            FailureLevel.EXPERIMENTAL_API_USAGES,
-        )
+        // Exclude EXPERIMENTAL_API_USAGES (amendCommitHandler is currently experimental).
+        failureLevel = FailureLevel.entries.toList() - FailureLevel.EXPERIMENTAL_API_USAGES
         ides {
             recommended()
             select {
