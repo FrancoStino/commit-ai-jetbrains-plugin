@@ -2,7 +2,8 @@ package com.davideladisa.commitai
 
 import com.intellij.DynamicBundle
 import com.intellij.ide.browsers.BrowserLauncher
-import com.intellij.ide.plugins.PluginManager
+import com.intellij.ide.plugins.PluginManagerCore
+import com.intellij.openapi.extensions.PluginId
 import com.intellij.openapi.options.ShowSettingsUtil
 import com.intellij.openapi.project.Project
 import org.jetbrains.annotations.NonNls
@@ -41,7 +42,9 @@ object CommitAIBundle : DynamicBundle(BUNDLE) {
         BrowserLauncher.instance.open("https://github.com/FrancoStino/commit-ai-jetbrains-plugin")
     }
 
-    fun plugin() = PluginManager.getPluginByClass(CommitAIBundle::class.java)
+    private const val PLUGIN_ID = "com.davideladisa.commit-ai"
+
+    fun plugin() = PluginManagerCore.getPlugin(PluginId.getId(PLUGIN_ID))
 
 
 }

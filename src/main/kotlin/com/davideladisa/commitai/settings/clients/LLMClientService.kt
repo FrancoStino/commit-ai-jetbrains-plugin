@@ -39,7 +39,7 @@ abstract class LLMClientService<C : LLMClientConfiguration>(private val cs: Coro
         generateCommitMessageJob = cs.launch(ModalityState.current().asContextElement()) {
             withBackgroundProgress(project, message("action.background")) {
 
-                val diff = if (commitWorkflowHandler.amendCommitHandler.isAmendCommitMode) {
+                val diff = if (commitWorkflowHandler.amendCommitHandler?.isAmendCommitMode == true) {
                     try {
                         val commandLine = GeneralCommandLine("git", "show", "HEAD")
                         commandLine.setWorkDirectory(project.basePath)
