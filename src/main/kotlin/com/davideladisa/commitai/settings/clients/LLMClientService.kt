@@ -39,8 +39,7 @@ abstract class LLMClientService<C : LLMClientConfiguration>(private val cs: Coro
         generateCommitMessageJob = cs.launch(ModalityState.current().asContextElement()) {
             withBackgroundProgress(project, message("action.background")) {
 
-                val amendCommitHandler = commitWorkflowHandler.amendCommitHandler
-                val isAmendMode = amendCommitHandler.isAmendCommitMode
+                val isAmendMode = commitWorkflowHandler.amendCommitHandler?.isAmendCommitMode == true
 
                 val diff = if (isAmendMode) {
                     try {
@@ -50,10 +49,10 @@ abstract class LLMClientService<C : LLMClientConfiguration>(private val cs: Coro
                         commandLine.setWorkDirectory(project.basePath)
                         val output = com.intellij.execution.process.ScriptRunnerUtil.getProcessOutput(commandLine)
                         output.ifEmpty {
-                            // If HEAD^ doesn't exist (first commit) or other issue, fallback to showing HEAD
-                            val showHead = GeneralCommandLine("git", "show", "HEAD")
-                            showHead.setWorkDirectory(project.basePath)
-                            com.intellij.execution.process.ScriptRunnerUtil.getProcessOutput(showHead)
+                            // If HEAD^ doesn't exist (first commit) or other issue, fallback to current staged
+                            val stagedOnly = GeneralCommandLine("git", "diff", "--cached")
+                            stagedOnly.setWorkDirectory(project.basePath)
+                            com.intellij.execution.process.ScriptRunnerUtil.getProcessOutput(stagedOnly)
                         }
                     } catch (_: Exception) {
                         // fallback to showing just the new changes
