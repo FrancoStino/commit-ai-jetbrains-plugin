@@ -39,7 +39,7 @@ abstract class LLMClientService<C : LLMClientConfiguration>(private val cs: Coro
         generateCommitMessageJob = cs.launch(ModalityState.current().asContextElement()) {
             withBackgroundProgress(project, message("action.background")) {
 
-                val isAmendMode = commitWorkflowHandler.amendCommitHandler?.isAmendCommitMode == true
+                val isAmendMode = commitWorkflowHandler.amendCommitHandler.isAmendCommitMode
 
                 val diff = if (isAmendMode) {
                     try {
