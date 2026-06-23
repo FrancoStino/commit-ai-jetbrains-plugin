@@ -15,7 +15,7 @@ class ApplicationStartupListener : ProjectActivity {
     }
     private fun showVersionNotification(project: Project) {
         val settings = AppSettings2.instance
-        val version = CommitAIBundle.plugin()?.version
+        val version = CommitAIBundle.getPluginVersion()
 
         if (version == settings.lastVersion) {
             return

@@ -28,6 +28,16 @@ repositories {
     }
 }
 
+tasks.processResources {
+    val projectVersion = project.version.toString()
+    inputs.property("version", projectVersion)
+    filesMatching("messages/CommitAIBundle.properties") {
+        filter { line ->
+            line.replace("@version@", projectVersion)
+        }
+    }
+}
+
 dependencies {
     testImplementation(libs.junit)
     testImplementation(libs.opentest4j)
