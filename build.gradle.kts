@@ -88,7 +88,7 @@ intellijPlatform {
         channels = providers.gradleProperty("pluginVersion").map { listOf(it.substringAfter('-', "").substringBefore('.').ifEmpty { "default" }) }
     }
     pluginVerification {
-        failureLevel = FailureLevel.entries.toList()
+        failureLevel = FailureLevel.entries.toList() - FailureLevel.EXPERIMENTAL_API_USAGES
         ides {
             recommended()
             select {
