@@ -47,16 +47,23 @@ abstract class LLMClientService<C : LLMClientConfiguration>(private val cs: Coro
                         // to capture the full state of the amended commit.
                         val commandLine = GeneralCommandLine("git", "diff", "HEAD^", "--cached")
                         commandLine.setWorkDirectory(project.basePath)
-                        val output = com.intellij.execution.process.ScriptRunnerUtil.getProcessOutput(commandLine)
-                        output.ifEmpty {
-                            // If HEAD^ doesn't exist (first commit) or other issue, fallback to current staged
-                            val stagedOnly = GeneralCommandLine("git", "diff", "--cached")
-                            stagedOnly.setWorkDirectory(project.basePath)
-                            com.intellij.execution.process.ScriptRunnerUtil.getProcessOutput(stagedOnly)
-                        }
+                        com.intellij.execution.process.ScriptRunnerUtil.getProcessOutput(commandLine)
                     } catch (_: Exception) {
-                        // fallback to showing just the new changes
-                        computeDiff(includedChanges, false, project)
+                        try {
+                            // If HEAD^ doesn't exist (first commit) or other issue, concatenate HEAD and current staged changes
+                            val showHead = GeneralCommandLine("git", "show", "HEAD")
+                            showHead.setWorkDirectory(project.basePath)
+                            val headContent = com.intellij.execution.process.ScriptRunnerUtil.getProcessOutput(showHead)
+
+                            val diffCached = GeneralCommandLine("git", "diff", "--cached")
+                            diffCached.setWorkDirectory(project.basePath)
+                            val stagedChanges = com.intellij.execution.process.ScriptRunnerUtil.getProcessOutput(diffCached)
+
+                            headContent + "\n" + stagedChanges
+                        } catch (_: Exception) {
+                            // fallback to showing just the new changes
+                            computeDiff(includedChanges, false, project)
+                        }
                     }
                 } else {
                     computeDiff(includedChanges, false, project)
