@@ -88,12 +88,7 @@ intellijPlatform {
         channels = providers.gradleProperty("pluginVersion").map { listOf(it.substringAfter('-', "").substringBefore('.').ifEmpty { "default" }) }
     }
     pluginVerification {
-        // Exclude INTERNAL_API_USAGES (PluginManagerCore.getPlugin has no public replacement)
-        // and DEPRECATED_API_USAGES (isAmendCommitMode has no non-deprecated alternative yet).
-        failureLevel = FailureLevel.entries.toList() - listOf(
-            FailureLevel.INTERNAL_API_USAGES,
-            FailureLevel.DEPRECATED_API_USAGES,
-        )
+        failureLevel = FailureLevel.entries.toList()
         ides {
             recommended()
             select {

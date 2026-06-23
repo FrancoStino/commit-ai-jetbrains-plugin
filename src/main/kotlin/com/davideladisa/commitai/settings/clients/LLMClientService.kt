@@ -17,7 +17,6 @@ import com.intellij.openapi.project.Project
 import com.intellij.platform.ide.progress.withBackgroundProgress
 import com.intellij.ui.components.JBLabel
 import com.intellij.vcs.commit.AbstractCommitWorkflowHandler
-import com.intellij.vcs.commit.isAmendCommitMode
 import dev.langchain4j.data.message.UserMessage
 import dev.langchain4j.model.chat.ChatModel
 import dev.langchain4j.model.chat.StreamingChatModel
@@ -35,13 +34,12 @@ abstract class LLMClientService<C : LLMClientConfiguration>(private val cs: Coro
 
     fun generateCommitMessage(clientConfiguration: C, commitWorkflowHandler: AbstractCommitWorkflowHandler<*, *>, project: Project) {
 
-        val commitContext = commitWorkflowHandler.workflow.commitContext
         val includedChanges = commitWorkflowHandler.ui.getIncludedChanges().toMutableList()
 
         generateCommitMessageJob = cs.launch(ModalityState.current().asContextElement()) {
             withBackgroundProgress(project, message("action.background")) {
 
-                val diff = if (commitContext.isAmendCommitMode) {
+                val diff = if (commitWorkflowHandler.amendCommitHandler.isAmendCommitMode) {
                     try {
                         val commandLine = GeneralCommandLine("git", "show", "HEAD")
                         commandLine.setWorkDirectory(project.basePath)
