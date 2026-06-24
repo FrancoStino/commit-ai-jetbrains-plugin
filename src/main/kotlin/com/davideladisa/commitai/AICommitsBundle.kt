@@ -2,7 +2,7 @@ package com.davideladisa.commitai
 
 import com.intellij.DynamicBundle
 import com.intellij.ide.browsers.BrowserLauncher
-import com.intellij.ide.plugins.PluginManager
+import com.intellij.ide.plugins.PluginManagerCore
 import com.intellij.openapi.extensions.PluginId
 import com.intellij.openapi.options.ShowSettingsUtil
 import com.intellij.openapi.project.Project
@@ -44,7 +44,7 @@ object CommitAIBundle : DynamicBundle(BUNDLE) {
 
     private const val PLUGIN_ID = "com.davideladisa.commit-ai"
 
-    fun plugin() = PluginManager.getInstance().findEnabledPlugin(PluginId.getId(PLUGIN_ID))
+    fun plugin() = PluginManagerCore.getPlugin(PluginId.getId(PLUGIN_ID))
 
 
 }
