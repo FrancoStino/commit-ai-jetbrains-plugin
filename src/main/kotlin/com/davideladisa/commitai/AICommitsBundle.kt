@@ -2,8 +2,6 @@ package com.davideladisa.commitai
 
 import com.intellij.DynamicBundle
 import com.intellij.ide.browsers.BrowserLauncher
-import com.intellij.ide.plugins.IdeaPluginDescriptor
-import com.intellij.ide.plugins.cl.PluginAwareClassLoader
 import com.intellij.openapi.options.ShowSettingsUtil
 import com.intellij.openapi.project.Project
 import org.jetbrains.annotations.NonNls
@@ -42,10 +40,12 @@ object CommitAIBundle : DynamicBundle(BUNDLE) {
         BrowserLauncher.instance.open("https://github.com/FrancoStino/commit-ai-jetbrains-plugin")
     }
 
-    fun plugin(): IdeaPluginDescriptor? {
-        val cl = CommitAIBundle::class.java.classLoader
-        return (cl as? PluginAwareClassLoader)?.pluginDescriptor as? IdeaPluginDescriptor
-    }
-
+    fun pluginVersion(): String? =
+        CommitAIBundle::class.java
+            .getResourceAsStream("/META-INF/plugin.xml")
+            ?.use { stream ->
+                val text = stream.bufferedReader().readText()
+                Regex("<version>(.*?)</version>").find(text)?.groupValues?.get(1)
+            }
 
 }
