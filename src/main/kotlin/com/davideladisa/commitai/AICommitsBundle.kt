@@ -44,7 +44,7 @@ object CommitAIBundle : DynamicBundle(BUNDLE) {
 
     fun plugin(): IdeaPluginDescriptor? {
         val cl = CommitAIBundle::class.java.classLoader
-        return (cl as? PluginAwareClassLoader)?.pluginDescriptor
+        return (cl as? PluginAwareClassLoader)?.pluginDescriptor as? IdeaPluginDescriptor
     }
 
 
