@@ -40,12 +40,13 @@ object CommitAIBundle : DynamicBundle(BUNDLE) {
         BrowserLauncher.instance.open("https://github.com/FrancoStino/commit-ai-jetbrains-plugin")
     }
 
-    fun pluginVersion(): String? =
+    fun pluginVersion(): String? = runCatching {
         CommitAIBundle::class.java
             .getResourceAsStream("/META-INF/plugin.xml")
             ?.use { stream ->
                 val text = stream.bufferedReader().readText()
                 Regex("<version>(.*?)</version>").find(text)?.groupValues?.get(1)
             }
+    }.getOrNull()
 
 }
