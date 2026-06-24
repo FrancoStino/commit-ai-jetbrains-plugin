@@ -12,7 +12,6 @@ import com.intellij.openapi.project.DumbAware
 import com.intellij.openapi.util.Disposer
 import com.intellij.openapi.vcs.VcsDataKeys
 import com.intellij.vcs.commit.AbstractCommitWorkflowHandler
-import com.intellij.vcs.commit.isAmendCommitMode
 
 class CommitAISplitButtonAction : SplitButtonAction(object : ActionGroup() {
 
@@ -91,7 +90,7 @@ class CommitAISplitButtonAction : SplitButtonAction(object : ActionGroup() {
             ?: AppSettings2.instance.getActiveLLMClientConfiguration()
         val hasActiveLlmClient = activeLlmClient != null
         val hasStagedFiles = commitWorkflowHandler?.ui?.getIncludedChanges()?.isNotEmpty() == true
-        val isAmendMode = commitWorkflowHandler?.workflow?.commitContext?.isAmendCommitMode == true
+        val isAmendMode = commitWorkflowHandler?.amendCommitHandler?.isAmendCommitMode == true
 
         // Always visible when commit dialog is open and has LLM client
         e.presentation.isVisible = commitWorkflowHandler != null && hasActiveLlmClient
