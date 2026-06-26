@@ -89,8 +89,20 @@ object CommitAIUtils {
     }
 
     fun replaceHint(promptContent: String, hint: String?): String {
-        // For now, only support the simple {hint} placeholder to avoid regex issues.
-        return promptContent.replace("{hint}", hint.orEmpty())
+        var content = promptContent
+        val hintRegex = Regex("\\{(.*?)\\$hint(.*?)\\}", RegexOption.DOT_MATCHES_ALL)
+
+        content = if (hint.isNullOrBlank()) {
+            content.replace(hintRegex, "")
+        } else {
+            content.replace(hintRegex) { matchResult ->
+                val prefix = matchResult.groupValues[1]
+                val suffix = matchResult.groupValues[2]
+                prefix + hint + suffix
+            }
+        }
+
+        return content.replace("{hint}", hint.orEmpty())
     }
 
     suspend fun getCommonBranch(changes: List<Change>, project: Project): String? {
