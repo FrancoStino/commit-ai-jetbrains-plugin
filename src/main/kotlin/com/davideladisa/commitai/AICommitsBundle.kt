@@ -13,8 +13,8 @@ private const val BUNDLE = "messages.CommitAIBundle"
 
 object CommitAIBundle : DynamicBundle(BUNDLE) {
 
-    val URL_BUG_REPORT = URI("https://github.com/FrancoStino/commit-ai-jetbrains-plugin/28558-commit-ai/issues")
-    val URL_PROMPTS_DISCUSSION = URI("https://github.com/FrancoStino/commit-ai-jetbrains-plugin/28558-commit-ai/discussions/2")
+    val URL_BUG_REPORT = URI("https://github.com/FrancoStino/commit-ai-jetbrains-plugin/issues")
+    val URL_PROMPTS_DISCUSSION = URI("https://github.com/FrancoStino/commit-ai-jetbrains-plugin/discussions/2")
     val URL_LLM_CLIENTS_DISCUSSION = URI("https://github.com/FrancoStino/commit-ai-jetbrains-plugin/discussions/7")
     val URL_POLLINATIONS_AUTH = URI("https://enter.pollinations.ai/")
     val URL_GROQ_KEYS = URI("https://console.groq.com/keys")

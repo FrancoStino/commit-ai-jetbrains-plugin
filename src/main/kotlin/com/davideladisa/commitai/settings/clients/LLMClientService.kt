@@ -61,11 +61,12 @@ abstract class LLMClientService<C : LLMClientConfiguration>(private val cs: Coro
                     withContext(Dispatchers.EDT) {
                         clientConfiguration.setCommitMessage(commitWorkflowHandler, prompt, cleanCommitMessage(it))
                     }
-                    AppSettings2.instance.recordHit()
                 }, onError = {
                     withContext(Dispatchers.EDT) {
                         commitWorkflowHandler.setCommitMessage(it)
                     }
+                }, onComplete = {
+                    AppSettings2.instance.recordHit()
                 })
             }
         }
@@ -101,19 +102,33 @@ abstract class LLMClientService<C : LLMClientConfiguration>(private val cs: Coro
         }
     }
 
-    private suspend fun makeRequest(client: C, text: String, onSuccess: suspend (r: String) -> Unit, onError: suspend (r: String) -> Unit) {
+    private suspend fun makeRequest(
+        client: C,
+        text: String,
+        onSuccess: suspend (r: String) -> Unit,
+        onError: suspend (r: String) -> Unit,
+        onComplete: (suspend (r: String) -> Unit)? = null
+    ) {
         makeRequestWithTryCatch(function = {
             if (AppSettings2.instance.useStreamingResponse) {
                 buildStreamingChatModel(client)?.let { streamingChatModel ->
-                    sendStreamingRequest(streamingChatModel, text, onSuccess)
+                    sendStreamingRequest(streamingChatModel, text, onSuccess, onComplete)
                     return@makeRequestWithTryCatch
                 }
             }
-            sendRequest(client, text, onSuccess)
+            sendRequest(client, text, {
+                onSuccess(it)
+                onComplete?.invoke(it)
+            })
         }, onError = onError)
     }
 
-    private suspend fun sendStreamingRequest(streamingModel: StreamingChatModel, text: String, onSuccess: suspend (r: String) -> Unit) {
+    private suspend fun sendStreamingRequest(
+        streamingModel: StreamingChatModel,
+        text: String,
+        onSuccess: suspend (r: String) -> Unit,
+        onComplete: (suspend (r: String) -> Unit)? = null
+    ) {
         var response = ""
         val completionDeferred = CompletableDeferred<String>()
 
@@ -134,7 +149,8 @@ abstract class LLMClientService<C : LLMClientConfiguration>(private val cs: Coro
                     }
 
                     override fun onCompleteResponse(completeResponse: ChatResponse) {
-                        completionDeferred.complete(completeResponse.aiMessage().text())
+                        val finalResponse = completeResponse.aiMessage().text()
+                        completionDeferred.complete(finalResponse)
                     }
 
                     override fun onError(error: Throwable) {
@@ -144,7 +160,9 @@ abstract class LLMClientService<C : LLMClientConfiguration>(private val cs: Coro
             )
             // This throws exception if completionDeferred.completeExceptionally(error) is called
             // which is handled by the function calling this function
-            onSuccess(completionDeferred.await())
+            val finalResult = completionDeferred.await()
+            onSuccess(finalResult)
+            onComplete?.invoke(finalResult)
         }
     }
 
@@ -164,10 +182,17 @@ abstract class LLMClientService<C : LLMClientConfiguration>(private val cs: Coro
     }
 
     private fun cleanCommitMessage(message: String): String {
-        return message
-            .replace("**", "")
-            .replace("```", "")
-            .replace(Regex("<think>.*?</think>", RegexOption.DOT_MATCHES_ALL), "")
-            .trim()
+        var cleaned = message.replace(Regex("<think>.*?</think>", RegexOption.DOT_MATCHES_ALL), "")
+        cleaned = cleaned.replace("**", "")
+
+        val codeBlockRegex = Regex("```(?:[a-zA-Z]*\\n)?([\\s\\S]*?)```")
+        val match = codeBlockRegex.find(cleaned)
+        cleaned = if (match != null) {
+            match.groupValues[1]
+        } else {
+            cleaned.replace("```", "")
+        }
+
+        return cleaned.trim()
     }
 }
