@@ -164,10 +164,18 @@ abstract class LLMClientService<C : LLMClientConfiguration>(private val cs: Coro
     }
 
     private fun cleanCommitMessage(message: String): String {
-        return message
+        var result = message.replace(Regex("<think>.*?</think>", RegexOption.DOT_MATCHES_ALL), "")
+
+        // Extract content from the first code block if it exists
+        val codeBlockRegex = Regex("```(?:\\w+)?\\s*(.*?)\\s*```", RegexOption.DOT_MATCHES_ALL)
+        val matchResult = codeBlockRegex.find(result)
+        if (matchResult != null) {
+            result = matchResult.groupValues[1]
+        }
+
+        return result
             .replace("**", "")
             .replace("```", "")
-            .replace(Regex("<think>.*?</think>", RegexOption.DOT_MATCHES_ALL), "")
             .trim()
     }
 }
