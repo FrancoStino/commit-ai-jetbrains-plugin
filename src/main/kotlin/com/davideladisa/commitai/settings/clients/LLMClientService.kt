@@ -57,16 +57,23 @@ abstract class LLMClientService<C : LLMClientConfiguration>(private val cs: Coro
                 val branch = getCommonBranch(includedChanges, project)
                 val prompt = constructPrompt(project.service<ProjectSettings>().activePrompt.content, diff, branch, commitWorkflowHandler.getCommitMessage(), project)
 
-                makeRequest(clientConfiguration, prompt, onSuccess = {
-                    withContext(Dispatchers.EDT) {
-                        clientConfiguration.setCommitMessage(commitWorkflowHandler, prompt, cleanCommitMessage(it))
+                makeRequest(
+                    clientConfiguration,
+                    prompt,
+                    onSuccess = {
+                        withContext(Dispatchers.EDT) {
+                            clientConfiguration.setCommitMessage(commitWorkflowHandler, prompt, cleanCommitMessage(it))
+                        }
+                    },
+                    onComplete = {
+                        AppSettings2.instance.recordHit()
+                    },
+                    onError = {
+                        withContext(Dispatchers.EDT) {
+                            commitWorkflowHandler.setCommitMessage(it)
+                        }
                     }
-                    AppSettings2.instance.recordHit()
-                }, onError = {
-                    withContext(Dispatchers.EDT) {
-                        commitWorkflowHandler.setCommitMessage(it)
-                    }
-                })
+                )
             }
         }
     }
@@ -101,19 +108,33 @@ abstract class LLMClientService<C : LLMClientConfiguration>(private val cs: Coro
         }
     }
 
-    private suspend fun makeRequest(client: C, text: String, onSuccess: suspend (r: String) -> Unit, onError: suspend (r: String) -> Unit) {
+    private suspend fun makeRequest(
+        client: C,
+        text: String,
+        onSuccess: suspend (r: String) -> Unit,
+        onComplete: suspend (r: String) -> Unit = {},
+        onError: suspend (r: String) -> Unit
+    ) {
         makeRequestWithTryCatch(function = {
             if (AppSettings2.instance.useStreamingResponse) {
                 buildStreamingChatModel(client)?.let { streamingChatModel ->
-                    sendStreamingRequest(streamingChatModel, text, onSuccess)
+                    sendStreamingRequest(streamingChatModel, text, onSuccess, onComplete)
                     return@makeRequestWithTryCatch
                 }
             }
-            sendRequest(client, text, onSuccess)
+            sendRequest(client, text, {
+                onSuccess(it)
+                onComplete(it)
+            })
         }, onError = onError)
     }
 
-    private suspend fun sendStreamingRequest(streamingModel: StreamingChatModel, text: String, onSuccess: suspend (r: String) -> Unit) {
+    private suspend fun sendStreamingRequest(
+        streamingModel: StreamingChatModel,
+        text: String,
+        onSuccess: suspend (r: String) -> Unit,
+        onComplete: suspend (r: String) -> Unit
+    ) {
         var response = ""
         val completionDeferred = CompletableDeferred<String>()
 
@@ -144,7 +165,9 @@ abstract class LLMClientService<C : LLMClientConfiguration>(private val cs: Coro
             )
             // This throws exception if completionDeferred.completeExceptionally(error) is called
             // which is handled by the function calling this function
-            onSuccess(completionDeferred.await())
+            val finalResponse = completionDeferred.await()
+            onSuccess(finalResponse)
+            onComplete(finalResponse)
         }
     }
 
@@ -164,10 +187,17 @@ abstract class LLMClientService<C : LLMClientConfiguration>(private val cs: Coro
     }
 
     private fun cleanCommitMessage(message: String): String {
-        return message
+        var content = message.replace(Regex("<think>.*?</think>", RegexOption.DOT_MATCHES_ALL), "").trim()
+
+        // Extract content from the first markdown code block if present
+        val codeBlockRegex = Regex("```(?:[a-zA-Z]*\\n)?([\\s\\S]*?)```")
+        codeBlockRegex.find(content)?.let {
+            content = it.groupValues[1].trim()
+        }
+
+        return content
             .replace("**", "")
             .replace("```", "")
-            .replace(Regex("<think>.*?</think>", RegexOption.DOT_MATCHES_ALL), "")
             .trim()
     }
 }

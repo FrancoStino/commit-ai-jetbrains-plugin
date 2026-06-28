@@ -89,8 +89,20 @@ object CommitAIUtils {
     }
 
     fun replaceHint(promptContent: String, hint: String?): String {
+        var content = promptContent
+        // Support conditional replacement: {This is a $hint}
+        // If hint is blank, the entire block is removed.
+        val regex = Regex("\\{([^}]*\\\$hint[^}]*)\\}")
+        content = regex.replace(content) { matchResult ->
+            if (hint.isNullOrBlank()) {
+                ""
+            } else {
+                matchResult.groupValues[1].replace("\$hint", hint)
+            }
+        }
+
         // For now, only support the simple {hint} placeholder to avoid regex issues.
-        return promptContent.replace("{hint}", hint.orEmpty())
+        return content.replace("{hint}", hint.orEmpty())
     }
 
     suspend fun getCommonBranch(changes: List<Change>, project: Project): String? {
