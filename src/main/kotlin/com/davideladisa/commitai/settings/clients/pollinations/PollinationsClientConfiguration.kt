@@ -25,7 +25,7 @@ class PollinationsClientConfiguration : BaseRestLLMClientConfiguration(
 
     companion object {
         const val CLIENT_NAME = "Pollinations"
-        const val DEFAULT_MODEL = "openai-large"
+        const val DEFAULT_MODEL = "openai"
     }
 
     override fun getClientName(): String {
