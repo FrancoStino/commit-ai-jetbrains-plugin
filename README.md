@@ -116,10 +116,10 @@ Please see [LICENSE](LICENSE.md) for details.
 
 ## Star History
 
-<a href="https://www.star-history.com/#FrancoStino/commit-ai-jetbrains-plugin&Date">
+<a href="https://www.star-history.com/?repos=FrancoStino%2Fcommit-ai-jetbrains-plugin&type=date&legend=top-left">
  <picture>
-   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=FrancoStino/commit-ai-jetbrains-plugin&type=Date&theme=dark" />
-   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=FrancoStino/commit-ai-jetbrains-plugin&type=Date" />
-   <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=FrancoStino/commit-ai-jetbrains-plugin&type=Date" />
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=FrancoStino/commit-ai-jetbrains-plugin&type=date&theme=dark&legend=top-left&sealed_token=AxOHePZXilyYYZmdFeMmnV6fNA10Fra2JPLVccfUOG8NLKyQsxXihf2OxjXTicGoa9S7vvYCL0uZjMYj9sOhFAOdipM7Sk1FyxeoNhyCftrzpxlFMjs3aQ" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=FrancoStino/commit-ai-jetbrains-plugin&type=date&legend=top-left&sealed_token=AxOHePZXilyYYZmdFeMmnV6fNA10Fra2JPLVccfUOG8NLKyQsxXihf2OxjXTicGoa9S7vvYCL0uZjMYj9sOhFAOdipM7Sk1FyxeoNhyCftrzpxlFMjs3aQ" />
+   <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=FrancoStino/commit-ai-jetbrains-plugin&type=date&legend=top-left&sealed_token=AxOHePZXilyYYZmdFeMmnV6fNA10Fra2JPLVccfUOG8NLKyQsxXihf2OxjXTicGoa9S7vvYCL0uZjMYj9sOhFAOdipM7Sk1FyxeoNhyCftrzpxlFMjs3aQ" />
  </picture>
 </a>
